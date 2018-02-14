@@ -1,1 +1,53 @@
----
+GITBASH COMMANDS TO SET UP LOCAL REPO
+-------------------------------------
+
+cd "path/to/desired/directory" 			//make sure to include the quotes and then paste the directory you want to clone the github repo 
+git clone [paste repo url] 			//clones repository in current directory
+
+GITBASH COMMANDS TO SYNC PROJECT
+---------------------------------
+
+
+	(To update changes on github repository)
+
+
+cd "path/to/directy" 				//changes directory to "path/to/directory"; make sure to change directory to your github repo directory first before doing the commands below
+
+git add . 					//adds all the files to commit
+git commit -m "ENTER COMMIT MESSAGE HERE" 	//commits all the added files. Shows commit message on github for convenience and known changes
+git push					//pushes the changes to the online github repository 
+	
+
+	(To pull and grab the updated changes from the github repository)
+
+
+cd "path/to/project" 				//changes directory to "path/to/directory"; make sure to change directory to your Unity project first before running the commands belows
+git pull 					//if git pull doesn't work, refer to foot note below
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//----------------------FOOT NOTE--------------------------------//
+
+if "git push" doesn't work, try
+	git push -u origin master 
+
+if "git pull" doesn't work, try in following order
+	git fetch --all				//fetches all files from online repo
+	git merge				//merge online repo files to local files
+	git reset --hard origin/master
+
+
+
+
