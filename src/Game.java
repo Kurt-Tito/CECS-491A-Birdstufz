@@ -7,7 +7,6 @@ public class Game extends JFrame{
 		setTitle(title);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(1600, 900);
-		JPanel panel = new MenuPanel(); // Set assignment to new MazePanel to display maze game
 		JPanel panel = new MenuPanel(); // change assignment to new MazePanel() for maze game
 		setContentPane(panel);
 		panel.requestFocus();
