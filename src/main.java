@@ -1,13 +1,8 @@
 
-public class main {
+public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		//DELETE CODE BELOW
-		//This is just to initialize the development of the project
-		
-		System.out.println("Initializing...");
+		Game game = new Game("BirdStufz Games");
 
 	}
 
