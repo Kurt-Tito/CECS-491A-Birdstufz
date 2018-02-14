@@ -141,32 +141,7 @@ public class Maze {
 			{
 				if(!grid[j][i].isHidden())
 				{
-					g2.setColor(Color.green);
-					g2.fillRect(x + (cellSize*i), (cellSize*j), cellSize, cellSize);
-					g2.setColor(Color.red);
-					g2.setStroke(new BasicStroke(5));
-					if(grid[j][i].hasWall(Direction.NORTH))
-					{
-						//g2.fillRect(x + (cellSize*i + cellSize), (cellSize*j + cellSize), cellSize, cellSize);
-						g2.drawLine(cellSize*i+x, cellSize*j+y, cellSize*i+x + cellSize, cellSize*j+y);
-					}
-					if(grid[j][i].hasWall(Direction.WEST))
-					{
-						//g2.fillRect(x + (cellSize*i + cellSize), (cellSize*j + cellSize), cellSize, cellSize);
-						g2.drawLine(cellSize*i+x, cellSize*j+y, cellSize*i+x, cellSize*j+y + cellSize);
-	
-					}
-					if(grid[j][i].hasWall(Direction.EAST))
-					{
-						//g2.fillRect(x + (cellSize*i + cellSize), (cellSize*j + cellSize), cellSize, cellSize);
-						g2.drawLine(cellSize*i+x + cellSize, cellSize*j+y, cellSize*i+x + cellSize, cellSize*j+y + cellSize);
-	
-					}
-					if(grid[j][i].hasWall(Direction.SOUTH))
-					{
-						//g2.fillRect(x + (cellSize*i + cellSize), (cellSize*j + cellSize), cellSize, cellSize);
-						g2.drawLine(cellSize*i+x, cellSize*j+y+cellSize, cellSize*i+x+cellSize, cellSize*j+y + cellSize);
-					}
+					grid[j][i].draw(g2, i*cellSize + x, j*cellSize + y, cellSize);
 				}
 			}
 		}

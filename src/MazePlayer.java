@@ -24,7 +24,7 @@ public class MazePlayer {
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
-		row = col = 0;
+		row = col = 2;
 		this.cellSize = cellSize;
 		dir = Direction.NORTH;
 	}

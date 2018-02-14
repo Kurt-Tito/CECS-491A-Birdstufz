@@ -14,7 +14,7 @@ public class MazePanel extends JPanel implements MouseListener, KeyListener{
 	{
 		maze = new Maze(10);
 		player = new MazePlayer(64);
-		maze.reveal(0, 0);
+		maze.reveal(player.getCol(), player.getRow());
 		setBackground(Color.black);
 		addKeyListener(this);
 		setFocusable(true);
@@ -24,7 +24,7 @@ public class MazePanel extends JPanel implements MouseListener, KeyListener{
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D) g;
-		g2.fillRect(0, 0, getWidth(), getHeight());
+		
 		maze.drawMaze(g2, 0, 0, 64);
 		player.draw(g2, 0, 0);
 		
