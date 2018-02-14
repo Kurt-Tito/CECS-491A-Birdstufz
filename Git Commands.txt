@@ -1,3 +1,6 @@
+
+								GIT COMMANDS USING GITBASH
+
 GITBASH COMMANDS TO SET UP LOCAL REPO
 -------------------------------------
 
