@@ -33,7 +33,7 @@ public class MazeExit {
 	{
 		Random rand = new Random();
 		row = rand.nextInt(9);
-		col = rand.nextInt(9);
+		col = rand.nextInt(9 - 9/2) + 9/2;
 	}
 	
 	//boolean check if player and maze_exit have the same coordinates

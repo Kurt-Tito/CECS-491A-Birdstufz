@@ -20,6 +20,7 @@ public class MazePanel extends JPanel implements MouseListener, KeyListener{
 		exit = new MazeExit(64);
 		
 		maze.reveal(player.getCol(), player.getRow());
+		maze.reveal(exit.getCol(), exit.getRow());
 		setBackground(Color.black);
 		addKeyListener(this);
 		
