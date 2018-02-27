@@ -115,11 +115,11 @@ public class MazePanel extends JPanel implements MouseListener, KeyListener{
 			System.out.print("WINNER");
 			WinScreenPanel win = new WinScreenPanel();
 			win.setVisible(true);
-			repaint();
 		}
-		else{
-//			maze.reveal(player.getCol(), player.getRow());
-//			System.out.println(arg0.getKeyCode());
+		else
+		{
+			maze.reveal(player.getCol(), player.getRow());
+			System.out.println(arg0.getKeyCode());
 		}
 		
 		repaint();
