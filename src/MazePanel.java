@@ -108,8 +108,6 @@ public class MazePanel extends JPanel implements MouseListener, KeyListener{
 				player.move(Direction.SOUTH);
 			}
 		}
-		maze.reveal(player.getCol(), player.getRow());
-		System.out.println(arg0.getKeyCode());
 		
 		//if checkFinish is true, open WinScreenPanel
 		if(exit.checkFinish(player) == true)
@@ -118,6 +116,10 @@ public class MazePanel extends JPanel implements MouseListener, KeyListener{
 			WinScreenPanel win = new WinScreenPanel();
 			win.setVisible(true);
 			repaint();
+		}
+		else{
+			maze.reveal(player.getCol(), player.getRow());
+			System.out.println(arg0.getKeyCode());
 		}
 		
 		repaint();
