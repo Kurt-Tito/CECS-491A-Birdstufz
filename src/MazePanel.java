@@ -10,13 +10,19 @@ import java.awt.event.MouseListener;
 public class MazePanel extends JPanel implements MouseListener, KeyListener{
 	Maze maze;
 	MazePlayer player;
+	MazeExit exit;
+	
+	
 	public MazePanel()
 	{
 		maze = new Maze(10);
 		player = new MazePlayer(64);
+		exit = new MazeExit(64);
+		
 		maze.reveal(player.getCol(), player.getRow());
 		setBackground(Color.black);
 		addKeyListener(this);
+		
 		setFocusable(true);
 		requestFocus();
 	}
@@ -27,6 +33,7 @@ public class MazePanel extends JPanel implements MouseListener, KeyListener{
 		
 		maze.drawMaze(g2, 0, 0, 64);
 		player.draw(g2, 0, 0);
+		exit.draw(g2, 0, 0);
 		
 		
 	}
@@ -102,6 +109,16 @@ public class MazePanel extends JPanel implements MouseListener, KeyListener{
 		}
 		maze.reveal(player.getCol(), player.getRow());
 		System.out.println(arg0.getKeyCode());
+		
+		//if checkFinish is true, open WinScreenPanel
+		if(exit.checkFinish(player) == true)
+		{	
+			System.out.print("WINNER");
+			WinScreenPanel win = new WinScreenPanel();
+			win.setVisible(true);
+			repaint();
+		}
+		
 		repaint();
 		
 	}
