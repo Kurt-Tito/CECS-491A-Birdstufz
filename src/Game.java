@@ -7,10 +7,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-public class Game extends JFrame{
-
-	JPanel panel = new MenuPanel(); // change assignment to new MazePanel() for maze game
-	JPanel mazepanel = new MazePanel();
+public class Game extends JFrame implements ActionListener{
+	private GamePanel currentPanel;
+	private final MenuPanel menupanel = new MenuPanel(); // change assignment to new MazePanel() for maze game
+	private final MazePanel mazepanel = new MazePanel();
 	
 	public Game(String title)
 	{
@@ -23,57 +23,59 @@ public class Game extends JFrame{
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		
-		setContentPane(panel);
-		panel.requestFocus();
+		
+		menupanel.addListener(this);
+		mazepanel.addListener(this);
+		
+		currentPanel = menupanel;
+		updatePanel();
+		
 		setVisible(true);
 		
-		addMazeButton();
-		addConcentrationButton();
+		
 		
 		repaint();
 	}
 	
-	public void addMazeButton()
-	{
-		ImageIcon buttonbg = new ImageIcon("images/ButtonFrame.png");
-		setLayout(null);
-		
-		JButton mazebutton = new JButton("MAZE GAME", buttonbg);
-		mazebutton.setBounds(600, 350, 380, 50);
-		mazebutton.setHorizontalTextPosition(JButton.CENTER);
-		mazebutton.setVerticalTextPosition(JButton.CENTER);
-		add(mazebutton);
-		
-		mazebutton.addActionListener(new ActionListener(){
-		public void actionPerformed(ActionEvent e){
-			JPanel mazepanel = new MazePanel();
-			
-			System.out.println("Going to maze game"); //debugging purposes
-			remove(panel);
-			add(mazepanel);
-			setContentPane(mazepanel);
-			mazepanel.requestFocus();
-			invalidate();
-			validate();
-			repaint();
-			}
-		});
-	}
-	
-	public void addConcentrationButton()
-	{
-		ImageIcon buttonbg = new ImageIcon("images/ButtonFrame.png");
-		setLayout(null);
-		
-		JButton concentration = new JButton("CONCENTRATION GAME", buttonbg);
-		concentration.setBounds(600, 450, 380, 50);
-		concentration.setHorizontalTextPosition(JButton.CENTER);
-		concentration.setVerticalTextPosition(JButton.CENTER);
-		add(concentration);
-	}
 	
 	public void changeState(State s)
 	{
-		
+		switch(s)
+		{
+			case MENU:
+				currentPanel = menupanel;
+				break;
+			case MAZE:
+				currentPanel = mazepanel;
+				break;
+			case CONCENTRATION:
+				break;
+			case CHESS:
+				break;
+		}
+		updatePanel();
+	}
+	
+	private void updatePanel()
+	{
+		getContentPane().removeAll();
+		setContentPane(currentPanel);
+		currentPanel.reset();
+		currentPanel.requestFocus();
+		currentPanel.removeListener(this);
+		currentPanel.addListener(this);
+		revalidate();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		try {
+			changeState(State.valueOf(e.getActionCommand()));
+			System.out.println("Action received: " + State.valueOf(e.getActionCommand()));
+		}
+		catch(IllegalArgumentException exc)
+		{
+			System.out.println("Error: Not a valid state.");
+		}
 	}
 }

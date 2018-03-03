@@ -1,4 +1,4 @@
 
 public enum State {
-	MENU, GAME
+	MENU, MAZE, CONCENTRATION, CHESS
 }

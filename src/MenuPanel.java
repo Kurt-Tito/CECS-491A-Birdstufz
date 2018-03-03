@@ -15,23 +15,43 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-public class MenuPanel extends JPanel implements MouseListener{
-	private final String PATH_BRANDING = "images/branding.png"; 
-	private final String PATH_BANNER = "images/panel.png";
-	
-	private BufferedImage brand, banner;
+public class MenuPanel extends GamePanel implements MouseListener{
+	private JButton mazebutton, concentrationbutton;
 	public MenuPanel()
 	{
 		setBackground(new Color(121, 189, 255));
-		try
-		{
-			brand = ImageIO.read(new File(PATH_BRANDING));
-			banner = ImageIO.read(new File(PATH_BANNER));
-		} catch(IOException e)
-		{
-			
-		}
 		
+		ImageIcon buttonbg = new ImageIcon("images/ButtonFrame.png");
+		setLayout(null);
+		
+		mazebutton = new JButton("MAZE GAME", buttonbg);
+		mazebutton.setActionCommand(State.MAZE.toString());
+		mazebutton.setBounds(600, 350, 380, 50);
+		mazebutton.setHorizontalTextPosition(JButton.CENTER);
+		mazebutton.setVerticalTextPosition(JButton.CENTER);
+		
+		concentrationbutton = new JButton("CONCENTRATION GAME", buttonbg);
+		concentrationbutton.setActionCommand(State.CONCENTRATION.toString());
+		concentrationbutton.setBounds(600, 450, 380, 50);
+		concentrationbutton.setHorizontalTextPosition(JButton.CENTER);
+		concentrationbutton.setVerticalTextPosition(JButton.CENTER);
+	}
+	
+	@Override
+	public void reset() {
+		addButtons();
+	}
+
+	@Override
+	public void addListener(ActionListener al) {
+		mazebutton.addActionListener(al);
+		concentrationbutton.addActionListener(al);
+	}
+	
+	public void removeListener(ActionListener al)
+	{
+		mazebutton.removeActionListener(al);
+		concentrationbutton.removeActionListener(al);
 	}
 	
 	public void paintComponent(Graphics g)
@@ -39,7 +59,6 @@ public class MenuPanel extends JPanel implements MouseListener{
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		drawBanner(g2);
-		drawStatusBar(g2);
 	}
 	
 	public void drawBanner(Graphics2D g2)
@@ -48,11 +67,10 @@ public class MenuPanel extends JPanel implements MouseListener{
 		g2.drawImage(banner, (getWidth() - w)/2, (getHeight() - h)/2, w, h, null);
 	}
 	
-	public void drawStatusBar(Graphics2D g2)
-	{
-		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .6f)); // Adjusts opacity;
-		g2.drawImage(brand, getWidth()-180, getHeight()-60, 180, 60, null);
-		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
+	public void addButtons()
+	{	
+		add(mazebutton);
+		add(concentrationbutton);
 	}
 	
 	@Override
@@ -84,6 +102,7 @@ public class MenuPanel extends JPanel implements MouseListener{
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }
 

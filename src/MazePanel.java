@@ -1,18 +1,20 @@
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-public class MazePanel extends JPanel implements MouseListener, KeyListener{
-	Maze maze;
-	MazePlayer player;
-	MazeExit exit;
-	
+public class MazePanel extends GamePanel implements MouseListener, KeyListener{
+	private Maze maze;
+	private MazePlayer player;
+	private MazeExit exit;
+	private JButton menuButton;
 	
 	public MazePanel()
 	{
@@ -20,14 +22,44 @@ public class MazePanel extends JPanel implements MouseListener, KeyListener{
 		player = new MazePlayer(64);
 		exit = new MazeExit(64);
 		
-		maze.reveal(player.getCol(), player.getRow());
-		maze.reveal(exit.getCol(), exit.getRow());
 		setBackground(Color.black);
 		addKeyListener(this);
 		
 		setFocusable(true);
 		requestFocus();
+		menuButton = new JButton("Main Menu");
+		menuButton.setActionCommand(State.MENU.toString());
+		
+		
 	}
+	
+	public void addButtons()
+	{
+		add(menuButton);
+	}
+	
+	@Override
+	public void reset() 
+	{
+		maze.initMaze();
+		exit.RandomizeExit();
+		maze.reveal(player.getCol(), player.getRow());
+		addButtons();
+		System.out.println(getComponentCount() + "Components");
+		
+	}
+
+	@Override
+	public void addListener(ActionListener al) {
+		menuButton.addActionListener(al);
+		
+	}
+	
+	public void removeListener(ActionListener al)
+	{
+		menuButton.removeActionListener(al);
+	}
+
 	
 	public void paintComponent(Graphics g)
 	{
@@ -37,8 +69,6 @@ public class MazePanel extends JPanel implements MouseListener, KeyListener{
 		maze.drawMaze(g2, 0, 0, 64);
 		player.draw(g2, 0, 0);
 		exit.draw(g2, 0, 0);
-		
-		
 	}
 
 	@Override
