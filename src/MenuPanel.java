@@ -16,7 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 public class MenuPanel extends GamePanel implements MouseListener{
-	private JButton mazebutton, concentrationbutton;
+	private JButton mazebutton, concentrationbutton, chessbutton;
 	public MenuPanel()
 	{
 		setBackground(new Color(121, 189, 255));
@@ -35,6 +35,12 @@ public class MenuPanel extends GamePanel implements MouseListener{
 		concentrationbutton.setBounds(600, 450, 380, 50);
 		concentrationbutton.setHorizontalTextPosition(JButton.CENTER);
 		concentrationbutton.setVerticalTextPosition(JButton.CENTER);
+		
+		chessbutton = new JButton("CHESS GAME", buttonbg);
+		chessbutton.setActionCommand(State.CHESS.toString());
+		chessbutton.setBounds(600, 550, 380, 50);
+		chessbutton.setHorizontalTextPosition(JButton.CENTER);
+		chessbutton.setVerticalTextPosition(JButton.CENTER);
 	}
 	
 	@Override
@@ -46,12 +52,14 @@ public class MenuPanel extends GamePanel implements MouseListener{
 	public void addListener(ActionListener al) {
 		mazebutton.addActionListener(al);
 		concentrationbutton.addActionListener(al);
+		chessbutton.addActionListener(al);
 	}
 	
 	public void removeListener(ActionListener al)
 	{
 		mazebutton.removeActionListener(al);
 		concentrationbutton.removeActionListener(al);
+		chessbutton.removeActionListener(al);
 	}
 	
 	public void paintComponent(Graphics g)
@@ -71,6 +79,7 @@ public class MenuPanel extends GamePanel implements MouseListener{
 	{	
 		add(mazebutton);
 		add(concentrationbutton);
+		add(chessbutton);
 	}
 	
 	@Override

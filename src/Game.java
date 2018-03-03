@@ -11,6 +11,7 @@ public class Game extends JFrame implements ActionListener{
 	private GamePanel currentPanel;
 	private final MenuPanel menupanel = new MenuPanel(); // change assignment to new MazePanel() for maze game
 	private final MazePanel mazepanel = new MazePanel();
+	private final ChessPanel chesspanel = new ChessPanel();
 	
 	public Game(String title)
 	{
@@ -26,6 +27,7 @@ public class Game extends JFrame implements ActionListener{
 		
 		menupanel.addListener(this);
 		mazepanel.addListener(this);
+		chesspanel.addListener(this);
 		
 		currentPanel = menupanel;
 		updatePanel();
@@ -51,6 +53,7 @@ public class Game extends JFrame implements ActionListener{
 			case CONCENTRATION:
 				break;
 			case CHESS:
+				currentPanel = chesspanel;
 				break;
 		}
 		updatePanel();
