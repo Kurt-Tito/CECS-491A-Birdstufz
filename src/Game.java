@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -12,27 +13,34 @@ public class Game extends JFrame implements ActionListener{
 	private final MenuPanel menupanel = new MenuPanel(); // change assignment to new MazePanel() for maze game
 	private final MazePanel mazepanel = new MazePanel();
 	private final ChessPanel chesspanel = new ChessPanel();
+	private final StatusBar statusbar = new StatusBar();
 	
 	public Game(String title)
 	{
 		setTitle(title);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(1600, 900);
+		setLocationRelativeTo(null);
+		//setSize(1600, 900);
+		setResizable(false);
 //		JPanel panel = new MenuPanel(); // change assignment to new MazePanel() for maze game
 //		JPanel mazepanel = new MazePanel();
 		
-		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+		setLayout(new BorderLayout());
+		add(BorderLayout.SOUTH, statusbar);
+		
+		
 		
 		
 		menupanel.addListener(this);
 		mazepanel.addListener(this);
 		chesspanel.addListener(this);
+		statusbar.addListener(this);
 		
 		currentPanel = menupanel;
 		updatePanel();
 		
 		setVisible(true);
+		
 		
 		
 		
@@ -42,6 +50,7 @@ public class Game extends JFrame implements ActionListener{
 	
 	public void changeState(State s)
 	{
+		getContentPane().remove(currentPanel);
 		switch(s)
 		{
 			case MENU:
@@ -61,13 +70,16 @@ public class Game extends JFrame implements ActionListener{
 	
 	private void updatePanel()
 	{
-		getContentPane().removeAll();
-		setContentPane(currentPanel);
+		//getContentPane().removeAll();
+		add(BorderLayout.CENTER, currentPanel);
+		pack();
 		currentPanel.reset();
 		currentPanel.requestFocus();
 		currentPanel.removeListener(this);
 		currentPanel.addListener(this);
 		revalidate();
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 	}
 
 	@Override

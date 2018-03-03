@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -20,6 +21,7 @@ public class MenuPanel extends GamePanel implements MouseListener{
 	public MenuPanel()
 	{
 		setBackground(new Color(121, 189, 255));
+		setPreferredSize(new Dimension(1600, 900));
 		
 		ImageIcon buttonbg = new ImageIcon("images/ButtonFrame.png");
 		setLayout(null);

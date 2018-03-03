@@ -3,6 +3,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionListener;
@@ -23,19 +24,9 @@ public class MazePanel extends GamePanel implements MouseListener, KeyListener{
 		exit = new MazeExit(64);
 		
 		setBackground(Color.black);
+		setPreferredSize(new Dimension(640, 640));
 		addKeyListener(this);
 		
-		setFocusable(true);
-		requestFocus();
-		menuButton = new JButton("Main Menu");
-		menuButton.setActionCommand(State.MENU.toString());
-		
-		
-	}
-	
-	public void addButtons()
-	{
-		add(menuButton);
 	}
 	
 	@Override
@@ -44,20 +35,16 @@ public class MazePanel extends GamePanel implements MouseListener, KeyListener{
 		maze.initMaze();
 		exit.RandomizeExit();
 		maze.reveal(player.getCol(), player.getRow());
-		addButtons();
 		System.out.println(getComponentCount() + "Components");
 		
 	}
 
 	@Override
 	public void addListener(ActionListener al) {
-		menuButton.addActionListener(al);
-		
 	}
 	
 	public void removeListener(ActionListener al)
 	{
-		menuButton.removeActionListener(al);
 	}
 
 	
