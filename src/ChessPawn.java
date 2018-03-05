@@ -47,55 +47,71 @@ public class ChessPawn extends ChessPiece{
 		List<ChessTile> validMoves = new ArrayList<ChessTile>();
 		ChessTile tile;
 		if(colorAlignment) {
-			//Check front
-			tile = board.getBoard()[location.getCol()][location.getRow()-1];
-			if(!tile.hasPiece())
+			if(location.getRow() > 0)
 			{
-				validMoves.add(tile);
-			}
-			//Check left diagonal
-			tile = board.getBoard()[location.getCol()-1][location.getRow()-1];
-			if(tile.hasPiece())
-			{
-				if(colorAlignment != tile.getPiece().getColorAlignment())
+				tile = board.getBoard()[location.getCol()][location.getRow()-1];
+				if(!tile.hasPiece())
 				{
 					validMoves.add(tile);
 				}
-			}
-			//Check right diagonal
-			tile = board.getBoard()[location.getCol()+1][location.getRow()-1];
-			if(tile.hasPiece())
-			{
-				if(colorAlignment != tile.getPiece().getColorAlignment())
+				//Check left diagonal
+				if(location.getCol() > 0)
 				{
-					validMoves.add(tile);
+					tile = board.getBoard()[location.getCol()-1][location.getRow()-1];
+					if(tile.hasPiece())
+					{
+						if(colorAlignment != tile.getPiece().getColorAlignment())
+						{
+							validMoves.add(tile);
+						}
+					}
+				}
+				//Check right diagonal
+				if(location.getCol() < board.getBoard()[0].length - 1)
+				{
+					tile = board.getBoard()[location.getCol()+1][location.getRow()-1];
+					if(tile.hasPiece())
+					{
+						if(colorAlignment != tile.getPiece().getColorAlignment())
+						{
+							validMoves.add(tile);
+						}
+					}
 				}
 			}
 		}
 		else
 		{
-			//Check front
-			tile = board.getBoard()[location.getCol()][location.getRow()+1];
-			if(!tile.hasPiece())
+			if(location.getRow() < board.getBoard().length - 1)
 			{
-				validMoves.add(tile);
-			}
-			//Check left diagonal
-			tile = board.getBoard()[location.getCol()-1][location.getRow()+1];
-			if(tile.hasPiece())
-			{
-				if(colorAlignment != tile.getPiece().getColorAlignment())
+				tile = board.getBoard()[location.getCol()][location.getRow()+1];
+				if(!tile.hasPiece())
 				{
 					validMoves.add(tile);
 				}
-			}
-			//Check right diagonal
-			tile = board.getBoard()[location.getCol()+1][location.getRow()+1];
-			if(tile.hasPiece())
-			{
-				if(colorAlignment != tile.getPiece().getColorAlignment())
+				//Check left diagonal
+				if(location.getCol() > 0)
 				{
-					validMoves.add(tile);
+					tile = board.getBoard()[location.getCol()-1][location.getRow()+1];
+					if(tile.hasPiece())
+					{
+						if(colorAlignment != tile.getPiece().getColorAlignment())
+						{
+							validMoves.add(tile);
+						}
+					}
+				}
+				//Check right diagonal
+				if(location.getCol() < board.getBoard()[0].length - 1)
+				{
+					tile = board.getBoard()[location.getCol()+1][location.getRow()+1];
+					if(tile.hasPiece())
+					{
+						if(colorAlignment != tile.getPiece().getColorAlignment())
+						{
+							validMoves.add(tile);
+						}
+					}
 				}
 			}
 		}
