@@ -17,6 +17,7 @@ public class ChessPawn extends ChessPiece{
 		colorAlignment = isWhite;
 		loadImage();
 	}
+	
 	@Override
 	protected void loadImage()
 	{
@@ -36,11 +37,6 @@ public class ChessPawn extends ChessPiece{
 		{
 			System.out.println("Pawn image not found");
 		}
-	}
-	@Override
-	public void move(ChessTile tile)
-	{
-		
 	}
 	@Override
 	public List<ChessTile> getValidMoves(ChessBoard board, ChessTile location) {

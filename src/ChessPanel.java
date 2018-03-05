@@ -49,7 +49,7 @@ public class ChessPanel extends GamePanel implements MouseListener, MouseMotionL
 			for(int i = 0; i < validMoves.size(); i++)
 			{
 				ChessTile tile = validMoves.get(i);
-				g2.fillOval(tile.getCol() * TILE_SIZE + (TILE_SIZE/4), tile.getRow() * TILE_SIZE + (TILE_SIZE/4), TILE_SIZE/2, TILE_SIZE/2);
+				g2.fillOval(tile.getCol() * TILE_SIZE + (TILE_SIZE/3), tile.getRow() * TILE_SIZE + (TILE_SIZE/3), TILE_SIZE/3, TILE_SIZE/3);
 			}
 		}
 		
@@ -87,7 +87,9 @@ public class ChessPanel extends GamePanel implements MouseListener, MouseMotionL
 
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
+		board = new ChessBoard();
+		tileSelected = null;
+		validMoves = null;
 		
 	}
 
@@ -123,7 +125,6 @@ public class ChessPanel extends GamePanel implements MouseListener, MouseMotionL
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		System.out.println("Mouse Pressed: " + e.getX() + " " + e.getY());
 		ChessTile tile = getTileOnClick(e.getX(), e.getY());
 		// TODO Auto-generated method stub
 		if(tileSelected == null)

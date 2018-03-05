@@ -23,6 +23,5 @@ public abstract class ChessPiece {
 		return image;
 	}
 	protected abstract void loadImage();
-	public abstract void move(ChessTile tile);
 	public abstract List<ChessTile> getValidMoves(ChessBoard board, ChessTile location);
 }
