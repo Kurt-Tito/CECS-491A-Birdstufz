@@ -29,6 +29,12 @@ public class MazePlayer {
 		dir = Direction.NORTH;
 	}
 	
+	public void reset()
+	{
+		row = col = 2;
+		dir = Direction.NORTH;
+	}
+	
 	public void turn(Direction d)
 	{
 		dir = d;

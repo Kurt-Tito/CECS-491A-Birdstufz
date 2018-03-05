@@ -33,6 +33,7 @@ public class MazePanel extends GamePanel implements MouseListener, KeyListener{
 	public void reset() 
 	{
 		maze.initMaze();
+		player.reset();
 		exit.RandomizeExit();
 		maze.reveal(player.getCol(), player.getRow());
 		System.out.println(getComponentCount() + "Components");
