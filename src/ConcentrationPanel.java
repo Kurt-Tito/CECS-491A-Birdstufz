@@ -46,7 +46,6 @@ public class ConcentrationPanel extends GamePanel{
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					// TODO Auto-generated method stub
-					c.showCard();
 					selectedCard = c;
 					doTurn();
 				}
@@ -82,10 +81,12 @@ public class ConcentrationPanel extends GamePanel{
 		if(c1 == null && c2 == null)
 		{
 			c1 = selectedCard;
+			c1.showCard();
 		}
 		if(c1 != null && c1 != selectedCard && c2 == null)
 		{
 			c2 = selectedCard;
+			c2.showCard();
 			t.start();
 		}
 	}
