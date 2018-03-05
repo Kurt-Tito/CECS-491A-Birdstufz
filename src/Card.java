@@ -3,7 +3,7 @@ import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-public class Card extends JButton implements MouseListener{
+public class Card extends JButton {
 	
 	private int value;
 	private boolean match = false;
@@ -11,7 +11,7 @@ public class Card extends JButton implements MouseListener{
 	
 	public Card()
 	{
-		addMouseListener(this);
+	
 	}
 	
 	public void setValue(int invalue)
@@ -50,35 +50,5 @@ public class Card extends JButton implements MouseListener{
 	{
 		setIcon(null);
 	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		showCard();	
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 }

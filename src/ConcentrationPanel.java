@@ -61,7 +61,7 @@ public class ConcentrationPanel extends GamePanel{
 		}
 		
 		//set card images
-		for(int i = 0; i < 24; i++)
+		for(int i = 0; i < pairs*2; i++)
 		{
 			cards.get(i).setImage("images/concentration_game/" +Integer.toString(i%12) +".png");
 		}
@@ -81,10 +81,12 @@ public class ConcentrationPanel extends GamePanel{
 		if(c1 == null && c2 == null)
 		{
 			c1 = selectedCard;
+			c1.showCard();
 		}
 		if(c1 != null && c1 != selectedCard && c2 == null)
 		{
 			c2 = selectedCard;
+			c2.showCard();
 			t.start();
 		}
 	}
@@ -132,6 +134,14 @@ public class ConcentrationPanel extends GamePanel{
 	public void reset() {
 		// TODO Auto-generated method stub
 		
+		//Clears panel of all cards
+		for(int i = 0; i < 24; i++)
+			remove(cards.get(i));
+		//Clears cards list of all cards
+		cards.removeAll(cards);
+		
+		createCards();
+		createBoard();
 	}
 
 	@Override
