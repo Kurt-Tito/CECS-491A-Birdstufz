@@ -134,6 +134,14 @@ public class ConcentrationPanel extends GamePanel{
 	public void reset() {
 		// TODO Auto-generated method stub
 		
+		//Clears panel of all cards
+		for(int i = 0; i < 24; i++)
+			remove(cards.get(i));
+		//Clears cards list of all cards
+		cards.removeAll(cards);
+		
+		createCards();
+		createBoard();
 	}
 
 	@Override
