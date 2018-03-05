@@ -46,6 +46,7 @@ public class ConcentrationPanel extends GamePanel{
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					// TODO Auto-generated method stub
+					c.showCard();
 					selectedCard = c;
 					doTurn();
 				}
@@ -61,7 +62,7 @@ public class ConcentrationPanel extends GamePanel{
 		}
 		
 		//set card images
-		for(int i = 0; i < 24; i++)
+		for(int i = 0; i < pairs*2; i++)
 		{
 			cards.get(i).setImage("images/concentration_game/" +Integer.toString(i%12) +".png");
 		}
