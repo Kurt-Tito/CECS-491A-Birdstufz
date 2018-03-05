@@ -76,6 +76,14 @@ public class Game extends JFrame implements ActionListener{
 		currentPanel.requestFocus();
 		currentPanel.removeListener(this);
 		currentPanel.addListener(this);
+		if(currentPanel.equals(menupanel))
+		{
+			statusbar.hideHomeButton();
+		}
+		else
+		{
+			statusbar.showHomeButton();
+		}
 		revalidate();
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);

@@ -37,6 +37,15 @@ public class StatusBar extends JPanel{
 		add(menuButton);
 	}
 	
+	public void hideHomeButton()
+	{
+		remove(menuButton);
+	}
+	public void showHomeButton()
+	{
+		remove(menuButton);
+		add(menuButton);
+	}
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
