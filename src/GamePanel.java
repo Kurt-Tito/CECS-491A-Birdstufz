@@ -30,15 +30,6 @@ public abstract class GamePanel extends JPanel{
 		statusBar = new StatusBar();
 		add(BorderLayout.SOUTH, statusBar);
 	}
-	public void paintComponent(Graphics g)
-	{
-		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D) g;
-		// Draws the status bar
-		//g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .6f)); // Adjusts opacity;
-		//g2.drawImage(brand, getWidth()-180, getHeight()-60, 180, 60, null);
-		//g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
-	}
 	public abstract void reset();
 	public abstract void addListener(ActionListener al);
 	public abstract void removeListener(ActionListener al);
