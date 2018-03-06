@@ -63,7 +63,7 @@ public class ChessPawn extends ChessPiece{
 					}
 				}
 				//Check right diagonal
-				if(location.getCol() < board.getBoard()[0].length - 1)
+				if(location.getCol() < board.getBoard().length - 1)
 				{
 					tile = board.getBoard()[location.getCol()+1][location.getRow()-1];
 					if(tile.hasPiece())
@@ -78,7 +78,7 @@ public class ChessPawn extends ChessPiece{
 		}
 		else
 		{
-			if(location.getRow() < board.getBoard().length - 1)
+			if(location.getRow() < board.getBoard()[0].length - 1)
 			{
 				tile = board.getBoard()[location.getCol()][location.getRow()+1];
 				if(!tile.hasPiece())
@@ -98,7 +98,7 @@ public class ChessPawn extends ChessPiece{
 					}
 				}
 				//Check right diagonal
-				if(location.getCol() < board.getBoard()[0].length - 1)
+				if(location.getCol() < board.getBoard().length - 1)
 				{
 					tile = board.getBoard()[location.getCol()+1][location.getRow()+1];
 					if(tile.hasPiece())

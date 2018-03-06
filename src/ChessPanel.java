@@ -1,3 +1,4 @@
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -17,8 +18,8 @@ public class ChessPanel extends GamePanel implements MouseListener, MouseMotionL
 	public ChessPanel()
 	{
 		board = new ChessBoard();
-		setBackground(new Color(211, 116, 38));
-		setPreferredSize(new Dimension(600, 600));
+		//setBackground(new Color(211, 116, 38));
+		setPreferredSize(new Dimension(board.getBoard().length * TILE_SIZE, board.getBoard()[0].length * TILE_SIZE));
 		addMouseListener(this);
 		addMouseMotionListener(this);
 	}
@@ -44,7 +45,9 @@ public class ChessPanel extends GamePanel implements MouseListener, MouseMotionL
 		if(tileSelected != null)
 		{
 			g2.setColor(Color.green);
+			g2.setStroke(new BasicStroke(3));
 			g2.drawRect(tileSelected.getCol() * TILE_SIZE, tileSelected.getRow() * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+			g2.setStroke(new BasicStroke(1));
 			g2.setColor(Color.red);
 			for(int i = 0; i < validMoves.size(); i++)
 			{
@@ -61,7 +64,9 @@ public class ChessPanel extends GamePanel implements MouseListener, MouseMotionL
 		{
 			g2.setColor(Color.black);
 		}
-		g2.fillRect(0, 0, TILE_SIZE/10, TILE_SIZE/10);
+		g2.fillRect(board.getBoard().length * TILE_SIZE - TILE_SIZE/5, 0, TILE_SIZE/5, TILE_SIZE/5);
+		g2.setColor(Color.black);
+		g2.drawRect(board.getBoard().length * TILE_SIZE - TILE_SIZE/5, 0, TILE_SIZE/5, TILE_SIZE/5);
 	}
 	
 	public void selectTile(ChessTile selectedTile)
