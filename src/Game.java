@@ -23,6 +23,7 @@ public class Game extends JFrame implements ActionListener{
 		setLocationRelativeTo(null);
 		//setSize(1600, 900);
 		setResizable(false);
+		setMaximumSize(new Dimension(1600, 900));
 //		JPanel panel = new MenuPanel(); // change assignment to new MazePanel() for maze game
 //		JPanel mazepanel = new MazePanel();
 		

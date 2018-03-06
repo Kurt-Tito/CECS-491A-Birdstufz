@@ -21,26 +21,26 @@ public class MenuPanel extends GamePanel implements MouseListener{
 	public MenuPanel()
 	{
 		setBackground(new Color(121, 189, 255));
-		setPreferredSize(new Dimension(1600, 900));
+		setPreferredSize(new Dimension(1280, 720));
 		
 		ImageIcon buttonbg = new ImageIcon("images/ButtonFrame.png");
 		setLayout(null);
 		
 		mazebutton = new JButton("MAZE GAME", buttonbg);
 		mazebutton.setActionCommand(State.MAZE.toString());
-		mazebutton.setBounds(600, 350, 380, 50);
+		mazebutton.setBounds(450, 300, 380, 50);
 		mazebutton.setHorizontalTextPosition(JButton.CENTER);
 		mazebutton.setVerticalTextPosition(JButton.CENTER);
 		
 		concentrationbutton = new JButton("CONCENTRATION GAME", buttonbg);
 		concentrationbutton.setActionCommand(State.CONCENTRATION.toString());
-		concentrationbutton.setBounds(600, 450, 380, 50);
+		concentrationbutton.setBounds(450, 400, 380, 50);
 		concentrationbutton.setHorizontalTextPosition(JButton.CENTER);
 		concentrationbutton.setVerticalTextPosition(JButton.CENTER);
 		
 		chessbutton = new JButton("CHESS GAME", buttonbg);
 		chessbutton.setActionCommand(State.CHESS.toString());
-		chessbutton.setBounds(600, 550, 380, 50);
+		chessbutton.setBounds(450, 500, 380, 50);
 		chessbutton.setHorizontalTextPosition(JButton.CENTER);
 		chessbutton.setVerticalTextPosition(JButton.CENTER);
 	}
