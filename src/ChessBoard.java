@@ -20,11 +20,11 @@ public class ChessBoard {
 			board[j][rows-2].replacePiece(new ChessPawn(true));
 			board[j][1].replacePiece(new ChessPawn(false));
 		}
-		// Add bishops
-		board[2][rows-1].replacePiece(new ChessBishop(true));
-		board[cols-3][rows-1].replacePiece(new ChessBishop(true));
-		board[2][0].replacePiece(new ChessBishop(false));
-		board[cols-3][0].replacePiece(new ChessBishop(false));
+		// Add King
+		board[2][rows-1].replacePiece(new ChessQueen(true));
+		board[cols-3][rows-1].replacePiece(new ChessKing(true));
+		board[2][0].replacePiece(new ChessQueen(false));
+		board[cols-3][0].replacePiece(new ChessKing(false));
 		//Add knights
 		board[1][rows-1].replacePiece(new ChessKnight(true));
 		board[cols-2][rows-1].replacePiece(new ChessKnight(true));
