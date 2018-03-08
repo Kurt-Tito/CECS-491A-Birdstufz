@@ -7,6 +7,7 @@ public class ChessBoard {
 	private final int rows = 6, cols = 6;
 	private ChessTile[][] board;
 	private boolean isWhiteTurn;
+	private boolean playing;
 	public ChessBoard()
 	{
 		board = new ChessTile[cols][rows];
@@ -41,6 +42,7 @@ public class ChessBoard {
 		board[cols-1][0].replacePiece(new ChessRook(false));
 		
 		isWhiteTurn = true;
+		playing = true;
 	}
 	
 	public ChessTile[][] getBoard()
@@ -48,11 +50,13 @@ public class ChessBoard {
 		return board;
 	}
 	
-	private void movePiece(ChessTile fromTile, ChessTile toTile)
+	private ChessPiece movePiece(ChessTile fromTile, ChessTile toTile)
 	{
-		ChessPiece p = fromTile.getPiece();
-		toTile.replacePiece(p);
+		ChessPiece movePiece = fromTile.getPiece();
+		ChessPiece eatenPiece = toTile.getPiece();
+		toTile.replacePiece(movePiece);
 		fromTile.replacePiece(null);
+		return eatenPiece;
 	}
 	
 	public boolean pieceHasTurn(ChessTile tile)
@@ -61,25 +65,47 @@ public class ChessBoard {
 			return tile.getPiece().getColorAlignment() == isWhiteTurn;
 		return false;
 	}
-	public boolean doTurn(ChessTile fromTile, ChessTile toTile)
+	
+	public boolean isPlaying()
+	{
+		return playing;
+	}
+	public ChessStatus doTurn(ChessTile fromTile, ChessTile toTile)
 	{
 		if(pieceHasTurn(fromTile))
 		{
 			if(fromTile.getPiece().getValidMoves(this, fromTile).contains(toTile))
 			{
-				movePiece(fromTile, toTile);
 				changeTurn();
-				return true;
+				ChessPiece eatenPiece = movePiece(fromTile, toTile);
+				if(eatenPiece != null && eatenPiece.getType() == ChessPieceType.KING)
+				{
+					playing = false;
+					if(!eatenPiece.getColorAlignment())
+					{
+						return ChessStatus.WHITE_WIN;
+					}
+					else
+					{
+						return ChessStatus.BLACK_WIN;
+					}
+				}
+				return ChessStatus.VALID_MOVE;
 			}
 			else 
 			{
 				System.out.println("Invalid path");
-				return false;
+				return ChessStatus.NO_PATH;
 			}
 			
 		}
 		else System.out.println("That piece doesn't belong to you");
-		return false;
+		return ChessStatus.NOT_TURN;
+	}
+	
+	public void hasCheck()
+	{
+		
 	}
 	
 	public boolean hasCheck(boolean color)

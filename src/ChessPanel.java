@@ -131,31 +131,44 @@ public class ChessPanel extends GamePanel implements MouseListener, MouseMotionL
 	@Override
 	public void mousePressed(MouseEvent e) {
 		ChessTile tile = getTileOnClick(e.getX(), e.getY());
-		// TODO Auto-generated method stub
-		if(tileSelected == null)
+		if(board.isPlaying())
 		{
-			if(board.pieceHasTurn(tile))
+			if(tileSelected == null)
 			{
-				selectTile(tile);
+				if(board.pieceHasTurn(tile))
+				{
+					selectTile(tile);
+				}
+				else
+				{
+					System.out.println("That isn't a movable piece");
+				}
+		
 			}
-			else
-			{
-				System.out.println("That isn't a movable piece");
-			}
-	
-		}
-		else if(tileSelected.equals(tile))
-		{
-			deselectTile();
-		}
-		else
-		{
-			if(board.doTurn(tileSelected, tile))
+			else if(tileSelected.equals(tile))
 			{
 				deselectTile();
 			}
+			else
+			{
+				ChessStatus status = board.doTurn(tileSelected, tile);
+				if(status == ChessStatus.VALID_MOVE)
+				{
+					deselectTile();
+				}
+				else if(status == ChessStatus.WHITE_WIN)
+				{
+					deselectTile();
+					System.out.println("White wins");
+				}
+				else if(status == ChessStatus.BLACK_WIN)
+				{
+					deselectTile();
+					System.out.println("Black wins");
+				}
+			}
+			repaint();
 		}
-		repaint();
 	}
 
 	@Override
