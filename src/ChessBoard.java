@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 public class ChessBoard {
 	private final int rows = 6, cols = 6;
@@ -42,6 +46,74 @@ public class ChessBoard {
 	public ChessTile[][] getBoard()
 	{
 		return board;
+	}
+	
+	private void movePiece(ChessTile fromTile, ChessTile toTile)
+	{
+		ChessPiece p = fromTile.getPiece();
+		toTile.replacePiece(p);
+		fromTile.replacePiece(null);
+	}
+	
+	public boolean pieceHasTurn(ChessTile tile)
+	{
+		if(tile.hasPiece())
+			return tile.getPiece().getColorAlignment() == isWhiteTurn;
+		return false;
+	}
+	public boolean doTurn(ChessTile fromTile, ChessTile toTile)
+	{
+		if(pieceHasTurn(fromTile))
+		{
+			if(fromTile.getPiece().getValidMoves(this, fromTile).contains(toTile))
+			{
+				movePiece(fromTile, toTile);
+				changeTurn();
+				return true;
+			}
+			else 
+			{
+				System.out.println("Invalid path");
+				return false;
+			}
+			
+		}
+		else System.out.println("That piece doesn't belong to you");
+		return false;
+	}
+	
+	public boolean hasCheck(boolean color)
+	{
+		//Find king
+		ChessTile kingPos = null;
+		for(int i = 0; i < rows; i++)
+		{
+			for(int j = 0; j < cols; j++)
+			{
+				ChessTile tile = board[j][i];
+				if(tile.hasPiece() && tile.getPiece().getColorAlignment() == color  &&
+						tile.getPiece().type == ChessPieceType.KING)
+				{
+					kingPos = tile;
+				}
+			}
+		}
+		//Check if king is attacked
+		for(int i = 0; i < rows; i++)
+		{
+			for(int j = 0; j < cols; j++)
+			{
+				ChessTile tile = board[j][i];
+				if(tile.hasPiece() && tile.getPiece().getColorAlignment() != color)
+				{
+					if(tile.getPiece().getValidMoves(this, tile).contains(kingPos))
+					{
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 	
 	public void changeTurn()

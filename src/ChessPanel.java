@@ -134,13 +134,15 @@ public class ChessPanel extends GamePanel implements MouseListener, MouseMotionL
 		// TODO Auto-generated method stub
 		if(tileSelected == null)
 		{
-			if(tile.hasPiece())
+			if(board.pieceHasTurn(tile))
 			{
-				if(tile.getPiece().getColorAlignment() == board.isWhiteTurn())
-				{
-					selectTile(tile);
-				}
+				selectTile(tile);
 			}
+			else
+			{
+				System.out.println("That isn't a movable piece");
+			}
+	
 		}
 		else if(tileSelected.equals(tile))
 		{
@@ -148,16 +150,9 @@ public class ChessPanel extends GamePanel implements MouseListener, MouseMotionL
 		}
 		else
 		{
-			if(validMoves.contains(tile))
+			if(board.doTurn(tileSelected, tile))
 			{
-				tile.replacePiece(tileSelected.getPiece());
-				tileSelected.replacePiece(null);
 				deselectTile();
-				board.changeTurn();
-			}
-			else
-			{
-				System.out.println("That is not a valid move!");
 			}
 		}
 		repaint();
