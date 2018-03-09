@@ -46,27 +46,27 @@ public class ChessKing extends ChessPiece{
 				//-------------STANDARD MOVES--------------//
 				
 				tile = board.getBoard()[location.getCol()][location.getRow()-1];
-				if(!tile.hasPiece())
+				if(!tile.hasPiece() && tile.getPiece().colorAlignment != colorAlignment)
 				{
 					validMoves.add(tile);
 				}
 				tile = board.getBoard()[location.getCol()+1][location.getRow()-1];
-				if(!tile.hasPiece())
+				if(!tile.hasPiece() && tile.getPiece().colorAlignment != colorAlignment)
 				{
 					validMoves.add(tile);
 				}
 				tile = board.getBoard()[location.getCol()+1][location.getRow()];
-				if(!tile.hasPiece())
+				if(!tile.hasPiece() && tile.getPiece().colorAlignment != colorAlignment)
 				{
 					validMoves.add(tile);
 				}
 				tile = board.getBoard()[location.getCol()-1][location.getRow()];
-				if(!tile.hasPiece())
+				if(!tile.hasPiece() && tile.getPiece().colorAlignment != colorAlignment)
 				{
 					validMoves.add(tile);
 				}
 				tile = board.getBoard()[location.getCol()-1][location.getRow()-1]; 
-				if(!tile.hasPiece())
+				if(!tile.hasPiece() && tile.getPiece().colorAlignment != colorAlignment)
 				{
 					validMoves.add(tile);
 				}
@@ -188,38 +188,7 @@ public class ChessKing extends ChessPiece{
 		}
 		else
 		{
-			if(location.getRow() < board.getBoard()[0].length - 1)
-			{
-				tile = board.getBoard()[location.getCol()][location.getRow()+1];
-				if(!tile.hasPiece())
-				{
-					validMoves.add(tile);
-				}
-				//Check left diagonal
-				if(location.getCol() > 0)
-				{
-					tile = board.getBoard()[location.getCol()-1][location.getRow()+1];
-					if(tile.hasPiece())
-					{
-						if(colorAlignment != tile.getPiece().getColorAlignment())
-						{
-							validMoves.add(tile);
-						}
-					}
-				}
-				//Check right diagonal
-				if(location.getCol() < board.getBoard().length - 1)
-				{
-					tile = board.getBoard()[location.getCol()+1][location.getRow()+1];
-					if(tile.hasPiece())
-					{
-						if(colorAlignment != tile.getPiece().getColorAlignment())
-						{
-							validMoves.add(tile);
-						}
-					}
-				}
-			}
+
 		}
 		// TODO Auto-generated method stub
 		return validMoves;
