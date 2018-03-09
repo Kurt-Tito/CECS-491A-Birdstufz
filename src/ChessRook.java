@@ -55,13 +55,12 @@ public class ChessRook extends ChessPiece {
 			
 				if(location.getRow() < 4)
 				{
-					tile = board.getBoard()[location.getCol()][location.getRow() + 2];
+					tile = board.getBoard()[location.getCol()][location.getRow() + 1];
 					if(!tile.hasPiece())
 					{
-					 tile = board.getBoard()[location.getCol()][location.getRow() + 1];
+					 tile = board.getBoard()[location.getCol()][location.getRow() + 2];
 					  if(!tile.hasPiece())
 					   {
-						tile = board.getBoard()[location.getCol()][location.getRow() + 2];
 						validMoves.add(tile);
 					   }
 					}
@@ -98,13 +97,12 @@ public class ChessRook extends ChessPiece {
 					
 				if(location.getRow() > 1)
 				{
-					tile = board.getBoard()[location.getCol()][location.getRow() - 2];
+					tile = board.getBoard()[location.getCol()][location.getRow() - 1];
 					if(!tile.hasPiece())
 					{
-						tile = board.getBoard()[location.getCol()][location.getRow() - 1];
+					 tile = board.getBoard()[location.getCol()][location.getRow() - 2];
 						if(!tile.hasPiece())
 						{
-						 tile = board.getBoard()[location.getCol()][location.getRow() - 2];
 						 validMoves.add(tile);
 						}
 					}
@@ -143,13 +141,12 @@ public class ChessRook extends ChessPiece {
 					
 					if(location.getCol() < 4)
 						{
-						tile = board.getBoard()[location.getCol() + 2][location.getRow()];
+						tile = board.getBoard()[location.getCol() + 1][location.getRow()];
 						  if(!tile.hasPiece())
 							{
-							tile = board.getBoard()[location.getCol() + 1][location.getRow()];
+							  tile = board.getBoard()[location.getCol() + 2][location.getRow()];
 							 if(!tile.hasPiece())
 							 {
-							  tile = board.getBoard()[location.getCol() + 2][location.getRow()];
 							  validMoves.add(tile);
 							 }
 							}
@@ -186,12 +183,11 @@ public class ChessRook extends ChessPiece {
 			
 					if(location.getCol() > 1)
 					{
-						tile = board.getBoard()[location.getCol() - 2][location.getRow()];
+						tile = board.getBoard()[location.getCol() - 1][location.getRow()];
 						if(!tile.hasPiece())
 						{
-							tile = board.getBoard()[location.getCol() - 1][location.getRow()];
-							if(!tile.hasPiece()){
 							tile = board.getBoard()[location.getCol() - 2][location.getRow()];
+							if(!tile.hasPiece()){
 							validMoves.add(tile);
 							}
 						}
