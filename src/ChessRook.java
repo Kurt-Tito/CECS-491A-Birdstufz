@@ -34,180 +34,185 @@ public class ChessRook extends ChessPiece {
 	}
 
 	@Override
-	public List<ChessTile> getValidMoves(ChessBoard board, ChessTile location) {
-		List<ChessTile> validMoves = new ArrayList<ChessTile>();
-		ChessTile tile;
-		if(colorAlignment) {
-			//white rook north direction
-			if(location.getRow() > 0){
-				for(int i = 0; i < 6; i++){
-				tile = board.getBoard()[location.getCol()][location.getRow()-i];
-				System.out.println("Row:" + location.getRow() + " Col: " + location.getCol() + " " + i);
-				if(tile.hasPiece() && colorAlignment != tile.getPiece().getColorAlignment())
-				{
-					validMoves.add(tile);
-					break;
-				}
-				else if(tile.hasPiece() && colorAlignment == tile.getPiece().getColorAlignment() && 
-						tile != board.getBoard()[location.getCol()][location.getRow()])
-				{
-					tile = board.getBoard()[location.getCol()][location.getRow()-i+1];
-					validMoves.add(tile);
-					break;
-			  	}
-				if(!tile.hasPiece() && tile == board.getBoard()[location.getCol()][5]){ //check if row is 5
-					validMoves.add(tile);
-					break;
-				}
-				if(!tile.hasPiece() && tile == board.getBoard()[location.getCol()][0]){//check if row is 0
-					validMoves.add(tile);
-					break;
-				}
-			}
-			}
-			//white rook south direction
-			if(location.getRow() < 5){
-				for(int i = 5; i > 0; i--){
-				tile = board.getBoard()[location.getCol()][i];
-				System.out.println("Row:" + location.getRow() + " Col: " + location.getCol() + " " + i);
-				if(tile.hasPiece() && colorAlignment != tile.getPiece().getColorAlignment())
-				{
-					validMoves.add(tile);
-					break;
-				}
-				else if(tile.hasPiece() && colorAlignment == tile.getPiece().getColorAlignment() && 
-						tile != board.getBoard()[location.getCol()][location.getRow()])
-				{
-					tile = board.getBoard()[location.getCol()][location.getRow()-i];
-					validMoves.add(tile);
-					break;
-			  	}
-				if(!tile.hasPiece() && tile == board.getBoard()[location.getCol()][5]){ //check if row is 5
-					validMoves.add(tile);
-					break;
-				}
-				if(!tile.hasPiece() && tile == board.getBoard()[location.getCol()][0]){//check if row is 0
-					validMoves.add(tile);
-					break;
-				}
-			}
-			}
-	      /*
-		  //white rook west direction
-			if(location.getCol() > 0)
+		public List<ChessTile> getValidMoves(ChessBoard board, ChessTile location) {
+			List<ChessTile> validMoves = new ArrayList<ChessTile>();
+			ChessTile tile;
+			//south
+			if(location.getRow() < 5)
 			{
-				for(int i = 0; i < 6; i++){
-					tile = board.getBoard()[location.getCol()-1][location.getRow()];
-					System.out.println("Row:" + location.getRow() + " Col: " + location.getCol() + " " + i);
-					if(tile.hasPiece() && colorAlignment != tile.getPiece().getColorAlignment())
+				tile = board.getBoard()[location.getCol()][location.getRow() + 1];
+				if(!tile.hasPiece())
+				{
+					validMoves.add(tile);
+				}
+				else if(tile.hasPiece())
+				{
+					if(colorAlignment != tile.getPiece().getColorAlignment())
 					{
 						validMoves.add(tile);
-						break;
 					}
-					else if(tile.hasPiece() && colorAlignment == tile.getPiece().getColorAlignment() && 
-							tile != board.getBoard()[location.getCol()][location.getRow()])
+				}
+			
+				if(location.getRow() < 4)
+				{
+					tile = board.getBoard()[location.getCol()][location.getRow() + 2];
+					if(!tile.hasPiece())
 					{
-						tile = board.getBoard()[location.getCol()-i+1][location.getRow()];
+					 tile = board.getBoard()[location.getCol()][location.getRow() + 1];
+					  if(!tile.hasPiece())
+					   {
+						tile = board.getBoard()[location.getCol()][location.getRow() + 2];
 						validMoves.add(tile);
-						break;
-				  	}
-					if(!tile.hasPiece() && tile == board.getBoard()[5][location.getRow()]){ //check if row is 5
-						validMoves.add(tile);
-						break;
+					   }
 					}
-					if(!tile.hasPiece() && tile == board.getBoard()[0][location.getRow()]){//check if row is 0
-						validMoves.add(tile);
-						break;
+					else if(tile.hasPiece())
+					{
+						if(colorAlignment != tile.getPiece().getColorAlignment())
+						{
+						 tile = board.getBoard()[location.getCol()][location.getRow() + 1];
+						  if(!tile.hasPiece())
+						  {
+						   tile = board.getBoard()[location.getCol()][location.getRow() + 2];
+						   validMoves.add(tile);
+						  }
+						}
 					}
 				}
 			}
-			//white rook east direction
-			if(location.getCol() < 5){
-				for(int i = 5; i > 0; i--){
-				tile = board.getBoard()[i][location.getRow()];
-				System.out.println("Row:" + location.getRow() + " Col: " + location.getCol() + " " + i);
-				if(tile.hasPiece() && colorAlignment != tile.getPiece().getColorAlignment())
+			 //north
+				if(location.getRow() > 0)
+					{
+						tile = board.getBoard()[location.getCol()][location.getRow() - 1];
+						if(tile.hasPiece())
+						{
+							if(colorAlignment != tile.getPiece().getColorAlignment())
+							{
+								validMoves.add(tile);
+							}
+						}
+						else if(!tile.hasPiece())
+						{
+							validMoves.add(tile);
+						}
+					
+					
+				if(location.getRow() > 1)
 				{
-					validMoves.add(tile);
-					break;
-				}
-				else if(tile.hasPiece() && colorAlignment == tile.getPiece().getColorAlignment() && 
-						tile != board.getBoard()[location.getCol()][location.getRow()])
-				{
-					tile = board.getBoard()[location.getCol()-i][location.getRow()];
-					validMoves.add(tile);
-					break;
-			  	}
-				if(!tile.hasPiece() && tile == board.getBoard()[5][location.getRow()]){ //check if row is 5
-					validMoves.add(tile);
-					break;
-				}
-				if(!tile.hasPiece() && tile == board.getBoard()[0][location.getRow()]){//check if row is 0
-					validMoves.add(tile);
-					break;
+					tile = board.getBoard()[location.getCol()][location.getRow() - 2];
+					if(!tile.hasPiece())
+					{
+						tile = board.getBoard()[location.getCol()][location.getRow() - 1];
+						if(!tile.hasPiece())
+						{
+						 tile = board.getBoard()[location.getCol()][location.getRow() - 2];
+						 validMoves.add(tile);
+						}
+					}
+					else if(tile.hasPiece())
+					{
+						if(colorAlignment != tile.getPiece().getColorAlignment())
+						{
+						 tile = board.getBoard()[location.getCol()][location.getRow() - 1];
+						  if(!tile.hasPiece())
+						  {
+						   tile = board.getBoard()[location.getCol()][location.getRow() - 2];
+						   validMoves.add(tile);
+						  }
+						}
+					}
 				}
 			}
-			}
-			*/
+				
+				
+				
+				   //east
+					if(location.getCol() < 5)
+					{
+						tile = board.getBoard()[location.getCol() + 1][location.getRow()];
+						if(!tile.hasPiece())
+						{
+							validMoves.add(tile);
+						}
+						else if(tile.hasPiece())
+						{
+						 if(colorAlignment != tile.getPiece().getColorAlignment())
+						  {
+						   validMoves.add(tile);
+						  }
+						}
+					
+					if(location.getCol() < 4)
+						{
+						tile = board.getBoard()[location.getCol() + 2][location.getRow()];
+						  if(!tile.hasPiece())
+							{
+							tile = board.getBoard()[location.getCol() + 1][location.getRow()];
+							 if(!tile.hasPiece())
+							 {
+							  tile = board.getBoard()[location.getCol() + 2][location.getRow()];
+							  validMoves.add(tile);
+							 }
+							}
+						  else if(tile.hasPiece())
+							{
+							 if(colorAlignment != tile.getPiece().getColorAlignment())
+							 {
+							  tile = board.getBoard()[location.getCol() + 1][location.getRow()];
+							  if(!tile.hasPiece())
+							  {
+							   tile = board.getBoard()[location.getCol() + 2][location.getRow()];
+							   validMoves.add(tile);
+							  }
+							}
+						}
+					}
+				}				
+					//west
+					if(location.getCol() > 0)
+					{
+						tile = board.getBoard()[location.getCol()-1][location.getRow()];
+						if(tile.hasPiece())
+						{
+							if(colorAlignment != tile.getPiece().getColorAlignment())
+							{
+								validMoves.add(tile);
+							}
+						}
+						else if(!tile.hasPiece())
+						{
+							validMoves.add(tile);
+						}
+	
+					
+					
+					if(location.getCol() > 1)
+					{
+						tile = board.getBoard()[location.getCol() - 2][location.getRow()];
+						if(!tile.hasPiece())
+						{
+							tile = board.getBoard()[location.getCol() - 1][location.getRow()];
+							if(!tile.hasPiece()){
+							tile = board.getBoard()[location.getCol() - 2][location.getRow()];
+							validMoves.add(tile);
+							}
+						}
+						else if(tile.hasPiece())
+						{
+							if(colorAlignment != tile.getPiece().getColorAlignment())
+							{
+							 tile = board.getBoard()[location.getCol() - 1][location.getRow()];
+							  if(!tile.hasPiece())
+							  {
+							   tile = board.getBoard()[location.getCol() - 2][location.getRow()];
+							   validMoves.add(tile);
+							  }
+							}
+						}
+					}
+					}
+			
+			// TODO Auto-generated method stub
+			return validMoves;
 		}
-		else
-		 {
-			//black rook south
-			if(location.getRow() < 5){
-				for(int i = 0; i < 6; i++){
-				tile = board.getBoard()[location.getCol()][location.getRow()+i];
-				System.out.println("Row:" + location.getRow() + " Col: " + location.getCol() + " " + i);
-				if(tile.hasPiece() && colorAlignment != tile.getPiece().getColorAlignment())
-				{
-					validMoves.add(tile);
-					break;
-				}
-				else if(tile.hasPiece() && colorAlignment == tile.getPiece().getColorAlignment() && 
-						tile != board.getBoard()[location.getCol()][location.getRow()])
-				{
-					tile = board.getBoard()[location.getCol()][location.getRow()+i-1];
-					validMoves.add(tile);
-					break;
-			  	}
-				if(!tile.hasPiece() && tile == board.getBoard()[location.getCol()][5]){ //check if row is 5
-					validMoves.add(tile);
-					break;
-				}
-				if(!tile.hasPiece() && tile == board.getBoard()[location.getCol()][0]){//check if row is 0
-					validMoves.add(tile);
-					break;
-				} 
-			}
-			}
-			//black rook north
-			if(location.getRow() > 0){
-				for(int i = 0; i > 5; i++){
-				tile = board.getBoard()[location.getCol()][i];
-				System.out.println("Row:" + location.getRow() + " Col: " + location.getCol() + " " + i);
-				if(tile.hasPiece() && colorAlignment != tile.getPiece().getColorAlignment())
-				{
-					validMoves.add(tile);
-					break;
-				}
-				else if(tile.hasPiece() && colorAlignment == tile.getPiece().getColorAlignment() && 
-						tile != board.getBoard()[location.getCol()][location.getRow()])
-				{
-					tile = board.getBoard()[location.getCol()][location.getRow()-i+1];
-					validMoves.add(tile);
-					break;
-			  	}
-				if(!tile.hasPiece() && tile == board.getBoard()[location.getCol()][5]){ //check if row is 5
-					validMoves.add(tile);
-					break;
-				}
-				if(!tile.hasPiece() && tile == board.getBoard()[location.getCol()][0]){//check if row is 0
-					validMoves.add(tile);
-					break;
-				} 
-			}
-			}
-		}
-		// TODO Auto-generated method stub
-		return validMoves;
-	}
+		
 }
