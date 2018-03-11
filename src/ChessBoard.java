@@ -90,6 +90,28 @@ public class ChessBoard {
 						return ChessStatus.BLACK_WIN;
 					}
 				}
+				///////////////////////////////////////////////////////////////////////////////
+				//--toTile.getPiece().getType() == ChessPieceType.PAWN does not work for both statements
+
+				//white pawn
+				for(int i = 0; i < 6; i++){
+					ChessTile tile = getBoard()[i][0];
+					if(true == toTile.getPiece().getColorAlignment() && toTile.getPiece().getType() == ChessPieceType.PAWN 
+							&& tile == toTile){
+						ChessPawnPromotion promote = new ChessPawnPromotion();
+						promote.setVisible(true);
+						break;
+					}
+					//black pawn
+					tile = getBoard()[i][5];
+					if(false == toTile.getPiece().getColorAlignment() && toTile.getPiece().getType() == ChessPieceType.PAWN
+							&& tile == toTile){
+						ChessPawnPromotion promote = new ChessPawnPromotion();
+						promote.setVisible(true);
+						break;
+					}
+				}
+				//////////////////////////////////////////////////////////////////////////////
 				return ChessStatus.VALID_MOVE;
 			}
 			else 
