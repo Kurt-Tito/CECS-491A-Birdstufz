@@ -91,24 +91,28 @@ public class ChessBoard {
 					}
 				}
 				///////////////////////////////////////////////////////////////////////////////
-				//--toTile.getPiece().getType() == ChessPieceType.PAWN does not work for both statements
+				//--toTile.getPiece().getType() == ChessPieceType.PAWN does not work for some reason
 
-				//white pawn
+				//white pawn			
 				for(int i = 0; i < 6; i++){
 					ChessTile tile = getBoard()[i][0];
-					if(true == toTile.getPiece().getColorAlignment() && toTile.getPiece().getType() == ChessPieceType.PAWN 
-							&& tile == toTile){
+					if(true == toTile.getPiece().getColorAlignment() && tile == toTile){
+						if(tile.getPiece().type != ChessPieceType.KNIGHT && tile.getPiece().type != ChessPieceType.KING
+						&& tile.getPiece().type != ChessPieceType.ROOK && tile.getPiece().type != ChessPieceType.QUEEN){
 						ChessPawnPromotion promote = new ChessPawnPromotion();
 						promote.setVisible(true);
 						break;
+						}
 					}
 					//black pawn
 					tile = getBoard()[i][5];
-					if(false == toTile.getPiece().getColorAlignment() && toTile.getPiece().getType() == ChessPieceType.PAWN
-							&& tile == toTile){
+					if(false == toTile.getPiece().getColorAlignment() && tile == toTile){
+						if(tile.getPiece().type != ChessPieceType.KNIGHT && tile.getPiece().type != ChessPieceType.KING
+						&& tile.getPiece().type != ChessPieceType.ROOK && tile.getPiece().type != ChessPieceType.QUEEN){
 						ChessPawnPromotion promote = new ChessPawnPromotion();
 						promote.setVisible(true);
 						break;
+						}
 					}
 				}
 				//////////////////////////////////////////////////////////////////////////////
