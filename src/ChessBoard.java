@@ -99,7 +99,7 @@ public class ChessBoard {
 					if(true == toTile.getPiece().getColorAlignment() && tile == toTile){
 						if(tile.getPiece().type != ChessPieceType.KNIGHT && tile.getPiece().type != ChessPieceType.KING
 						&& tile.getPiece().type != ChessPieceType.ROOK && tile.getPiece().type != ChessPieceType.QUEEN){
-						ChessPawnPromotion promote = new ChessPawnPromotion();
+						ChessPawnPromotion promote = new ChessPawnPromotion(i, 0);
 						promote.setVisible(true);
 						break;
 						}
@@ -109,7 +109,7 @@ public class ChessBoard {
 					if(false == toTile.getPiece().getColorAlignment() && tile == toTile){
 						if(tile.getPiece().type != ChessPieceType.KNIGHT && tile.getPiece().type != ChessPieceType.KING
 						&& tile.getPiece().type != ChessPieceType.ROOK && tile.getPiece().type != ChessPieceType.QUEEN){
-						ChessPawnPromotion promote = new ChessPawnPromotion();
+						ChessPawnPromotion promote = new ChessPawnPromotion(i, 5);
 						promote.setVisible(true);
 						break;
 						}
