@@ -18,7 +18,7 @@ public class ChessPawnPromotion extends JFrame{
 	JPanel Panel = new JPanel();
 	ChessPanel chesspanel = new ChessPanel();
 	
-	public ChessPawnPromotion(int col, int row){
+	public ChessPawnPromotion(ChessTile tile){
 		label = new JLabel("Select Promotion Piece:");
 		label.setFont(new Font("Courier New", Font.PLAIN, 30)); 	
 		space = new JLabel("     ");
@@ -27,11 +27,11 @@ public class ChessPawnPromotion extends JFrame{
 		Panel.add(tab);
 		Panel.add(label);
 		Panel.add(space);
-		Panel.add(Rook(col, row));
+		Panel.add(Rook(tile));
 		Panel.add(tab1);
-		Panel.add(Knight(col, row));
+		Panel.add(Knight(tile));
 		Panel.add(tab);
-		Panel.add(Queen(col, row));	
+		Panel.add(Queen(tile));	
 		add(Panel);
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		
@@ -44,7 +44,7 @@ public class ChessPawnPromotion extends JFrame{
 		 Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
 	}
 	
-	private JButton Rook(int col, int row) {
+	private JButton Rook(ChessTile tile) {
 		JButton RookButton = new JButton("Rook");
 		RookButton.setFont(new Font("Courier New", Font.PLAIN, 20));
 		RookButton.setForeground(Color.darkGray);
@@ -52,9 +52,9 @@ public class ChessPawnPromotion extends JFrame{
 		
 		class R implements ActionListener {
 			public void actionPerformed(ActionEvent event) {
-				ChessTile tile = new ChessTile(col, row);
+				//ChessTile tile = new ChessTile(col, row);
 				//white pawn
-				if(row == 0){
+				if(tile.getPiece().getColorAlignment()){
 					tile.replacePiece(new ChessRook(true));
 				}
 				//black pawn
@@ -69,7 +69,7 @@ public class ChessPawnPromotion extends JFrame{
 		return RookButton;
 	}
 
-	private JButton Knight(int col, int row) {
+	private JButton Knight(ChessTile tile) {
 		JButton KnightButton = new JButton("Knight");
 		KnightButton.setFont(new Font("Courier New", Font.PLAIN, 20));
 		KnightButton.setForeground(Color.darkGray);
@@ -77,9 +77,9 @@ public class ChessPawnPromotion extends JFrame{
 		
 		class K implements ActionListener {
 			public void actionPerformed(ActionEvent event) {
-				ChessTile tile = new ChessTile(col, row);
+				//ChessTile tile = new ChessTile(col, row);
 				//white pawn
-				if(row == 0){
+				if(tile.getPiece().getColorAlignment()){
 					tile.replacePiece(new ChessKnight(true));
 				}
 				//black pawn
@@ -94,7 +94,7 @@ public class ChessPawnPromotion extends JFrame{
 		return KnightButton;
 	}
 	
-	private JButton Queen(int col, int row) {
+	private JButton Queen(ChessTile tile) {
 		JButton QueenButton = new JButton("Queen");
 		QueenButton.setFont(new Font("Courier New", Font.PLAIN, 20));
 		QueenButton.setForeground(Color.darkGray);
@@ -102,9 +102,9 @@ public class ChessPawnPromotion extends JFrame{
 		
 		class Q implements ActionListener {
 			public void actionPerformed(ActionEvent event) {
-				ChessTile tile = new ChessTile(col, row);
+				//ChessTile tile = new ChessTile(col, row);
 				//white pawn
-				if(row == 0){
+				if(tile.getPiece().getColorAlignment()){
 					tile.replacePiece(new ChessQueen(true));
 				}
 				//black pawn
