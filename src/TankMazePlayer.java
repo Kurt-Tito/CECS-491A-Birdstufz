@@ -13,10 +13,10 @@ import javax.swing.Timer;
 
 public class TankMazePlayer extends JPanel implements ActionListener, KeyListener {
 Timer t = new Timer(10, this);
-double x = 0, y = 0, counter;
-int dx = 0, dy = 0;
-double velx = 0, vely = 0;
-double degree = 0;
+double x = 0, y = 0, velx = 0, vely = 0, degree = 0;
+int dx = 0, dy = 0, counter;
+float health, starthealth = 100;
+boolean keyPress;
 BufferedImage tank, tank1;
 
 public TankMazePlayer() throws IOException {
@@ -30,7 +30,7 @@ public TankMazePlayer() throws IOException {
 }
 public void paintComponent(Graphics g) {
 	super.paintComponent(g);
-	g.drawImage(tank1, dx, dy,null);
+	g.drawImage(tank1, dx, dy, null);
 
 }
 
@@ -73,138 +73,204 @@ public void keyPressed(KeyEvent arg0) {
 			velx = 0;
 			vely = 1;
 			}
-	    	else if(counter == 1 || counter == -15){//22.5
-			velx = -.25;
-			vely = .75;
-			}	
-			else if(counter == 2 || counter == -14){//45
+		else if(counter == 1 || counter == -23){//15
+  			velx = -(Math.sqrt(6) - Math.sqrt(2))/4;
+			vely = (Math.sqrt(6) + Math.sqrt(2))/4;
+  			}
+  			else if(counter == 2 || counter == -22){//30
 			velx = -.5;
+			vely = Math.sqrt(3)/2;
+			}
+			else if(counter == 3 || counter == -21){//45
+			velx = -(Math.sqrt(2))/2;
+			vely = (Math.sqrt(2))/2;	
+			}
+			else if(counter == 4 || counter == -20){//60
+			velx = -Math.sqrt(3)/2;
 			vely = .5;
 			}
-			else if(counter == 3 || counter == -13){
-			velx = -.75;
-			vely = .25;	
+			else if(counter == 5 || counter == -19){//75
+			velx = -(Math.sqrt(6) + Math.sqrt(2))/4;
+			vely = (Math.sqrt(6) - Math.sqrt(2))/4;
 			}
-			else if(counter == 4 || counter == -12){
+			else if(counter == 6 || counter == -18){//90
 			velx = -1;
 			vely = 0;
 			}
-			else if(counter == 5 || counter == -11){
-			velx = -.75;
-			vely =-.25;
+			else if(counter == 7 || counter == -17){//105
+			velx = -(Math.sqrt(6) + Math.sqrt(2))/4;
+			vely = (Math.sqrt(2) - Math.sqrt(6))/4;
 			}
-			else if(counter == 6 || counter == -10){
-			velx = -.5;
+			else if(counter == 8 || counter == -16){//120
+			velx = -Math.sqrt(3)/2;
 			vely = -.5;
 			}
-			else if(counter == 7 || counter == -9){
-			velx = -.25;
-			vely = -.75;
+			else if(counter == 9 || counter == -15){//135
+			velx = -Math.sqrt(2)/2;
+			vely = -Math.sqrt(2)/2;
 			}
-			else if(counter == 8 || counter == -8){
+			else if(counter == 10 || counter == -14){//150
+			velx = -.5;
+			vely = -Math.sqrt(3)/2;
+			}
+			else if(counter == 11 || counter == -13){//165
+			velx = -(Math.sqrt(6) - Math.sqrt(2))/4;
+			vely = -(Math.sqrt(6) + Math.sqrt(2))/4;
+			}
+			else if(counter == 12 || counter == -12){//180
 			velx = 0;
 			vely = -1;
 			}
-			else if(counter == 9 || counter == -7){
-			velx = .25;
-			vely = -.75;
+			else if(counter == 13 || counter == -11){//195
+			velx = -(Math.sqrt(2) - Math.sqrt(6))/4;
+			vely = -(Math.sqrt(6) + Math.sqrt(2))/4;
 			}
-			else if(counter == 10 || counter == -6){
+			else if(counter == 14 || counter == -10){//210
 			velx = .5;
-			vely = -.5;
+			vely = -Math.sqrt(3)/2;
 			}
-			else if(counter == 11 || counter == -5){
-			velx = .75;	
-			vely = -.25;
+			else if(counter == 15 || counter == -9){//225
+				velx = Math.sqrt(2)/2;
+				vely = -Math.sqrt(2)/2;
 			}
-			else if(counter == 12 || counter == -4){
-			velx = 1;
-			vely = 0;
-			}
-			else if(counter == 13 || counter == -3){
-			velx = .75;
-			vely = .25;
-			}
-			else if(counter == 14 || counter == -2){
-			velx = .5;
-			vely = .5;
-			}
-			else if(counter == 15 || counter == -1){
-			velx = .25;
-			vely = .75;
-			}
+			else if(counter == 16 || counter == -8){//240
+				velx = Math.sqrt(3)/2;
+				vely = -.5;
+				}
+			else if(counter == 17 || counter == -7){//255
+				velx = (Math.sqrt(6) + Math.sqrt(2))/4;
+				vely = (Math.sqrt(2) - Math.sqrt(6))/4;
+				}
+			else if(counter == 18 || counter == -6){//270
+				velx = 1;
+				vely = 0;
+				}
+			else if(counter == 19 || counter == -5){//285
+				velx = (Math.sqrt(6) + Math.sqrt(2))/4;
+				vely = (Math.sqrt(6) - Math.sqrt(2))/4;
+				}
+			else if(counter == 20 || counter == -4){//300
+				velx = Math.sqrt(3)/2;
+				vely = .5;
+				}
+			else if(counter == 21 || counter == -3){//315
+				velx = Math.sqrt(2)/2;
+				vely = Math.sqrt(2)/2;
+				}
+			else if(counter == 22 || counter == -2){//330
+				velx = .5;
+				vely = Math.sqrt(3)/2;
+				}
+			else if(counter == 23 || counter == -1){//345
+				velx = -(Math.sqrt(2) - Math.sqrt(6))/4;
+				vely = (Math.sqrt(6) + Math.sqrt(2))/4;
+				}
+		
 	}
-	if (arg0.getKeyCode() == 87){//w
+	
+	else if (arg0.getKeyCode() == 87){//w
 		if(counter == 0){
 		velx = 0;
 		vely = -1;
 		}
-		else if(counter == 1 || counter == -15){
-		velx = .25;
-		vely = -.75;
-		}	
-		else if(counter == 2 || counter == -14){
-		velx = .5;
-		vely = -.5;
-		}
-		else if(counter == 3 || counter == -13){
-		velx = .75;
-		vely = -.25;
-		}
-		else if(counter == 4 || counter == -12){
-			velx = 1;
-			vely = 0;	
-		}
-		else if(counter == 5 || counter == -11){
-			velx = .75;
-			vely = .25;
-		}
-		else if(counter == 6 || counter == -10){
-			velx = .5;
-			vely = .5;
-		}
-		else if(counter == 7 || counter == -9){
-			velx = .25;
-			vely = .75;
-		}
-		else if(counter == 8 || counter == -8){
-			velx = 0;
-			vely = 1;
-		}
-		else if(counter == 9 || counter == -7){
-			velx = -.25;
-			vely = .75;
-		}
-		else if(counter == 10 || counter == -6){
-			velx = -.5;
-			vely = .5;
-		}
-		else if(counter == 11 || counter == -5){
-			velx = -.75;
-			vely = .25;
-		}
-		else if(counter == 12 || counter == -4){
-			velx = -1;
-			vely = 0;
-		}
-		else if(counter == 13 || counter == -3){
-			velx = -.75;
-			vely = -.25;
-		}
-		else if(counter == 14 || counter == -2){
-			velx = -.5;
-			vely = -.5;
-		}
-		else if(counter == 15 || counter == -1){
-			velx = -.25;
-			vely = -.75;
-		}
+	  			else if(counter == 1 || counter == -23){//15
+	  			velx = (Math.sqrt(6) - Math.sqrt(2))/4;
+				vely = -(Math.sqrt(6) + Math.sqrt(2))/4;
+	  			}
+	  			else if(counter == 2 || counter == -22){//30
+				velx = .5;
+				vely = -Math.sqrt(3)/2;
+				}
+				else if(counter == 3 || counter == -21){//45
+				velx = (Math.sqrt(2))/2;
+				vely = -(Math.sqrt(2))/2;	
+				}
+				else if(counter == 4 || counter == -20){//60
+				velx = Math.sqrt(3)/2;
+				vely = -.5;
+				}
+				else if(counter == 5 || counter == -19){//75
+				velx = (Math.sqrt(6) + Math.sqrt(2))/4;
+				vely = -(Math.sqrt(6) - Math.sqrt(2))/4;
+				}
+				else if(counter == 6 || counter == -18){//90
+				velx = 1;
+				vely = 0;
+				}
+				else if(counter == 7 || counter == -17){//105
+				velx = (Math.sqrt(6) + Math.sqrt(2))/4;
+				vely = -(Math.sqrt(2) - Math.sqrt(6))/4;
+				}
+				else if(counter == 8 || counter == -16){//120
+				velx = Math.sqrt(3)/2;
+				vely = .5;
+				}
+				else if(counter == 9 || counter == -15){//135
+				velx = Math.sqrt(2)/2;
+				vely = Math.sqrt(2)/2;
+				}
+				else if(counter == 10 || counter == -14){//150
+				velx = .5;
+				vely = Math.sqrt(3)/2;
+				}
+				else if(counter == 11 || counter == -13){//165
+				velx = (Math.sqrt(6) - Math.sqrt(2))/4;
+				vely = (Math.sqrt(6) + Math.sqrt(2))/4;
+				}
+				else if(counter == 12 || counter == -12){//180
+				velx = 0;
+				vely = 1;
+				}
+				else if(counter == 13 || counter == -11){//195
+				velx = (Math.sqrt(2) - Math.sqrt(6))/4;
+				vely = (Math.sqrt(6) + Math.sqrt(2))/4;
+				}
+				else if(counter == 14 || counter == -10){//210
+				velx = -.5;
+				vely = Math.sqrt(3)/2;
+				}
+				else if(counter == 15 || counter == -9){//225
+					velx = -Math.sqrt(2)/2;
+					vely = Math.sqrt(2)/2;
+				}
+				else if(counter == 16 || counter == -8){//240
+					velx = -Math.sqrt(3)/2;
+					vely = .5;
+					}
+				else if(counter == 17 || counter == -7){//255
+					velx = -(Math.sqrt(6) + Math.sqrt(2))/4;
+					vely = -(Math.sqrt(2) - Math.sqrt(6))/4;
+					}
+				else if(counter == 18 || counter == -6){//270
+					velx = -1;
+					vely = 0;
+					}
+				else if(counter == 19 || counter == -5){//285
+					velx = -(Math.sqrt(6) + Math.sqrt(2))/4;
+					vely = -(Math.sqrt(6) - Math.sqrt(2))/4;
+					}
+				else if(counter == 20 || counter == -4){//300
+					velx = -Math.sqrt(3)/2;
+					vely = -.5;
+					}
+				else if(counter == 21 || counter == -3){//315
+					velx = -Math.sqrt(2)/2;
+					vely = -Math.sqrt(2)/2;
+					}
+				else if(counter == 22 || counter == -2){//330
+					velx = -.5;
+					vely = -Math.sqrt(3)/2;
+					}
+				else if(counter == 23 || counter == -1){//345
+					velx = (Math.sqrt(2) - Math.sqrt(6))/4;
+					vely = -(Math.sqrt(6) + Math.sqrt(2))/4;
+					}
 	}
 	
-	if (arg0.getKeyCode() == 65){//a
-		degree += -(2*Math.PI/16);
+	else if (arg0.getKeyCode() == 65){//a
+		degree += -(2*Math.PI/24);
 		counter--;
-		if(counter == -16){
+		if(counter == -24){
 			counter = 0;
 		}
 		System.out.println(counter);
@@ -213,10 +279,10 @@ public void keyPressed(KeyEvent arg0) {
 		  AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
 		  tank1 = op.filter(tank, null);
 	}
-	if (arg0.getKeyCode() == 68){//d
-		degree += 2*Math.PI/16;
+	else if (arg0.getKeyCode() == 68){//d
+		degree += 2*Math.PI/24;
 		counter++;
-		if(counter == 16){
+		if(counter == 24){
 			counter = 0;
 		}
 		System.out.println(counter);
@@ -230,10 +296,11 @@ public void keyPressed(KeyEvent arg0) {
 
 
 
-public void keyTyped(KeyEvent e) {}
+public void keyTyped(KeyEvent e) {
+}
 public void keyReleased(KeyEvent e) {
 	velx = 0;
-	vely = 0;
+	vely = 0;	
 }
 
 
@@ -247,4 +314,5 @@ public static void main (String arge[]) throws IOException{
 	f.setVisible(true);
 
 }
+
 }
