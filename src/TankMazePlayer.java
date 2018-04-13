@@ -35,30 +35,22 @@ public void paintComponent(Graphics g) {
 }
 
 public void actionPerformed(ActionEvent e) {
-if(x < 0)
-{
+if(x < 0){
 	velx = 0;
 	x = 0;		
 }
-
-if(x > 530)
-{
+if(x > 530){
 	velx = 0;
 	x = 530;		
 }
-
-if(y < 0)
-{
+if(y < 0){
 	vely = 0;
 	y = 0;		
 }
-
-if(y > 280)
-{
+if(y > 280){
 	vely = 0;
 	y = 280;		
 }
-
 
 x += velx;
 y += vely;
