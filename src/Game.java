@@ -3,6 +3,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Timer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,6 +16,9 @@ public class Game extends JFrame implements ActionListener{
 	private final ConcentrationPanel concentrationpanel = new ConcentrationPanel();
 	private final ChessPanel chesspanel = new ChessPanel();
 	private final StatusBar statusbar = new StatusBar();
+	
+	private java.util.Timer timer;
+	private boolean isRunning = true;
 	
 	public Game(String title)
 	{
@@ -30,9 +34,6 @@ public class Game extends JFrame implements ActionListener{
 		setLayout(new BorderLayout());
 		add(BorderLayout.SOUTH, statusbar);
 		
-		
-		
-		
 		menupanel.addListener(this);
 		mazepanel.addListener(this);
 		chesspanel.addListener(this);
@@ -40,10 +41,31 @@ public class Game extends JFrame implements ActionListener{
 		
 		currentPanel = menupanel;
 		updatePanel();
-		
 		setVisible(true);
-		
 		repaint();
+		
+		
+		//Game Loop
+		timer = new Timer();
+		timer.schedule(new GameLoop(), 0, 1000 / 60);
+	}
+	
+	private class GameLoop extends java.util.TimerTask
+	{
+		public void run() {
+			
+			while(isRunning){
+				//currentPanel.update(getGraphics());
+				currentPanel.repaint();
+				//System.out.println("updating");
+			}
+			
+			if(!isRunning)
+			{
+				timer.cancel();
+			}
+		}
+		
 	}
 	
 	
