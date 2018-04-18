@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -14,6 +15,7 @@ import javax.swing.Timer;
 
 public class TankMazePlayer extends JPanel implements ActionListener, KeyListener {
 Timer t = new Timer(10, this);
+Timer t2 = new Timer(100, this);
 double x = 0, y = 0, x2 = 0, y2 = 0;
 double velx = 0, vely = 0, velx2 = 0, vely2 = 0, degree = 0, degree2 = 0;
 int dx = 0, dy = 0, dx2 = 0, dy2 = 0, counter, counter2, j = 0, k = 4;
@@ -252,41 +254,41 @@ public void keyPressed(KeyEvent arg0) {
 				vely = Math.sqrt(3)/2;
 				}
 				else if(counter == 15 || counter == -9){//225
-					velx = -Math.sqrt(2)/2;
-					vely = Math.sqrt(2)/2;
+				velx = -Math.sqrt(2)/2;
+				vely = Math.sqrt(2)/2;
 				}
 				else if(counter == 16 || counter == -8){//240
-					velx = -Math.sqrt(3)/2;
-					vely = .5;
-					}
+				velx = -Math.sqrt(3)/2;
+				vely = .5;
+				}
 				else if(counter == 17 || counter == -7){//255
-					velx = -(Math.sqrt(6) + Math.sqrt(2))/4;
-					vely = -(Math.sqrt(2) - Math.sqrt(6))/4;
-					}
+				velx = -(Math.sqrt(6) + Math.sqrt(2))/4;
+				vely = -(Math.sqrt(2) - Math.sqrt(6))/4;
+				}
 				else if(counter == 18 || counter == -6){//270
-					velx = -1;
-					vely = 0;
-					}
+				velx = -1;
+				vely = 0;
+				}
 				else if(counter == 19 || counter == -5){//285
-					velx = -(Math.sqrt(6) + Math.sqrt(2))/4;
-					vely = -(Math.sqrt(6) - Math.sqrt(2))/4;
-					}
+				velx = -(Math.sqrt(6) + Math.sqrt(2))/4;
+				vely = -(Math.sqrt(6) - Math.sqrt(2))/4;
+				}
 				else if(counter == 20 || counter == -4){//300
-					velx = -Math.sqrt(3)/2;
-					vely = -.5;
-					}
+				velx = -Math.sqrt(3)/2;
+				vely = -.5;
+				}
 				else if(counter == 21 || counter == -3){//315
-					velx = -Math.sqrt(2)/2;
-					vely = -Math.sqrt(2)/2;
-					}
+				velx = -Math.sqrt(2)/2;
+				vely = -Math.sqrt(2)/2;
+				}
 				else if(counter == 22 || counter == -2){//330
-					velx = -.5;
-					vely = -Math.sqrt(3)/2;
-					}
+				velx = -.5;
+				vely = -Math.sqrt(3)/2;
+				}
 				else if(counter == 23 || counter == -1){//345
-					velx = (Math.sqrt(2) - Math.sqrt(6))/4;
-					vely = -(Math.sqrt(6) + Math.sqrt(2))/4;
-					}
+				velx = (Math.sqrt(2) - Math.sqrt(6))/4;
+				vely = -(Math.sqrt(6) + Math.sqrt(2))/4;
+				}
 	}
 	
 	else if (arg0.getKeyCode() == 65){//a
@@ -295,10 +297,7 @@ public void keyPressed(KeyEvent arg0) {
 		if(counter == -24){
 			counter = 0;
 		}
-		  AffineTransform transform = new AffineTransform();
-		  transform.rotate(degree, tank[0].getWidth()/2, tank[0].getHeight()/2);
-		  AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
-		  tank1 = op.filter(tank[j], null);
+		affinetranform(degree, j);
 	}
 	else if (arg0.getKeyCode() == 68){//d
 		degree += 2*Math.PI/24;
@@ -306,19 +305,15 @@ public void keyPressed(KeyEvent arg0) {
 		if(counter == 24){
 			counter = 0;
 		}
-		  AffineTransform transform = new AffineTransform();
-		  transform.rotate(degree, tank[0].getWidth()/2, tank[0].getHeight()/2);
-		  AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
-		  tank1 = op.filter(tank[j], null);
-		
+		affinetranform(degree, j);	
 	}
 	//--------------------------------------------------------------------------------	
 	if(arg0.getKeyCode() == 40){//down arrow
-		if(counter2 == 0){
+		    if(counter2 == 0){
 			velx2 = 0;
 			vely2 = 1;
 			}
-		else if(counter2 == 1 || counter2 == -23){//15
+		    else if(counter2 == 1 || counter2 == -23){//15
   			velx2 = -(Math.sqrt(6) - Math.sqrt(2))/4;
 			vely2 = (Math.sqrt(6) + Math.sqrt(2))/4;
   			}
@@ -374,49 +369,49 @@ public void keyPressed(KeyEvent arg0) {
 			velx2 = .5;
 			vely2 = -Math.sqrt(3)/2;
 			}
-			else if(counter == 15 || counter == -9){//225
-				velx2 = Math.sqrt(2)/2;
-				vely2 = -Math.sqrt(2)/2;
+			else if(counter2 == 15 || counter2 == -9){//225
+			velx2 = Math.sqrt(2)/2;
+			vely2 = -Math.sqrt(2)/2;
 			}
 			else if(counter2 == 16 || counter2 == -8){//240
-				velx2 = Math.sqrt(3)/2;
-				vely2 = -.5;
-				}
+			velx2 = Math.sqrt(3)/2;
+			vely2 = -.5;
+			}
 			else if(counter2 == 17 || counter2 == -7){//255
-				velx2 = (Math.sqrt(6) + Math.sqrt(2))/4;
-				vely2 = (Math.sqrt(2) - Math.sqrt(6))/4;
-				}
+			velx2 = (Math.sqrt(6) + Math.sqrt(2))/4;
+			vely2 = (Math.sqrt(2) - Math.sqrt(6))/4;
+			}
 			else if(counter2 == 18 || counter2 == -6){//270
-				velx2 = 1;
-				vely2 = 0;
-				}
+			velx2 = 1;
+			vely2 = 0;
+			}
 			else if(counter2 == 19 || counter2 == -5){//285
-				velx2 = (Math.sqrt(6) + Math.sqrt(2))/4;
-				vely2 = (Math.sqrt(6) - Math.sqrt(2))/4;
-				}
+			velx2 = (Math.sqrt(6) + Math.sqrt(2))/4;
+			vely2 = (Math.sqrt(6) - Math.sqrt(2))/4;
+			}
 			else if(counter2 == 20 || counter2 == -4){//300
-				velx2 = Math.sqrt(3)/2;
-				vely2 = .5;
-				}
+			velx2 = Math.sqrt(3)/2;
+			vely2 = .5;
+			}
 			else if(counter2 == 21 || counter2 == -3){//315
-				velx2 = Math.sqrt(2)/2;
-				vely2 = Math.sqrt(2)/2;
-				}
+			velx2 = Math.sqrt(2)/2;
+			vely2 = Math.sqrt(2)/2;
+			}
 			else if(counter2 == 22 || counter2 == -2){//330
-				velx2 = .5;
-				vely2 = Math.sqrt(3)/2;
-				}
+			velx2 = .5;
+			vely2 = Math.sqrt(3)/2;
+			}
 			else if(counter2 == 23 || counter2 == -1){//345
-				velx2 = -(Math.sqrt(2) - Math.sqrt(6))/4;
-				vely2 = (Math.sqrt(6) + Math.sqrt(2))/4;
-				}
+			velx2 = -(Math.sqrt(2) - Math.sqrt(6))/4;
+			vely2 = (Math.sqrt(6) + Math.sqrt(2))/4;
+			}
 		
 	}
 		else if (arg0.getKeyCode() == 38){//up arrow
-			if(counter2 == 0){
-			velx2 = 0;
-			vely2 = -1;
-			}
+					if(counter2 == 0){
+					velx2 = 0;
+					vely2 = -1;
+					}
 		  			else if(counter2 == 1 || counter2 == -23){//15
 		  			velx2 = (Math.sqrt(6) - Math.sqrt(2))/4;
 					vely2 = -(Math.sqrt(6) + Math.sqrt(2))/4;
@@ -474,41 +469,41 @@ public void keyPressed(KeyEvent arg0) {
 					vely2 = Math.sqrt(3)/2;
 					}
 					else if(counter2 == 15 || counter2 == -9){//225
-						velx2 = -Math.sqrt(2)/2;
-						vely2 = Math.sqrt(2)/2;
+					velx2 = -Math.sqrt(2)/2;
+					vely2 = Math.sqrt(2)/2;
 					}
 					else if(counter2 == 16 || counter2 == -8){//240
-						velx2 = -Math.sqrt(3)/2;
-						vely2 = .5;
-						}
+					velx2 = -Math.sqrt(3)/2;
+					vely2 = .5;
+					}
 					else if(counter2 == 17 || counter2 == -7){//255
-						velx2 = -(Math.sqrt(6) + Math.sqrt(2))/4;
-						vely2 = -(Math.sqrt(2) - Math.sqrt(6))/4;
-						}
+					velx2 = -(Math.sqrt(6) + Math.sqrt(2))/4;
+					vely2 = -(Math.sqrt(2) - Math.sqrt(6))/4;
+					}
 					else if(counter2 == 18 || counter2 == -6){//270
-						velx2 = -1;
-						vely2 = 0;
-						}
+					velx2 = -1;
+					vely2 = 0;
+					}
 					else if(counter2 == 19 || counter2 == -5){//285
-						velx2 = -(Math.sqrt(6) + Math.sqrt(2))/4;
-						vely2 = -(Math.sqrt(6) - Math.sqrt(2))/4;
-						}
+					velx2 = -(Math.sqrt(6) + Math.sqrt(2))/4;
+					vely2 = -(Math.sqrt(6) - Math.sqrt(2))/4;
+					}
 					else if(counter2 == 20 || counter2 == -4){//300
-						velx2 = -Math.sqrt(3)/2;
-						vely2 = -.5;
-						}
+					velx2 = -Math.sqrt(3)/2;
+					vely2 = -.5;
+					}
 					else if(counter2 == 21 || counter2 == -3){//315
-						velx2 = -Math.sqrt(2)/2;
-						vely2 = -Math.sqrt(2)/2;
-						}
+					velx2 = -Math.sqrt(2)/2;
+					vely2 = -Math.sqrt(2)/2;
+					}
 					else if(counter2 == 22 || counter2 == -2){//330
-						velx2 = -.5;
-						vely2 = -Math.sqrt(3)/2;
-						}
+					velx2 = -.5;
+					vely2 = -Math.sqrt(3)/2;
+					}
 					else if(counter2 == 23 || counter2 == -1){//345
-						velx2 = (Math.sqrt(2) - Math.sqrt(6))/4;
-						vely2 = -(Math.sqrt(6) + Math.sqrt(2))/4;
-						}
+					velx2 = (Math.sqrt(2) - Math.sqrt(6))/4;
+					vely2 = -(Math.sqrt(6) + Math.sqrt(2))/4;
+					}
 	}
 	
 	else if (arg0.getKeyCode() == 37){//left arrow
@@ -517,10 +512,7 @@ public void keyPressed(KeyEvent arg0) {
 		if(counter2 == -24){
 			counter2 = 0;
 		}
-		  AffineTransform transform = new AffineTransform();
-		  transform.rotate(degree2, tank[4].getWidth()/2, tank[4].getHeight()/2);
-		  AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
-		  tank2 = op.filter(tank[4], null);
+		affinetranform(degree2, k);
 	}
 	else if (arg0.getKeyCode() == 39){//right arrow
 		degree2 += 2*Math.PI/24;
@@ -528,65 +520,60 @@ public void keyPressed(KeyEvent arg0) {
 		if(counter2 == 24){
 			counter2 = 0;
 		}
-		  AffineTransform transform = new AffineTransform();
-		  transform.rotate(degree2, tank[4].getWidth()/2, tank[4].getHeight()/2);
-		  AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
-		  tank2 = op.filter(tank[4], null);
-		
+		affinetranform(degree2, k);	
 	}
 	else if(arg0.getKeyCode() == KeyEvent.VK_EQUALS){
-		health -= 5;
-		health2 -= 5;
+		health -= 10;
+		health2 -= 10;
 		System.out.println(health);
 	}
 	if(health <= 70){
-		j=1;
-		 AffineTransform transform = new AffineTransform();
-		 transform.rotate(degree, tank[0].getWidth()/2, tank[0].getHeight()/2);
-		 AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
-		 tank1 = op.filter(tank[j], null);
+	  j = 1;
+	   affinetranform(degree, j);
 		}
 	if(health <= 40){
-		j=2;
-		 AffineTransform transform = new AffineTransform();
-		 transform.rotate(degree, tank[0].getWidth()/2, tank[0].getHeight()/2);
-		 AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
-		 tank1 = op.filter(tank[j], null);
+	  j = 2;
+	   affinetranform(degree, j);
 	}
 	if(health <= 10){
-		j=3;
-		 AffineTransform transform = new AffineTransform();
-		 transform.rotate(degree, tank[0].getWidth()/2, tank[0].getHeight()/2);
-		 AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
-		 tank1 = op.filter(tank[j], null);
+	  j = 3;
+	   affinetranform(degree, j);
 	}
 	if(health2 <= 70){
-		k=5;
-		 AffineTransform transform = new AffineTransform();
-		 transform.rotate(degree2, tank[4].getWidth()/2, tank[4].getHeight()/2);
-		 AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
-		 tank2 = op.filter(tank[k], null);
+	  k = 5;
+	   affinetranform(degree2, k);
 		}
 	if(health2 <= 40){
-		k=6;
-		 AffineTransform transform = new AffineTransform();
-		 transform.rotate(degree2, tank[4].getWidth()/2, tank[4].getHeight()/2);
-		 AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
-		 tank2 = op.filter(tank[k], null);
+	  k = 6;
+	   affinetranform(degree2, k);
 	}
 	if(health2 <= 10){
-		k=7;
-		 AffineTransform transform = new AffineTransform();
-		 transform.rotate(degree2, tank[4].getWidth()/2, tank[4].getHeight()/2);
-		 AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
-		 tank2 = op.filter(tank[k], null);
+	  k = 7;
+	   affinetranform(degree2, k);
 	}
 	}
 
-
+public void affinetranform(double deg, int num){
+	 AffineTransform transform = new AffineTransform();
+	 if(num <= 3){
+	 transform.rotate(deg, tank[num].getWidth()/2, tank[num].getHeight()/2);
+	 AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
+	 tank1 = op.filter(tank[num], null);	 
+	 }
+	 else{
+	 transform.rotate(deg, tank[num].getWidth()/2, tank[num].getHeight()/2);
+	 AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
+	 tank2 = op.filter(tank[num], null);
+	 }
+}
 
 
 public void keyTyped(KeyEvent e) {
+	int keycode = e.getKeyCode();
+	if(keycode == 37 || keycode == 38 || keycode == 39|| keycode == 40){
+		t2.stop();
+		System.out.println(t2);
+		}
 /*long startTime = System.currentTimeMillis();
 long elapsedTime = 0L;
 while(e.getKeyCode() != 83 || e.getKeyCode() != 87 || 
@@ -602,6 +589,16 @@ while(e.getKeyCode() != 83 || e.getKeyCode() != 87 ||
 }
 public void keyReleased(KeyEvent e) {
 	int keycode = e.getKeyCode();
+	/*if(keycode == 37 || keycode == 38 || keycode == 39|| keycode == 40){
+	t2.schedule(new TimerTask(){
+		
+	}
+	health--;
+	System.out.println(health);
+	}
+	
+	*/
+
 	if(keycode == 37 || keycode == 38 || keycode == 39|| keycode == 40){
 	velx2 = 0;
 	vely2 = 0;
