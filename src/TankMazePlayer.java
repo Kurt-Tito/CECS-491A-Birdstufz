@@ -17,7 +17,7 @@ Timer t = new Timer(10, this);
 double x = 0, y = 0, x2 = 0, y2 = 0;
 double velx = 0, vely = 0, velx2 = 0, vely2 = 0, degree = 0, degree2 = 0;
 int dx = 0, dy = 0, dx2 = 0, dy2 = 0, j = 0, k = 4;
-int counter = 0, counter2 = 0;
+int counter = 0, counter2 = 0, delay = 0, delay2 = 0;
 int health = 100, health2 = 100;
 private BufferedImage[] tank = new BufferedImage[8];
 BufferedImage tank1, tank2;
@@ -309,20 +309,28 @@ if(keypress[1] == true){//s
 			}
 }
  if(keypress[2] == true){//a
+	 delay++;
+	 if(delay == 5){
+	delay = 0;
 	degree += -(2*Math.PI/24);
 	counter--;
 	if(counter == -24){
 		counter = 0;
 	}
 	affinetranform(degree, j); 
+	 }
  }
  if(keypress[3] == true){//d
+	 delay++;
+	 if(delay == 5){
+	delay = 0;
 	degree += 2*Math.PI/24;
 	counter++;
 	if(counter == 24){
 		counter = 0;
 	}
 	affinetranform(degree, j);	
+	 }
  }
 //--------------------------------------------------------------------------------	
 if(keypress[6] == true){//down arrow
@@ -523,20 +531,28 @@ if(keypress[6] == true){//down arrow
 		}
 }
 if(keypress[7] == true){
+	delay2++;
+	if(delay2 == 5){
+	delay2 = 0;
 	degree2 += -(2*Math.PI/24);
 	counter2--;
 	if(counter2 == -24){
 		counter2 = 0;
 	}
 	affinetranform(degree2, k);	
+	}
 }
 if(keypress[8] == true){
+	delay2++;
+	if(delay2 == 5){
+	delay2 = 0;
 	degree2 += 2*Math.PI/24;
 	counter2++;
 	if(counter2 == 24){
 		counter2 = 0;
 	}
 	affinetranform(degree2, k);
+	}
 }
  if(health <= 70){
 	  j = 1;
