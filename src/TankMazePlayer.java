@@ -16,6 +16,7 @@ public class TankMazePlayer extends JPanel implements ActionListener, KeyListene
 Timer t = new Timer(10, this);
 double x = 0, y = 0, x2 = 0, y2 = 0;
 double velx = 0, vely = 0, velx2 = 0, vely2 = 0, degree = 0, degree2 = 0;
+double velspeed = 1, velspeed2 = 1;
 int dx = 0, dy = 0, dx2 = 0, dy2 = 0, j = 0, k = 4;
 int counter = 0, counter2 = 0, delay = 0, delay2 = 0;
 int health = 100, health2 = 100;
@@ -49,14 +50,15 @@ public TankMazePlayer() throws IOException {
 	setFocusable(true);
 	setFocusTraversalKeysEnabled(false);
 }
+
 public void paintComponent(Graphics g) {
 	super.paintComponent(g);
 	g.drawImage(tank1, dx, dy, null);	
 	g.drawImage(tank2, dx2 + 530, dy2 + 280, null);
-
 }
 
 public void actionPerformed(ActionEvent e) {
+//rust counter relative to no keyboard input
 rustcounter++;
 rustcounter2++;
 
@@ -65,7 +67,7 @@ rustcounter = 0;
 }
 if(rustcounter >= 100){
 	rustcounter = 0;
-	health-= 2;
+	health-= 5;
 	System.out.println("health: " +health);
 }
 
@@ -74,9 +76,11 @@ rustcounter2 = 0;
 }
 if(rustcounter2 >= 100){
 	rustcounter2 = 0;
-	health2 -= 2;
+	health2 -= 5;
 	System.out.println("health2: " +health2);
 }
+
+//tank boundaries relative to frame size
 if(x < 0){
 	velx = 0;
 	x = 0;		
@@ -110,6 +114,7 @@ if(y2 > 0){
 	vely2 = 0;
 	y2 = 0;		
 }
+
 if(keypress[1] == true){//s
 	if(counter == 0){
 		velx = 0;
@@ -332,7 +337,7 @@ if(keypress[1] == true){//s
 	affinetranform(degree, j);	
 	 }
  }
-//--------------------------------------------------------------------------------	
+//---------------------------------------------------------------------------------------	
 if(keypress[6] == true){//down arrow
 	    if(counter2 == 0){
 		velx2 = 0;
@@ -554,30 +559,43 @@ if(keypress[8] == true){
 	affinetranform(degree2, k);
 	}
 }
+//rust, changing velocity speed according to health
  if(health <= 70){
 	  j = 1;
+	  velspeed = .9;
 	   affinetranform(degree, j);
 		}
 	if(health <= 40){
 	  j = 2;
+	  velspeed = .8;
 	   affinetranform(degree, j);
 	}
 	if(health <= 10){
 	  j = 3;
+	  velspeed = .6;
 	   affinetranform(degree, j);
 	}
 	if(health2 <= 70){
 	  k = 5;
+	  velspeed2 = .9;
 	   affinetranform(degree2, k);
 		}
 	if(health2 <= 40){
 	  k = 6;
+	  velspeed2 = .8;
 	   affinetranform(degree2, k);
 	}
 	if(health2 <= 10){
 	  k = 7;
+	  velspeed2 = .6;
 	   affinetranform(degree2, k);
 	}
+	
+
+velx = velx * velspeed;
+vely = vely * velspeed;
+velx2 = velx2 * velspeed2;
+vely2 = vely2 * velspeed2;
 x += velx;
 y += vely;
 x2 += velx2;
@@ -586,7 +604,6 @@ dx = (int) x;
 dy = (int) y;
 dx2 = (int) x2;
 dy2 = (int) y2;
-
 
 repaint();
 
@@ -620,6 +637,7 @@ public void keyPressed(KeyEvent arg0) {
 	}
 	}
 
+//rotates image 
 public void affinetranform(double deg, int num){
 	 AffineTransform transform = new AffineTransform();
 	 if(num <= 3){
@@ -675,7 +693,6 @@ public void keyReleased(KeyEvent e) {
 
 
 public static void main (String arge[]) throws IOException{
-
 	JFrame frame = new JFrame();
 	TankMazePlayer player = new TankMazePlayer();
 	frame.add(player);
