@@ -24,8 +24,8 @@ private BufferedImage[] tank = new BufferedImage[8];
 BufferedImage tank1, tank2;
 int rustcounter = 0, rustcounter2 = 0;
 
-TankHealth healthbar1 = new TankHealth(5, 5);
-TankHealth healthbar2 = new TankHealth(330, 330);
+TankHealth healthbar1 = new TankHealth(5, 5, "Player 1");
+TankHealth healthbar2 = new TankHealth(330, 330, "Player 2");
 
 Boolean[] keypress = {false, false, false, false, false, false, false, false, false, false};
 /* w = 0
@@ -57,8 +57,8 @@ public TankMazePlayer() throws IOException {
 
 public void paintComponent(Graphics g) {
 	super.paintComponent(g);
-	g.drawImage(tank1, dx, dy, null);	
-	g.drawImage(tank2, dx2 + 530, dy2 + 280, null);
+	g.drawImage(tank1, dx, dy + 20, null);	
+	g.drawImage(tank2, dx2 + 530, dy2 + 280 - 10, null);
 	
 	healthbar1.paintComponent(g);
 	healthbar2.paintComponent(g);
