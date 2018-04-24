@@ -23,6 +23,10 @@ int health = 100, health2 = 100;
 private BufferedImage[] tank = new BufferedImage[8];
 BufferedImage tank1, tank2;
 int rustcounter = 0, rustcounter2 = 0;
+
+TankHealth healthbar1 = new TankHealth(5, 5);
+TankHealth healthbar2 = new TankHealth(330, 330);
+
 Boolean[] keypress = {false, false, false, false, false, false, false, false, false, false};
 /* w = 0
  * s = 1
@@ -55,6 +59,9 @@ public void paintComponent(Graphics g) {
 	super.paintComponent(g);
 	g.drawImage(tank1, dx, dy, null);	
 	g.drawImage(tank2, dx2 + 530, dy2 + 280, null);
+	
+	healthbar1.paintComponent(g);
+	healthbar2.paintComponent(g);
 }
 
 public void actionPerformed(ActionEvent e) {
@@ -68,6 +75,7 @@ rustcounter = 0;
 if(rustcounter >= 100){
 	rustcounter = 0;
 	health-= 5;
+	healthbar1.takeDamage();
 	System.out.println("health: " +health);
 }
 
@@ -77,6 +85,7 @@ rustcounter2 = 0;
 if(rustcounter2 >= 100){
 	rustcounter2 = 0;
 	health2 -= 5;
+	healthbar2.takeDamage();
 	System.out.println("health2: " +health2);
 }
 
@@ -695,6 +704,7 @@ public void keyReleased(KeyEvent e) {
 public static void main (String arge[]) throws IOException{
 	JFrame frame = new JFrame();
 	TankMazePlayer player = new TankMazePlayer();
+	
 	frame.add(player);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	frame.setSize(610,400);
