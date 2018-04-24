@@ -41,14 +41,4 @@ public class TankHealth extends JPanel{
 			DAMAGE = 0;
 	}
 	
-	public static void main (String arge[]) throws IOException{
-		JFrame frame = new JFrame();
-		//TankHealth health1 = new TankHealth();
-		//frame.add(health1);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(610,400);
-		frame.setVisible(true);
-
-	}
-	
 }
