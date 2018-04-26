@@ -94,40 +94,6 @@ if(rustcounter2 >= 100){
 }
 
 //tank boundaries relative to frame size
-if(x < 0){
-	velx = 0;
-	x = 0;		
-}
-if(x > 530){
-	velx = 0;
-	x = 530;		
-}
-if(y < 0){
-	vely = 0;
-	y = 0;		
-}
-if(y > 280){
-	vely = 0;
-	y = 280;		
-}
-
-if(x2 < -530){
-	velx2 = 0;
-	x2 = -530;		
-}
-if(x2 > 0){
-	velx2 = 0;
-	x2 = 0;		
-}
-if(y2 < -280){
-	vely2 = 0;
-	y2 = -280;		
-}
-if(y2 > 0){
-	vely2 = 0;
-	y2 = 0;		
-}
-
 if(keypress[1] == true){//s
 	if(counter == 0){
 		velx = 0;
