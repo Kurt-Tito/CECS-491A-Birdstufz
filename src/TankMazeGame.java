@@ -6,12 +6,18 @@ import java.io.IOException;
 import javax.swing.Timer;
 
 public class TankMazeGame implements ActionListener {
-	private Timer t = new Timer(10, this);
+	private Timer t;
 	private TankMaze maze;
 	private TankMazePlayer player;
 	public TankMazeGame()
 	{
+		t = new Timer(10, this);
+	}
+	
+	public void reset()
+	{
 		maze = new TankMaze();
+		t.restart();
 		try
 		{
 			player = new TankMazePlayer();
@@ -35,6 +41,6 @@ public class TankMazeGame implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		
+		player.actionPerformed(arg0);
 	}
 }

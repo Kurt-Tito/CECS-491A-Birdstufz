@@ -12,8 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class TankMazePlayer extends JPanel implements ActionListener, KeyListener {
-Timer t = new Timer(10, this);
+public class TankMazePlayer extends JPanel implements KeyListener {
 double x = 0, y = 0, x2 = 0, y2 = 0;
 double velx = 0, vely = 0, velx2 = 0, vely2 = 0, degree = 0, degree2 = 0;
 double velspeed = 1, velspeed2 = 1;
@@ -41,7 +40,6 @@ Boolean[] keypress = {false, false, false, false, false, false, false, false, fa
  */
 
 public TankMazePlayer() throws IOException {
-	t.start();
 	setBackground(Color.LIGHT_GRAY);
 	for(int i = 0; i < 8; i++)
 	{

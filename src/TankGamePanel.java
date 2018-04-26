@@ -1,6 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.Timer;
 
 public class TankGamePanel extends GamePanel{
 	private TankMainPanel mainpanel;
@@ -20,8 +22,8 @@ public class TankGamePanel extends GamePanel{
 	}
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
-		
+		game.reset();
+		addKeyListener(game.getPlayer());
 	}
 
 	@Override

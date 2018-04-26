@@ -6,10 +6,10 @@ import javax.swing.JPanel;
 
 public class TankInfoPanel extends JPanel{
 	private final int HEIGHT = 100, WIDTH = 200;
-	TankMazePlayer player;
+	TankMazeGame game;
 	public TankInfoPanel(TankMazeGame game)
 	{
-		player = game.getPlayer();
+		this.game = game;
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 	}
 	
