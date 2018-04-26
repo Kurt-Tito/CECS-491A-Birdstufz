@@ -15,6 +15,7 @@ public class Game extends JFrame implements ActionListener{
 	private final MazePanel mazepanel = new MazePanel();
 	private final ConcentrationPanel concentrationpanel = new ConcentrationPanel();
 	private final ChessPanel chesspanel = new ChessPanel();
+	private final TankGamePanel tankpanel = new TankGamePanel();
 	private final StatusBar statusbar = new StatusBar();
 	
 	private java.util.Timer timer;
@@ -38,11 +39,13 @@ public class Game extends JFrame implements ActionListener{
 		mazepanel.addListener(this);
 		chesspanel.addListener(this);
 		statusbar.addListener(this);
-		
+		tankpanel.addListener(this);
+
 		currentPanel = menupanel;
 		updatePanel();
 		setVisible(true);
 		repaint();
+		System.out.println("hihi");
 		
 		
 		//Game Loop
@@ -85,6 +88,9 @@ public class Game extends JFrame implements ActionListener{
 				break;
 			case CHESS:
 				currentPanel = chesspanel;
+				break;
+			case TANK:
+				currentPanel = tankpanel;
 				break;
 		}
 		updatePanel();

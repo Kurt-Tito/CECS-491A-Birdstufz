@@ -64,6 +64,12 @@ public void paintComponent(Graphics g) {
 	healthbar2.paintComponent(g);
 }
 
+public void draw(Graphics2D g2)
+{
+	g2.drawImage(tank1, dx, dy + 20, null);	
+	g2.drawImage(tank2, dx2 + 530, dy2 + 280 - 10, null);
+}
+
 public void actionPerformed(ActionEvent e) {
 //rust counter relative to no keyboard input
 rustcounter++;

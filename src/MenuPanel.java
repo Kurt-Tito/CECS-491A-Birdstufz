@@ -17,7 +17,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 public class MenuPanel extends GamePanel implements MouseListener{
-	private JButton mazebutton, concentrationbutton, chessbutton;
+	private JButton mazebutton, concentrationbutton, chessbutton, tankbutton;
 	public MenuPanel()
 	{
 		setBackground(new Color(121, 189, 255));
@@ -28,21 +28,27 @@ public class MenuPanel extends GamePanel implements MouseListener{
 		
 		mazebutton = new JButton("MAZE GAME", buttonbg);
 		mazebutton.setActionCommand(State.MAZE.toString());
-		mazebutton.setBounds(450, 300, 380, 50);
+		mazebutton.setBounds(450, 250, 380, 50);
 		mazebutton.setHorizontalTextPosition(JButton.CENTER);
 		mazebutton.setVerticalTextPosition(JButton.CENTER);
 		
 		concentrationbutton = new JButton("CONCENTRATION GAME", buttonbg);
 		concentrationbutton.setActionCommand(State.CONCENTRATION.toString());
-		concentrationbutton.setBounds(450, 400, 380, 50);
+		concentrationbutton.setBounds(450, 350, 380, 50);
 		concentrationbutton.setHorizontalTextPosition(JButton.CENTER);
 		concentrationbutton.setVerticalTextPosition(JButton.CENTER);
 		
 		chessbutton = new JButton("CHESS GAME", buttonbg);
 		chessbutton.setActionCommand(State.CHESS.toString());
-		chessbutton.setBounds(450, 500, 380, 50);
+		chessbutton.setBounds(450, 450, 380, 50);
 		chessbutton.setHorizontalTextPosition(JButton.CENTER);
 		chessbutton.setVerticalTextPosition(JButton.CENTER);
+		
+		tankbutton = new JButton("TANK GAME", buttonbg);
+		tankbutton.setActionCommand(State.TANK.toString());
+		tankbutton.setBounds(450, 550, 380, 50);
+		tankbutton.setHorizontalTextPosition(JButton.CENTER);
+		tankbutton.setVerticalTextPosition(JButton.CENTER);
 	}
 	
 	@Override
@@ -55,6 +61,7 @@ public class MenuPanel extends GamePanel implements MouseListener{
 		mazebutton.addActionListener(al);
 		concentrationbutton.addActionListener(al);
 		chessbutton.addActionListener(al);
+		tankbutton.addActionListener(al);
 	}
 	
 	public void removeListener(ActionListener al)
@@ -62,6 +69,7 @@ public class MenuPanel extends GamePanel implements MouseListener{
 		mazebutton.removeActionListener(al);
 		concentrationbutton.removeActionListener(al);
 		chessbutton.removeActionListener(al);
+		tankbutton.addActionListener(al);
 	}
 	
 	public void paintComponent(Graphics g)
@@ -82,6 +90,7 @@ public class MenuPanel extends GamePanel implements MouseListener{
 		add(mazebutton);
 		add(concentrationbutton);
 		add(chessbutton);
+		add(tankbutton);
 	}
 	
 	@Override

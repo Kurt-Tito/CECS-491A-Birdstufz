@@ -1,12 +1,17 @@
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
 public class TankMaze {
-	public int width, height;
+	private final int TILE_SIZE = 90;
+	private final int WALL_THICKNESS = 10;
+	private int width, height;
 	private ArrayList<Edge> paths;
 	private ArrayList<Edge> walls;
-	public ArrayList<Node> nodes;
+	private ArrayList<Node> nodes;
+	private ArrayList<TankMazeWall> mazeWalls;
 	public TankMaze()
 	{
 		width = 11;
@@ -14,9 +19,20 @@ public class TankMaze {
 		nodes= new ArrayList<Node>();
 		paths = new ArrayList<Edge>();
 		walls = new ArrayList<Edge>();
+		mazeWalls = new ArrayList<TankMazeWall>();
 		
 		resetMaze();
 		
+	}
+	
+	public int getWidth()
+	{
+		return width;
+	}
+	
+	public int getHeight()
+	{
+		return height;
 	}
 	
 	public ArrayList<Edge> getWalls()
@@ -36,6 +52,43 @@ public class TankMaze {
 		paths.clear();
 		walls.clear();
 		initializeMaze();
+		
+		for(int i = 0; i < walls.size(); i++)
+		{
+			TankMazeWall w = new TankMazeWall(walls.get(i), TILE_SIZE, WALL_THICKNESS);
+			mazeWalls.add(w);
+		}
+		
+		for(int i = 0; i < width; i++)
+		{	
+			TankMazeWall w = new TankMazeWall(i*TILE_SIZE - WALL_THICKNESS/2, 0 - WALL_THICKNESS/2, TILE_SIZE + WALL_THICKNESS/2, WALL_THICKNESS);
+			mazeWalls.add(w);
+			w = new TankMazeWall(i*TILE_SIZE - WALL_THICKNESS/2, TILE_SIZE * height - WALL_THICKNESS/2, TILE_SIZE + WALL_THICKNESS, WALL_THICKNESS);
+			mazeWalls.add(w);
+			
+		}
+		for(int i = 0; i < height; i++)
+		{
+			TankMazeWall w = new TankMazeWall(0 - WALL_THICKNESS/2, i*TILE_SIZE - WALL_THICKNESS/2, WALL_THICKNESS, TILE_SIZE + WALL_THICKNESS/2);
+			mazeWalls.add(w);
+			w = new TankMazeWall(TILE_SIZE * width - WALL_THICKNESS/2, i*TILE_SIZE - WALL_THICKNESS/2, WALL_THICKNESS, TILE_SIZE + WALL_THICKNESS);
+			mazeWalls.add(w);
+		}
+		
+	}
+	
+	public ArrayList<TankMazeWall> getMazeWalls()
+	{
+		return mazeWalls;
+	}
+	
+	public void draw(Graphics2D g2)
+	{
+		for(int i = 0; i < mazeWalls.size(); i++)
+		{
+			Rectangle r = mazeWalls.get(i);
+			g2.fillRect(r.x, r.y, r.width, r.height);
+		}
 	}
 	
 	public void initializeMaze()
@@ -114,22 +167,6 @@ public class TankMaze {
 		{
 			
 				Node node1, node2;
-				/**
-				node1 = getNode(i, 4);
-				node2 = getNode(i, 5);
-				walls.remove(new Edge(node1, node2));
-				node1 = getNode(4,i);
-				node2 = getNode(5, i);
-				walls.remove(new Edge(node1, node2));
-				
-				node1 = getNode(i, 4);
-				node2 = getNode(i+1, 4);
-				walls.remove(new Edge(node1, node2));
-				node1 = getNode(4,i);
-				node2 = getNode(4, i+1);
-				walls.remove(new Edge(node1, node2));
-				*/
-				
 				
 				node1 = getNode(width / 2,i);
 				node2 = getNode(width / 2, i+1);
@@ -237,95 +274,7 @@ public class TankMaze {
 		walls.remove(new Edge(getNode(num2,num1),getNode(num2+1, num1)));
 		
 	}
-	
-	
-	/**
-	public void generateMaze()
-	{
-		walls = new ArrayList<Edge>();
-		paths = new ArrayList<Edge>();
-		ArrayList<Edge> edges = new ArrayList<Edge>();
-		ArrayList<HashSet> regions = new ArrayList<HashSet>();
-		for(int i = 0; i < size; i++)
-		{
-			for(int j = 0; j < size; j++)
-			{
-				if(maze[j][i] == true)
-				{
-					Point pt1 = new Point(j, i);
-					if(i != size-1 && maze[j][i+1] == true)
-					{
-						Point pt2 = new Point(j, i+1);
-						Edge edge = new Edge(pt1, pt2);
-						edges.add(edge);
-					}
-					if(j != size-1 && maze[j+1][i] == true)
-					{
-						Point pt2 = new Point(j+1, i);
-						Edge edge = new Edge(pt1, pt2);
-						edges.add(edge);
-					}
-					
-					
-				}
-			}
-		}
-		System.out.println("Edges!!!! " + edges.size());
-		
-		for(int i = 0; i < size; i++)
-		{
-			for(int j = 0; j < size; j++)
-			{
-				Point pt = new Point(j, i);
-				HashSet<Point> newRegion = new HashSet<Point>();
-				newRegion.add(pt);
-				regions.add(newRegion);
-			}
-			
-		}
-		
-		while(edges.size() > 0 )
-		{
-			Random random = new Random(System.nanoTime());
-			int num = random.nextInt(edges.size());
-			Edge edge = edges.remove(num);
-			Point pt1 = edge.getPoint1();
-			Point pt2 = edge.getPoint2();
-			System.out.println(pt1 + "-------" + pt2);
-			HashSet<Point> region1 = null, region2 = null;
-			System.out.println(regions.size());
-			for(int i = 0; i < regions.size(); i++)
-			{
-				if(regions.get(i).contains(pt1))
-				{
-					region1 = regions.get(i);
-				}
-				if(regions.get(i).contains(pt2))
-				{
-					region2 = regions.get(i);
-				}
-			}
-			if(region1 != region2)
-			{
-				for(int i = 0; i < regions.size(); i++)
-				{
-					System.out.print(Arrays.toString(regions.get(i).toArray()) + "           ");
-				}
-				System.out.println("");
-				System.out.println(Arrays.toString(region1.toArray()));
-				System.out.println(Arrays.toString(region2.toArray()));
-				region1.addAll(region2);
-				regions.remove(region2);
-				System.out.println(Arrays.toString(region1.toArray()));
-				paths.add(edge);
-			}
-			else
-			{
-				walls.add(edge);
-			}
-		}
-	}
-	**/
+
 	public ArrayList<Node> getMazeArea(int x1, int y1, int x2, int y2)
 	{
 		ArrayList<Node> area = new ArrayList<Node>();

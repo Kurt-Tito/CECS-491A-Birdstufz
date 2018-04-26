@@ -17,4 +17,9 @@ public class TankMazeWall extends Rectangle{
 			}
 		}
 	}
+	
+	public TankMazeWall(int x, int y, int width, int height)
+	{
+		super(x, y, width, height);
+	}
 }
