@@ -1,5 +1,4 @@
 import java.awt.Graphics2D;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -12,7 +11,6 @@ public class TankMazeGame implements ActionListener {
 	private TankMazePlayer player;
 	private TankMaze_Frog frog;
 	private int FrogTimer = 0;
-	private boolean concealed = false;
 	
 	public TankMazeGame()
 	{
