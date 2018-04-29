@@ -2,6 +2,7 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.swing.Timer;
 
@@ -10,12 +11,13 @@ public class TankMazeGame implements ActionListener {
 	private TankMaze maze;
 	private TankMazePlayer player;
 	private TankMaze_Frog frog;
+	
 	private int FrogTimer = 0;
+	private int FrogSpawnTime;
 	
 	public TankMazeGame()
 	{
 		t = new Timer(10, this);
-		frog = new TankMaze_Frog(90);
 	}
 	
 	public void reset()
@@ -25,9 +27,11 @@ public class TankMazeGame implements ActionListener {
 		try
 		{
 			player = new TankMazePlayer();
-			frog.concealFrog();
+			frog = new TankMaze_Frog(90);
 			
+			frog.concealFrog();
 			FrogTimer = 0;
+			FrogSpawnTime = generateFrogSpawnTime();
 		}
 		catch(IOException e)
 		{
@@ -49,6 +53,15 @@ public class TankMazeGame implements ActionListener {
 	{
 		return player;
 	}
+	
+	public int generateFrogSpawnTime()
+	{	//generates a random time for Frog to Spawn bounded between 100 and 2000 
+		Random rand = new Random();
+		int msec = rand.nextInt(2000 - 100 + 1) + 100;
+		
+		return msec;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		player.actionPerformed(arg0);
@@ -57,16 +70,18 @@ public class TankMazeGame implements ActionListener {
 		{	
 			System.out.println("Frog EATEN");
 			frog.concealFrog();
+			FrogSpawnTime = generateFrogSpawnTime();
+			FrogTimer = 0;
 		}
 		
 		if(frog.isConcealed())
 			FrogTimer++;
 		
-		if(FrogTimer == 1000) {
+		if(FrogTimer == FrogSpawnTime) 
+		{
 			FrogTimer = 0;
 			frog.RandomizeFrog();
 		}
 		
-		//System.out.println("Frog Timer = " +FrogTimer);
 	}
 }
