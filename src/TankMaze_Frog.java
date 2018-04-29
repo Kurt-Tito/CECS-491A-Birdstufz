@@ -41,7 +41,7 @@ public class TankMaze_Frog {
 		int b = Arrays.binarySearch(player.getYLocation(), this.getY());
 		
 		int a2 = Arrays.binarySearch(player.getX2Location(), this.getX());
-		int b2 = Arrays.binarySearch(player.getY2Location(), this.getX());
+		int b2 = Arrays.binarySearch(player.getY2Location(), this.getY());
 		
 		if(a > 0 && b > 0) 
 		{	
@@ -84,7 +84,7 @@ public class TankMaze_Frog {
 	
 	public void draw(Graphics2D g2, int x, int y)
 	{
-		g2.drawImage(currentImage(), col*cellSize + cellSize/5, row*cellSize + cellSize/5, cellSize/2, cellSize/2, null);
+		g2.drawImage(currentImage(), col*cellSize + cellSize/5, row*cellSize + cellSize/5, null);
 	}
 	
 	
