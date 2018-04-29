@@ -1,7 +1,7 @@
 import java.awt.Rectangle;
 
 public class TankMazeWall extends Rectangle{
-	public TankMazeWall(Edge edge, int cellSize, int thickness)
+	public TankMazeWall(Edge edge, int cellSize, int thickness) 
 	{
 		if(edge.getNode1().compareTo(edge.getNode2()) < 0)
 		{

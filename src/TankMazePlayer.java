@@ -53,6 +53,66 @@ public TankMazePlayer() throws IOException {
 	setFocusTraversalKeysEnabled(false);
 }
 
+public double[] getXLocation()
+{	
+	int dx_res = dx - 32;
+	
+	double xloc[] = new double[96];
+	
+	for(int i = 0; i < 96; i++)
+		xloc[i] = dx_res + i;
+	
+	return xloc;
+}
+
+public double[] getYLocation()
+{	
+	int dy_res = dy - 32;
+	
+	double yloc[] = new double[96];
+	
+	for(int i = 0; i < 96; i++)
+		yloc[i] = dy_res + i;
+	
+	return yloc;	
+}
+
+public double[] getX2Location()
+{
+	int dx2_res = dx2 - 32;
+	
+	double x2loc[] = new double[96];
+	
+	for(int i = 0; i < 96; i++)
+		x2loc[i] = dx2_res + i;
+	
+	return x2loc;
+}
+
+public double[] getY2Location()
+{
+	int dy2_res = dy2 - 32;
+	
+	double y2loc[] = new double[96];
+	
+	for(int i = 0; i < 96; i++)
+		y2loc[i] = dy2_res + i;
+	
+	return y2loc;
+}
+
+public void regainHealthP1()
+{	
+	if(health < 95)
+		health += 10;
+}
+
+public void regainHealthP2()
+{
+	if(health < 95)
+		health2 += 10;
+}
+
 public void paintComponent(Graphics g) {
 	super.paintComponent(g);
 	g.drawImage(tank1, dx, dy + 20, null);	
@@ -64,8 +124,8 @@ public void paintComponent(Graphics g) {
 
 public void draw(Graphics2D g2)
 {
-	g2.drawImage(tank1, dx, dy + 20, null);	
-	g2.drawImage(tank2, dx2 + 530, dy2 + 280 - 10, null);
+	g2.drawImage(tank1, dx, dy, null);	
+	g2.drawImage(tank2, dx2, dy2, null);
 }
 
 public void actionPerformed(ActionEvent e) {

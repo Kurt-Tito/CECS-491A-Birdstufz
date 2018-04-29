@@ -42,7 +42,7 @@ public class TankMaze {
 	
 	private Node getNode(int x, int y)
 	{
-		Node n = nodes.get((nodes.indexOf(new Node(x,y))));
+		Node n = nodes.get((nodes.indexOf(new Node(x,y)))); 
 		return n;
 	}
 	
