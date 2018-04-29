@@ -57,9 +57,9 @@ public double[] getXLocation()
 {	
 	int dx_res = dx - 32;
 	
-	double xloc[] = new double[96];
+	double xloc[] = new double[64];
 	
-	for(int i = 0; i < 96; i++)
+	for(int i = 0; i < 64; i++)
 		xloc[i] = dx_res + i;
 	
 	return xloc;
@@ -69,9 +69,9 @@ public double[] getYLocation()
 {	
 	int dy_res = dy - 32;
 	
-	double yloc[] = new double[96];
+	double yloc[] = new double[64];
 	
-	for(int i = 0; i < 96; i++)
+	for(int i = 0; i < 64; i++)
 		yloc[i] = dy_res + i;
 	
 	return yloc;	
@@ -81,9 +81,9 @@ public double[] getX2Location()
 {
 	int dx2_res = dx2 - 32;
 	
-	double x2loc[] = new double[96];
+	double x2loc[] = new double[64];
 	
-	for(int i = 0; i < 96; i++)
+	for(int i = 0; i < 64; i++)
 		x2loc[i] = dx2_res + i;
 	
 	return x2loc;
@@ -93,9 +93,9 @@ public double[] getY2Location()
 {
 	int dy2_res = dy2 - 32;
 	
-	double y2loc[] = new double[96];
+	double y2loc[] = new double[64];
 	
-	for(int i = 0; i < 96; i++)
+	for(int i = 0; i < 64; i++)
 		y2loc[i] = dy2_res + i;
 	
 	return y2loc;
