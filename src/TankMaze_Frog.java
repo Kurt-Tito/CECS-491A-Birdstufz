@@ -82,6 +82,20 @@ public class TankMaze_Frog {
 		return row*cellSize + cellSize/5;
 	}
 	
+	public void concealFrog()
+	{
+		row = -100;
+		col = -100;
+	}
+	
+	public boolean isConcealed()
+	{
+		if(row > 0 && col >0)
+			return false;
+		else
+			return true;
+	}
+	
 	public void draw(Graphics2D g2, int x, int y)
 	{
 		g2.drawImage(currentImage(), col*cellSize + cellSize/5, row*cellSize + cellSize/5, null);
