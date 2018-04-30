@@ -99,14 +99,22 @@ public double[] getY2Location()
 
 public void regainHealthP1()
 {	
-	if(health < 95)
+	if(health == 95){
+	health = 100;	
+	}
+	else if(health < 95){
 		health += 10;
+	}
 }
 
 public void regainHealthP2()
 {
-	if(health < 95)
+	if(health2 == 95){
+		health2 = 100;
+	}
+	else if(health < 95){
 		health2 += 10;
+	}
 }
 
 public void paintComponent(Graphics g) {
