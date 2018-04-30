@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class TankMazePlayer extends JPanel implements KeyListener {
+public class TankMazePlayer implements KeyListener {
 double x = 0, y = 0, x2 = 0, y2 = 0;
 double velx = 0, vely = 0, velx2 = 0, vely2 = 0, degree = 0, degree2 = 0;
 double velspeed = 1, velspeed2 = 1;
@@ -40,7 +40,6 @@ Boolean[] keypress = {false, false, false, false, false, false, false, false, fa
  */
 
 public TankMazePlayer() throws IOException {
-	setBackground(Color.LIGHT_GRAY);
 	for(int i = 0; i < 8; i++)
 	{
 		String tanks = "images/tankmaze/sprite_tank" + i + ".png";
@@ -48,9 +47,6 @@ public TankMazePlayer() throws IOException {
 	}
 	tank1 = ImageIO.read(new File("images/tankmaze/sprite_tank0.png"));
 	tank2 = ImageIO.read(new File("images/tankmaze/sprite_tank4.png"));
-	addKeyListener(this);
-	setFocusable(true);
-	setFocusTraversalKeysEnabled(false);
 }
 
 public double[] getXLocation()
@@ -114,9 +110,8 @@ public void regainHealthP2()
 }
 
 public void paintComponent(Graphics g) {
-	super.paintComponent(g);
-	g.drawImage(tank1, dx, dy + 20, null);	
-	g.drawImage(tank2, dx2 + 530, dy2 + 280 - 10, null);
+	g.drawImage(tank1, dx, dy, null);	
+	g.drawImage(tank2, dx2, dy2, null);
 	
 	healthbar1.paintComponent(g);
 	healthbar2.paintComponent(g);
@@ -352,7 +347,9 @@ if(keypress[1] == true){//s
 			vely = -(Math.sqrt(6) + Math.sqrt(2))/4;
 			}
 }
- if(keypress[2] == true){//a
+ if(keypress[2] == true && keypress[3] == true){
+ }
+ else if(keypress[2] == true){//a
 	 delay++;
 	 if(delay == 5){
 	delay = 0;
@@ -361,10 +358,10 @@ if(keypress[1] == true){//s
 	if(counter == -24){
 		counter = 0;
 	}
-	affinetranform(degree, j); 
+	affinetransform(degree, j); 
 	 }
  }
- if(keypress[3] == true){//d
+ else if(keypress[3] == true){//d
 	 delay++;
 	 if(delay == 5){
 	delay = 0;
@@ -373,7 +370,7 @@ if(keypress[1] == true){//s
 	if(counter == 24){
 		counter = 0;
 	}
-	affinetranform(degree, j);	
+	affinetransform(degree, j);	
 	 }
  }
 //---------------------------------------------------------------------------------------	
@@ -574,7 +571,9 @@ if(keypress[6] == true){//down arrow
 				vely2 = -(Math.sqrt(6) + Math.sqrt(2))/4;
 		}
 }
-if(keypress[7] == true){
+if(keypress[7] == true && keypress[8] == true){
+}
+else if(keypress[7] == true){//left
 	delay2++;
 	if(delay2 == 5){
 	delay2 = 0;
@@ -583,10 +582,10 @@ if(keypress[7] == true){
 	if(counter2 == -24){
 		counter2 = 0;
 	}
-	affinetranform(degree2, k);	
+	affinetransform(degree2, k);	
 	}
 }
-if(keypress[8] == true){
+else if(keypress[8] == true){//right
 	delay2++;
 	if(delay2 == 5){
 	delay2 = 0;
@@ -595,39 +594,49 @@ if(keypress[8] == true){
 	if(counter2 == 24){
 		counter2 = 0;
 	}
-	affinetranform(degree2, k);
+	affinetransform(degree2, k);
 	}
 }
 //rust, changing velocity speed according to health
- if(health <= 70){
-	  j = 1;
-	  velspeed = .9;
-	   affinetranform(degree, j);
-		}
-	if(health <= 40){
-	  j = 2;
-	  velspeed = .8;
-	   affinetranform(degree, j);
+if(health > 70){
+	j = 0;
+	velspeed = 1;
+	affinetransform(degree, j);
+}
+if(health <= 70){
+	j = 1;
+	velspeed = .9;
+	affinetransform(degree, j);
+}
+if(health <= 40){
+	j = 2;
+	velspeed = .8;
+	affinetransform(degree, j);
 	}
-	if(health <= 10){
-	  j = 3;
-	  velspeed = .6;
-	   affinetranform(degree, j);
+if(health <= 10){
+	j = 3;
+	velspeed = .6;
+	affinetransform(degree, j);
 	}
-	if(health2 <= 70){
-	  k = 5;
-	  velspeed2 = .9;
-	   affinetranform(degree2, k);
-		}
-	if(health2 <= 40){
-	  k = 6;
-	  velspeed2 = .8;
-	   affinetranform(degree2, k);
+if(health2 > 70){
+	k = 4;
+	velspeed2 = 1;
+	affinetransform(degree2, k);
 	}
-	if(health2 <= 10){
-	  k = 7;
-	  velspeed2 = .6;
-	   affinetranform(degree2, k);
+if(health2 <= 70){
+	k = 5;
+	velspeed2 = .9;
+	affinetransform(degree2, k);
+	}
+if(health2 <= 40){
+	k = 6;
+	velspeed2 = .8;
+	affinetransform(degree2, k);
+	}
+if(health2 <= 10){
+	k = 7;
+	velspeed2 = .6;
+	affinetransform(degree2, k);
 	}
 	
 
@@ -643,9 +652,6 @@ dx = (int) x;
 dy = (int) y;
 dx2 = (int) x2;
 dy2 = (int) y2;
-
-repaint();
-
 }
 
 public void keyPressed(KeyEvent arg0) {
@@ -677,7 +683,7 @@ public void keyPressed(KeyEvent arg0) {
 	}
 
 //rotates image 
-public void affinetranform(double deg, int num){
+public void affinetransform(double deg, int num){
 	 AffineTransform transform = new AffineTransform();
 	 if(num <= 3){
 	 transform.rotate(deg, tank[num].getWidth()/2, tank[num].getHeight()/2);
@@ -730,16 +736,5 @@ public void keyReleased(KeyEvent e) {
 	}
 }
 
-
-public static void main (String arge[]) throws IOException{
-	JFrame frame = new JFrame();
-	TankMazePlayer player = new TankMazePlayer();
-	
-	frame.add(player);
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	frame.setSize(610,400);
-	frame.setVisible(true);
-
-}
 
 }
