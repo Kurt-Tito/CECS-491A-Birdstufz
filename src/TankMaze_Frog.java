@@ -74,12 +74,12 @@ public class TankMaze_Frog {
 	
 	public double getX()
 	{
-		return col*cellSize + cellSize/5;
+		return col*cellSize + cellSize/3;
 	}
 	
 	public double getY()
 	{
-		return row*cellSize + cellSize/5;
+		return row*cellSize + cellSize/3;
 	}
 	
 	public void concealFrog()
@@ -98,7 +98,7 @@ public class TankMaze_Frog {
 	
 	public void draw(Graphics2D g2, int x, int y)
 	{
-		g2.drawImage(currentImage(), col*cellSize + cellSize/5, row*cellSize + cellSize/5, null);
+		g2.drawImage(currentImage(), col*cellSize + cellSize/3, row*cellSize + cellSize/3, null);
 	}
 	
 	
