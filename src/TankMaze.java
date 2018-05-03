@@ -1,4 +1,5 @@
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -59,21 +60,17 @@ public class TankMaze {
 			mazeWalls.add(w);
 		}
 		
-		for(int i = 0; i < width; i++)
-		{	
-			TankMazeWall w = new TankMazeWall(i*TILE_SIZE - WALL_THICKNESS/2, 0 - WALL_THICKNESS/2, TILE_SIZE + WALL_THICKNESS/2, WALL_THICKNESS);
-			mazeWalls.add(w);
-			w = new TankMazeWall(i*TILE_SIZE - WALL_THICKNESS/2, TILE_SIZE * height - WALL_THICKNESS/2, TILE_SIZE + WALL_THICKNESS, WALL_THICKNESS);
-			mazeWalls.add(w);
-			
-		}
-		for(int i = 0; i < height; i++)
-		{
-			TankMazeWall w = new TankMazeWall(0 - WALL_THICKNESS/2, i*TILE_SIZE - WALL_THICKNESS/2, WALL_THICKNESS, TILE_SIZE + WALL_THICKNESS/2);
-			mazeWalls.add(w);
-			w = new TankMazeWall(TILE_SIZE * width - WALL_THICKNESS/2, i*TILE_SIZE - WALL_THICKNESS/2, WALL_THICKNESS, TILE_SIZE + WALL_THICKNESS);
-			mazeWalls.add(w);
-		}
+		//North and south border
+		TankMazeWall w = new TankMazeWall(0 - WALL_THICKNESS/2, 0 - WALL_THICKNESS/2, width * TILE_SIZE + WALL_THICKNESS, WALL_THICKNESS);
+		mazeWalls.add(w);
+		w = new TankMazeWall(0 - WALL_THICKNESS/2, TILE_SIZE * height - WALL_THICKNESS/2, width * TILE_SIZE + WALL_THICKNESS, WALL_THICKNESS);
+		mazeWalls.add(w);
+		
+		//East and west border
+		w = new TankMazeWall(0 - WALL_THICKNESS/2, 0 - WALL_THICKNESS/2, WALL_THICKNESS, height * TILE_SIZE + WALL_THICKNESS);
+		mazeWalls.add(w);
+		w = new TankMazeWall(TILE_SIZE * width - WALL_THICKNESS/2, 0 - WALL_THICKNESS/2, WALL_THICKNESS, height * TILE_SIZE + WALL_THICKNESS);
+		mazeWalls.add(w);
 		
 	}
 	
@@ -311,8 +308,6 @@ public class TankMaze {
 				}
 			}
 		}
-		System.out.println(edges.size());
-		
 		ArrayList<HashSet> regions = new ArrayList<HashSet>();
 		for(Node node: nodes)
 		{
@@ -354,6 +349,30 @@ public class TankMaze {
 		
 		paths.addAll(mazePaths);
 		walls.addAll(mazeWalls);
+	}
+	
+	public Point getCellCoordinate(int col, int row)
+	{
+		if(col >= 0 && row >= 0 && col < width && row < height)
+		{
+			return new Point(col * TILE_SIZE + (TILE_SIZE/2), row * TILE_SIZE + TILE_SIZE/2);
+		}
+		return null;
+	}
+	
+	public Point getCell(int col, int row)
+	{
+		if(col < width / TILE_SIZE && col > 0 && row < height / TILE_SIZE && row > 0)
+		{
+			return new Point(col / TILE_SIZE, row / TILE_SIZE);
+		}
+		return null;
+	}
+	
+	public Point getCenterInCell(int col, int row)
+	{
+		Point p = getCell(col, row);
+		return getCellCoordinate(p.x, p.y);
 	}
 	
 }

@@ -26,6 +26,8 @@ int rustcounter = 0, rustcounter2 = 0;
 TankHealth healthbar1 = new TankHealth(5, 5, "Player 1");
 TankHealth healthbar2 = new TankHealth(330, 330, "Player 2");
 
+TankProjectile projectile;
+
 Boolean[] keypress = {false, false, false, false, false, false, false, false, false, false};
 /* w = 0
  * s = 1
@@ -127,14 +129,31 @@ public void paintComponent(Graphics g) {
 
 public void draw(Graphics2D g2)
 {
-	g2.drawImage(tank1, dx, dy, null);	
+	g2.setColor(Color.black);
+	g2.fillRect(dx, dy - 5, 64, 5);
+	g2.setColor(Color.red);
+	g2.fillRect(dx, dy - 5, (int) (64 * (health/100.0)), 5);
+	g2.drawImage(tank1, dx, dy, null);
+	g2.setColor(Color.black);
+	g2.fillRect(dx2, dy2 - 5, 64, 5);
+	g2.setColor(Color.red);
+	g2.fillRect(dx2, dy2 - 5, (int) (64 * (health2/100.0)), 5);
 	g2.drawImage(tank2, dx2, dy2, null);
+	if(projectile != null && projectile.isActive())
+	{
+		projectile.draw(g2);
+	}
 }
 
 public void actionPerformed(ActionEvent e) {
 //rust counter relative to no keyboard input
 rustcounter++;
 rustcounter2++;
+
+if(projectile != null && projectile.isActive())
+{
+	projectile.update();
+}
 
 if(keypress[0] == true || keypress[1] == true || keypress[2] == true || keypress[3] == true || keypress[4] == true){
 rustcounter = 0;
@@ -143,7 +162,6 @@ if(rustcounter >= 100){
 	rustcounter = 0;
 	health-= 5;
 	healthbar1.takeDamage();
-	System.out.println("health: " +health);
 }
 
 if(keypress[5] == true || keypress[6] == true || keypress[7] == true || keypress[8] == true || keypress[9] == true){
@@ -153,9 +171,7 @@ if(rustcounter2 >= 100){
 	rustcounter2 = 0;
 	health2 -= 5;
 	healthbar2.takeDamage();
-	System.out.println("health2: " +health2);
 }
-
 //tank boundaries relative to frame size
 if(keypress[1] == true){//s
 	if(counter == 0){
@@ -723,6 +739,10 @@ public void keyReleased(KeyEvent e) {
 	if(keycode == 65){//a
     keypress[2] = false;
 	}
+	if(keycode == 32 && (projectile == null || !projectile.isActive()))
+	{
+		projectile = new TankProjectile(32 +dx, 32+dy, (degree - (Math.PI /2)));
+	}
 	else if(keycode == 68){//d
 	keypress[3] = false;
 	}
@@ -744,5 +764,9 @@ public void keyReleased(KeyEvent e) {
 	}
 }
 
+public boolean isCollision(Rectangle r)
+{
+	return false;
+}
 
 }

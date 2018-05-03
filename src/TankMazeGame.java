@@ -23,6 +23,7 @@ public class TankMazeGame implements ActionListener {
 	public void reset()
 	{
 		maze = new TankMaze();
+		TankProjectile.addWallColliders(maze.getMazeWalls());
 		t.restart();
 		try
 		{
@@ -52,6 +53,11 @@ public class TankMazeGame implements ActionListener {
 	public TankMazePlayer getPlayer()
 	{
 		return player;
+	}
+	
+	public TankMaze getMaze()
+	{
+		return maze;
 	}
 	
 	public int generateFrogSpawnTime()
