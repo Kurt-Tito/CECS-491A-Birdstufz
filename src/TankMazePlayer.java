@@ -1,11 +1,12 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Line2D;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -13,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class TankMazePlayer implements KeyListener {
-double x = 0, y = 0, x2 = 0, y2 = 0;
+double x = 0, y = 0, x2 = 500, y2 = 400;
 double velx = 0, vely = 0, velx2 = 0, vely2 = 0, degree = 0, degree2 = 0;
 double velspeed = 1, velspeed2 = 1;
 int dx = 0, dy = 0, dx2 = 0, dy2 = 0, j = 0, k = 4;
@@ -29,6 +30,10 @@ TankHealth healthbar2 = new TankHealth(330, 330, "Player 2");
 TankProjectile projectile;
 
 Boolean[] keypress = {false, false, false, false, false, false, false, false, false, false};
+
+
+TankMaze maze;
+ArrayList<TankMazeWall> wall;
 /* w = 0
  * s = 1
  * a = 2
@@ -41,7 +46,9 @@ Boolean[] keypress = {false, false, false, false, false, false, false, false, fa
  * enter = 9
  */
 
-public TankMazePlayer() throws IOException {
+public TankMazePlayer(TankMazeGame TankMaze) throws IOException {
+	maze = TankMaze.getMaze();
+	wall = maze.getMazeWalls();
 	for(int i = 0; i < 8; i++)
 	{
 		String tanks = "images/tankmaze/sprite_tank" + i + ".png";
@@ -139,6 +146,95 @@ public void draw(Graphics2D g2)
 	g2.setColor(Color.red);
 	g2.fillRect(dx2, dy2 - 5, (int) (64 * (health2/100.0)), 5);
 	g2.drawImage(tank2, dx2, dy2, null);
+	
+	//TR = Top Right, TL = Top Left, BL = Bottom Left, BR = Bottom Right
+	double TRx = 0, TRy = 0, TLx = 0, TLy = 0; 
+	double BLx = 0, BLy = 0, BRx = 0, BRy = 0;
+	double Cx = 0, Cy = 0; //center coordiinates
+				
+				
+	double TRx2 = 0, TRy2 = 0, TLx2 = 0, TLy2 = 0; 
+	double BLx2 = 0, BLy2 = 0, BRx2 = 0, BRy2 = 0;
+	double Cx2 = 0, Cy2 = 0;
+			
+	double hypoSmall = 0, hypo = 0;
+	double xs = x;
+	double ys = y;
+				
+			
+				 
+	double trigDegree = (degree - Math.PI/2)* -1, 
+			trigDegree2 = (degree2 - Math.PI/2) * -1;
+	double side = 64; 
+	double halfSide = side / 2;
+		
+	double theta1 = 0, theta2 = 0, theta3 = 0, theta4 = 0; //tank1
+	double theta1b = 0, theta2b = 0, theta3b = 0, theta4b = 0; //tank2
+			
+			
+			
+				
+	hypo = Math.sqrt(Math.pow((side)/2, 2) + Math.pow((side)/2, 2));
+	hypoSmall = Math.sqrt(Math.pow((44)/2, 2) + Math.pow((44)/2, 2));
+			
+			
+	Cx = (xs + hypo * Math.cos(Math.toRadians(-45)));
+	Cy = (ys + hypo * Math.cos(Math.toRadians(-45)));
+			
+				
+
+				
+		//Theta tank 1
+	theta1 = Math.atan((halfSide / halfSide)) - trigDegree; //Top Right
+	theta2 = theta1 + Math.toRadians(90); //Bottom Right
+	theta3 = theta1 + Math.toRadians(180); //Bottom Left
+	theta4 = theta1 + Math.toRadians(270); //Top Left
+				
+	//theta tank2
+	theta1b = Math.atan((halfSide / halfSide)) - trigDegree2; //Top Right
+	theta2b = theta1b + Math.toRadians(90); //Bottom Right
+	theta3b = theta1b + Math.toRadians(180); //Bottom Left
+	theta4b = theta1b + Math.toRadians(270); //Top Left
+				
+				
+			
+		//find center coordinates of sprite
+	Cx = (x + hypo * Math.cos(Math.toRadians(-45)));
+	Cy = (y + hypo * Math.cos(Math.toRadians(-45)));
+				
+	Cx2 = (x2 + hypo * Math.cos(Math.toRadians(-45)));
+	Cy2 = (y2 + hypo * Math.cos(Math.toRadians(-45)));
+				
+				
+				
+	TRx = (hypoSmall * Math.cos(theta1) + Cx); TRy = (hypoSmall * Math.sin(theta1) + Cy);
+	BRx = (hypoSmall * Math.cos(theta2) + Cx); BRy = (hypoSmall * Math.sin(theta2) + Cy);
+	BLx = (hypoSmall * Math.cos(theta3) + Cx); BLy = (hypoSmall * Math.sin(theta3) + Cy);
+	TLx = (hypoSmall * Math.cos(theta4) + Cx); TLy = (hypoSmall * Math.sin(theta4) + Cy);
+				
+	TRx2 = (hypoSmall * Math.cos(theta1b) + Cx2); TRy2 = (hypoSmall * Math.sin(theta1b) + Cy2);
+	BRx2 = (hypoSmall * Math.cos(theta2b) + Cx2); BRy2 = (hypoSmall * Math.sin(theta2b) + Cy2);
+	BLx2 = (hypoSmall * Math.cos(theta3b) + Cx2); BLy2 = (hypoSmall * Math.sin(theta3b) + Cy2);
+	TLx2 = (hypoSmall * Math.cos(theta4b) + Cx2); TLy2 = (hypoSmall * Math.sin(theta4b) + Cy2);
+			
+
+			
+	g2.setColor(Color.RED);
+	//tank1
+	g2.draw(new Line2D.Double(TLx, TLy, TRx, TRy));
+	g2.draw(new Line2D.Double(TRx, TRy, BRx, BRy));
+	g2.draw(new Line2D.Double(BRx, BRy, BLx, BLy));
+	g2.draw(new Line2D.Double(BLx, BLy, TLx, TLy));
+			
+			
+	g2.draw(new Line2D.Double(TLx2, TLy2, TRx2, TRy2));
+	g2.draw(new Line2D.Double(TRx2, TRy2, BRx2, BRy2));
+	g2.draw(new Line2D.Double(BRx2, BRy2, BLx2, BLy2));
+	g2.draw(new Line2D.Double(BLx2, BLy2, TLx2, TLy2));
+	
+	
+	
+	
 	if(projectile != null && projectile.isActive())
 	{
 		projectile.draw(g2);
@@ -383,6 +479,14 @@ if(keypress[1] == true){//s
 		counter = 0;
 	}
 	affinetransform(degree, j); 
+	if (isCollision1()) {
+		degree -= -(2*Math.PI/24);
+		counter++;
+		if(counter == 0){
+			counter = -24;
+		}
+		affinetransform(degree,j);
+	}
 	 }
  }
  else if(keypress[3] == true){//d
@@ -394,7 +498,15 @@ if(keypress[1] == true){//s
 	if(counter == 24){
 		counter = 0;
 	}
-	affinetransform(degree, j);	
+	affinetransform(degree, j);
+	if (isCollision1()) {
+		degree -= 2*Math.PI/24;
+		counter--;
+		if(counter == 0){
+			counter = 24;
+		}
+		affinetransform(degree,j);
+	}
 	 }
  }
 //---------------------------------------------------------------------------------------	
@@ -606,7 +718,15 @@ else if(keypress[7] == true){//left
 	if(counter2 == -24){
 		counter2 = 0;
 	}
-	affinetransform(degree2, k);	
+	affinetransform(degree2, k);
+	if (isCollision2()) {
+		degree -= 2*Math.PI/24;
+		counter--;
+		if(counter2 == 0){
+			counter2 = -24;
+		}
+		affinetransform(degree2,k);
+	}
 	}
 }
 else if(keypress[8] == true){//right
@@ -619,6 +739,14 @@ else if(keypress[8] == true){//right
 		counter2 = 0;
 	}
 	affinetransform(degree2, k);
+	if (isCollision2()) {
+		degree -= 2*Math.PI/24;
+		counter--;
+		if(counter2 == 0){
+			counter2 = 24;
+		}
+		affinetransform(degree2,k);
+	}
 	}
 }
 //rust, changing velocity speed according to health
@@ -676,6 +804,32 @@ dx = (int) x;
 dy = (int) y;
 dx2 = (int) x2;
 dy2 = (int) y2;
+if (tankCollision()) {
+	x -= velx;
+	y -= vely;
+	x2 -= velx2;
+	y2 -= vely2;
+	dx = (int) x;
+	dy = (int) y;
+	dx2 = (int) x2;
+	dy2 = (int) y2;
+	
+}
+if (isCollision1()) {
+	x -= velx;
+	y -= vely;
+	dx = (int) x;
+	dy = (int) y;
+}
+if (isCollision2()) {
+	x2 -= velx2;
+	y2 -= vely2;
+	dx2 = (int) x2;
+	dy2 = (int) y2;
+	
+}
+
+
 }
 
 public void keyPressed(KeyEvent arg0) {
@@ -764,9 +918,309 @@ public void keyReleased(KeyEvent e) {
 	}
 }
 
-public boolean isCollision(Rectangle r)
-{
-	return false;
+public boolean tankCollision() {
+	//tank1
+	Line2D line1 = new Line2D.Double();
+	Line2D line2 = new Line2D.Double();
+	Line2D line3 = new Line2D.Double();
+	Line2D line4 = new Line2D.Double();
+		
+		
+	//tank2
+	Line2D line1b = new Line2D.Double();
+	Line2D line2b = new Line2D.Double();
+	Line2D line3b = new Line2D.Double();
+	Line2D line4b = new Line2D.Double();
+		
+	//TR = Top Right, TL = Top Left, BL = Bottom Left, BR = Bottom Right
+	double TRx = 0, TRy = 0, TLx = 0, TLy = 0; 
+	double BLx = 0, BLy = 0, BRx = 0, BRy = 0;
+	double Cx = 0, Cy = 0; //center coordiinates
+		
+		
+	double TRx2 = 0, TRy2 = 0, TLx2 = 0, TLy2 = 0; 
+	double BLx2 = 0, BLy2 = 0, BRx2 = 0, BRy2 = 0;
+	double Cx2 = 0, Cy2 = 0;
+	
+	double hypoSmall = 0, hypo = 0;
+		
+	
+		 
+	double trigDegree = (degree - Math.PI/2)* -1, 
+			trigDegree2 = (degree2 - Math.PI/2) * -1;
+	double side = 64; 
+	double halfSide = side / 2;
+	
+	double theta1 = 0, theta2 = 0, theta3 = 0, theta4 = 0; //tank1
+	double theta1b = 0, theta2b = 0, theta3b = 0, theta4b = 0; //tank2
+	
+	
+	
+	//tank sprite (10,10) top left. bottom right (54,54) square
+	double tankLength = 44;
+	
+	hypo = Math.sqrt(Math.pow((side)/2, 2) + Math.pow((side)/2, 2));
+	hypoSmall = Math.sqrt(Math.pow((tankLength)/2, 2) + Math.pow((tankLength)/2, 2));
+	
+	//Theta tank 1
+	theta1 = Math.atan((halfSide / halfSide)) - trigDegree; //Top Right
+	theta2 = theta1 + Math.toRadians(90); //Bottom Right
+	theta3 = theta1 + Math.toRadians(180); //Bottom Left
+	theta4 = theta1 + Math.toRadians(270); //Top Left
+		
+	//theta tank2
+	theta1b = Math.atan((halfSide / halfSide)) - trigDegree2; //Top Right
+	theta2b = theta1b + Math.toRadians(90); //Bottom Right
+	theta3b = theta1b + Math.toRadians(180); //Bottom Left
+	theta4b = theta1b + Math.toRadians(270); //Top Left
+		
+		
+	
+	//find center coordinates of sprite
+	Cx = (x + hypo * Math.cos(Math.toRadians(-45)));
+	Cy = (y + hypo * Math.cos(Math.toRadians(-45)));
+		
+	Cx2 = (x2 + hypo * Math.cos(Math.toRadians(-45)));
+	Cy2 = (y2 + hypo * Math.cos(Math.toRadians(-45)));
+		
+		
+		
+	TRx = (hypoSmall * Math.cos(theta1) + Cx); TRy = (hypoSmall * Math.sin(theta1) + Cy);
+	BRx = (hypoSmall * Math.cos(theta2) + Cx); BRy = (hypoSmall * Math.sin(theta2) + Cy);
+	BLx = (hypoSmall * Math.cos(theta3) + Cx); BLy = (hypoSmall * Math.sin(theta3) + Cy);
+	TLx = (hypoSmall * Math.cos(theta4) + Cx); TLy = (hypoSmall * Math.sin(theta4) + Cy);
+		
+	TRx2 = (hypoSmall * Math.cos(theta1b) + Cx2); TRy2 = (hypoSmall * Math.sin(theta1b) + Cy2);
+	BRx2 = (hypoSmall * Math.cos(theta2b) + Cx2); BRy2 = (hypoSmall * Math.sin(theta2b) + Cy2);
+	BLx2 = (hypoSmall * Math.cos(theta3b) + Cx2); BLy2 = (hypoSmall * Math.sin(theta3b) + Cy2);
+	TLx2 = (hypoSmall * Math.cos(theta4b) + Cx2); TLy2 = (hypoSmall * Math.sin(theta4b) + Cy2);
+
+
+
+
+	
+	//tank1 
+	line1.setLine(TLx, TLy, TRx, TRy);
+	line2.setLine(TRx, TRy, BRx, BRy);
+	line3.setLine(BRx, BRy, BLx, BLy);
+	line4.setLine(BLx, BRy, TLx, TRy);
+	
+	line1b.setLine(TLx2, TLy2, TRx2, TRy2);
+	line2b.setLine(TRx2, TRy2, BRx2, BRy2);
+	line3b.setLine(BRx2, BRy2, BLx2, BLy2);
+	line4b.setLine(BLx2, BRy2, TLx2, TRy2);
+	
+	if (line1.intersectsLine(line1b) || line1.intersectsLine(line2b) || 
+			line1.intersectsLine(line3b) || line1.intersectsLine(line4b)) {
+		return true;
+	}
+	if (line2.intersectsLine(line1b) || line2.intersectsLine(line2b) || 
+			line2.intersectsLine(line3b) || line2.intersectsLine(line4b)) {
+		return true;
+	}
+	if (line3.intersectsLine(line1b) || line3.intersectsLine(line2b) || 
+			line3.intersectsLine(line3b) || line3.intersectsLine(line4b)) {
+		return true;
+	}
+	if (line4.intersectsLine(line1b) || line4.intersectsLine(line2b) || 
+			line4.intersectsLine(line3b) || line4.intersectsLine(line4b)) {
+		return true;
+	}
+	else {
+		return false;
+		
+	}
+		
+
+
+
+
+
+
 }
+
+//wall collision
+public boolean isCollision1() {
+	
+
+
+	//tank1
+	Line2D line1 = new Line2D.Double();
+	Line2D line2 = new Line2D.Double();
+	Line2D line3 = new Line2D.Double();
+	Line2D line4 = new Line2D.Double();
+			
+			
+	//tank2
+	Line2D line1b = new Line2D.Double();
+	Line2D line2b = new Line2D.Double();
+	Line2D line3b = new Line2D.Double();
+	Line2D line4b = new Line2D.Double();
+			
+	//TR = Top Right, TL = Top Left, BL = Bottom Left, BR = Bottom Right
+	double TRx = 0, TRy = 0, TLx = 0, TLy = 0; 
+	double BLx = 0, BLy = 0, BRx = 0, BRy = 0;
+	double Cx = 0, Cy = 0; //center coordiinates
+		
+			
+	double TRx2 = 0, TRy2 = 0, TLx2 = 0, TLy2 = 0; 
+	double BLx2 = 0, BLy2 = 0, BRx2 = 0, BRy2 = 0;
+	double Cx2 = 0, Cy2 = 0;
+		
+	double hypoSmall = 0, hypo = 0;
+		
+		
+			 
+	double trigDegree = (degree - Math.PI/2)* -1, 
+			trigDegree2 = (degree2 - Math.PI/2) * -1;
+	double side = 64; 
+	double halfSide = side / 2;
+		
+	double theta1 = 0, theta2 = 0, theta3 = 0, theta4 = 0; //tank1
+	double theta1b = 0, theta2b = 0, theta3b = 0, theta4b = 0; //tank2
+		
+		
+		
+	//tank sprite (10,10) top left. bottom right (54,54) square
+	double tankLength = 44;
+		
+	hypo = Math.sqrt(Math.pow((side)/2, 2) + Math.pow((side)/2, 2));
+	hypoSmall = Math.sqrt(Math.pow((tankLength)/2, 2) + Math.pow((tankLength)/2, 2));
+		
+	//Theta tank 1
+	theta1 = Math.atan((halfSide / halfSide)) - trigDegree; //Top Right
+	theta2 = theta1 + Math.toRadians(90); //Bottom Right
+	theta3 = theta1 + Math.toRadians(180); //Bottom Left
+	theta4 = theta1 + Math.toRadians(270); //Top Left
+			
+	//theta tank2
+	theta1b = Math.atan((halfSide / halfSide)) - trigDegree2; //Top Right
+	theta2b = theta1b + Math.toRadians(90); //Bottom Right
+	theta3b = theta1b + Math.toRadians(180); //Bottom Left
+	theta4b = theta1b + Math.toRadians(270); //Top Left
+			
+			
+		
+	//find center coordinates of sprite
+	Cx = (x + hypo * Math.cos(Math.toRadians(-45)));
+	Cy = (y + hypo * Math.cos(Math.toRadians(-45)));
+			
+	Cx2 = (x2 + hypo * Math.cos(Math.toRadians(-45)));
+	Cy2 = (y2 + hypo * Math.cos(Math.toRadians(-45)));
+			
+			
+	TRx = (hypoSmall * Math.cos(theta1) + Cx); TRy = (hypoSmall * Math.sin(theta1) + Cy);
+	BRx = (hypoSmall * Math.cos(theta2) + Cx); BRy = (hypoSmall * Math.sin(theta2) + Cy);
+	BLx = (hypoSmall * Math.cos(theta3) + Cx); BLy = (hypoSmall * Math.sin(theta3) + Cy);
+	TLx = (hypoSmall * Math.cos(theta4) + Cx); TLy = (hypoSmall * Math.sin(theta4) + Cy);
+			
+	TRx2 = (hypoSmall * Math.cos(theta1b) + Cx2); TRy2 = (hypoSmall * Math.sin(theta1b) + Cy2);
+	BRx2 = (hypoSmall * Math.cos(theta2b) + Cx2); BRy2 = (hypoSmall * Math.sin(theta2b) + Cy2);
+	BLx2 = (hypoSmall * Math.cos(theta3b) + Cx2); BLy2 = (hypoSmall * Math.sin(theta3b) + Cy2);
+	TLx2 = (hypoSmall * Math.cos(theta4b) + Cx2); TLy2 = (hypoSmall * Math.sin(theta4b) + Cy2);
+
+
+
+
+		
+	//tank1 
+	line1.setLine(TLx, TLy, TRx, TRy);
+	line2.setLine(TRx, TRy, BRx, BRy);
+	line3.setLine(BRx, BRy, BLx, BLy);
+	line4.setLine(BLx, BRy, TLx, TRy);
+		
+	line1b.setLine(TLx2, TLy2, TRx2, TRy2);
+	line2b.setLine(TRx2, TRy2, BRx2, BRy2);
+	line3b.setLine(BRx2, BRy2, BLx2, BLy2);
+	line4b.setLine(BLx2, BRy2, TLx2, TRy2);
+	
+	
+	
+	for (int i = 0; i < wall.size(); i++) {
+		if (wall.get(i).intersectsLine(line1) || wall.get(i).intersectsLine(line2) 
+				|| wall.get(i).intersectsLine(line3) || wall.get(i).intersectsLine(line4)) {
+			return true;
+			
+		}
+		
+		
+		
+	}
+	return false;
+
+}
+
+//wall collision
+public boolean isCollision2() {
+	
+
+
+	//tank2
+	Line2D line1b = new Line2D.Double();
+	Line2D line2b = new Line2D.Double();
+	Line2D line3b = new Line2D.Double();
+	Line2D line4b = new Line2D.Double();
+			
+	//TR = Top Right, TL = Top Left, BL = Bottom Left, BR = Bottom Right
+		
+			
+	double TRx2 = 0, TRy2 = 0, TLx2 = 0, TLy2 = 0; 
+	double BLx2 = 0, BLy2 = 0, BRx2 = 0, BRy2 = 0;
+	double Cx2 = 0, Cy2 = 0;
+		
+	double hypoSmall = 0, hypo = 0;
+		
+		
+			 
+	double trigDegree2 = (degree2 - Math.PI/2) * -1;
+	double side = 64; 
+	double halfSide = side / 2;
+		
+	double theta1 = 0, theta2 = 0, theta3 = 0, theta4 = 0; //tank1
+	double theta1b = 0, theta2b = 0, theta3b = 0, theta4b = 0; //tank2
+		
+		
+		
+	//tank sprite (10,10) top left. bottom right (54,54) square
+	double tankLength = 44;
+		
+	hypo = Math.sqrt(Math.pow((side)/2, 2) + Math.pow((side)/2, 2));
+	hypoSmall = Math.sqrt(Math.pow((tankLength)/2, 2) + Math.pow((tankLength)/2, 2));
+
+	//theta tank2
+	theta1b = Math.atan((halfSide / halfSide)) - trigDegree2; //Top Right
+	theta2b = theta1b + Math.toRadians(90); //Bottom Right
+	theta3b = theta1b + Math.toRadians(180); //Bottom Left
+	theta4b = theta1b + Math.toRadians(270); //Top Left
+
+			
+	Cx2 = (x2 + hypo * Math.cos(Math.toRadians(-45)));
+	Cy2 = (y2 + hypo * Math.cos(Math.toRadians(-45)));
+		
+			
+	TRx2 = (hypoSmall * Math.cos(theta1b) + Cx2); TRy2 = (hypoSmall * Math.sin(theta1b) + Cy2);
+	BRx2 = (hypoSmall * Math.cos(theta2b) + Cx2); BRy2 = (hypoSmall * Math.sin(theta2b) + Cy2);
+	BLx2 = (hypoSmall * Math.cos(theta3b) + Cx2); BLy2 = (hypoSmall * Math.sin(theta3b) + Cy2);
+	TLx2 = (hypoSmall * Math.cos(theta4b) + Cx2); TLy2 = (hypoSmall * Math.sin(theta4b) + Cy2);
+		
+	line1b.setLine(TLx2, TLy2, TRx2, TRy2);
+	line2b.setLine(TRx2, TRy2, BRx2, BRy2);
+	line3b.setLine(BRx2, BRy2, BLx2, BLy2);
+	line4b.setLine(BLx2, BRy2, TLx2, TRy2);
+	
+	
+	
+	for (int i = 0; i < wall.size(); i++) {
+		if (wall.get(i).intersectsLine(line1b) || wall.get(i).intersectsLine(line2b) 
+				|| wall.get(i).intersectsLine(line3b) || wall.get(i).intersectsLine(line4b)) {
+			return true;
+			
+		}
+			
+	}
+	return false;
+	
+}
+
 
 }

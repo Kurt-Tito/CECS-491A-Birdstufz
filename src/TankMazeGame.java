@@ -27,7 +27,7 @@ public class TankMazeGame implements ActionListener {
 		t.restart();
 		try
 		{
-			player = new TankMazePlayer();
+			player = new TankMazePlayer(this);
 			frog = new TankMaze_Frog(90);
 			
 			frog.concealFrog();
