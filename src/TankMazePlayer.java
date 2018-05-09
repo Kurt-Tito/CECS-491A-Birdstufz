@@ -472,41 +472,47 @@ if(keypress[1] == true){//s
  else if(keypress[2] == true){//a
 	 delay++;
 	 if(delay == 5){
-	delay = 0;
-	degree += -(2*Math.PI/24);
-	counter--;
-	if(counter == -24){
-		counter = 0;
-	}
-	affinetransform(degree, j); 
-	if (isCollision1()) {
-		degree -= -(2*Math.PI/24);
-		counter++;
-		if(counter == 0){
-			counter = -24;
+		delay = 0;
+		if (checkCollision(x, y)) {
+			degree -= -(2*Math.PI/24);
+			counter++;
+			if(counter == 0){
+				counter = -24;
+			}
+			affinetransform(degree,j);
 		}
-		affinetransform(degree,j);
-	}
+		else {
+			degree += -(2*Math.PI/24);
+			counter--;
+			if(counter == -24){
+				counter = 0;
+			}
+			affinetransform(degree, j); 
+		}
+	
 	 }
  }
  else if(keypress[3] == true){//d
 	 delay++;
 	 if(delay == 5){
-	delay = 0;
-	degree += 2*Math.PI/24;
-	counter++;
-	if(counter == 24){
-		counter = 0;
-	}
-	affinetransform(degree, j);
-	if (isCollision1()) {
-		degree -= 2*Math.PI/24;
-		counter--;
-		if(counter == 0){
-			counter = 24;
+		delay = 0;
+		if (checkCollision(x, y)) {
+			degree -= 2*Math.PI/24;
+			counter--;
+			if(counter == 0){
+				counter = 24;
+			}
+			affinetransform(degree,j);
 		}
-		affinetransform(degree,j);
-	}
+		else {
+			degree += 2*Math.PI/24;
+			counter++;
+			if(counter == 24){
+				counter = 0;
+			}
+			affinetransform(degree, j);
+		}
+	
 	 }
  }
 //---------------------------------------------------------------------------------------	
@@ -712,41 +718,46 @@ if(keypress[7] == true && keypress[8] == true){
 else if(keypress[7] == true){//left
 	delay2++;
 	if(delay2 == 5){
-	delay2 = 0;
-	degree2 += -(2*Math.PI/24);
-	counter2--;
-	if(counter2 == -24){
-		counter2 = 0;
-	}
-	affinetransform(degree2, k);
-	if (isCollision2()) {
-		degree -= 2*Math.PI/24;
-		counter--;
-		if(counter2 == 0){
-			counter2 = -24;
+		delay2 = 0;
+		if (checkCollision2(x2, y2)) {
+			degree2 -= -(2*Math.PI/24);
+			counter2++;
+			if(counter2 == 0){
+				counter2 = -24;
+			}
+			affinetransform(degree2,k);
 		}
-		affinetransform(degree2,k);
-	}
+		else {
+			degree2 += -(2*Math.PI/24);
+			counter2--;
+			if(counter2 == -24){
+				counter2 = 0;
+			}
+			affinetransform(degree2, k); 
+		}
 	}
 }
 else if(keypress[8] == true){//right
 	delay2++;
 	if(delay2 == 5){
-	delay2 = 0;
-	degree2 += 2*Math.PI/24;
-	counter2++;
-	if(counter2 == 24){
-		counter2 = 0;
-	}
-	affinetransform(degree2, k);
-	if (isCollision2()) {
-		degree -= 2*Math.PI/24;
-		counter--;
-		if(counter2 == 0){
-			counter2 = 24;
+		delay2 = 0;
+		if (checkCollision2(x2, y2)) {
+			degree2 -= 2*Math.PI/24;
+			counter2--;
+			if(counter2 == 0){
+				counter2 = 24;
+			}
+			affinetransform(degree2,k);
 		}
-		affinetransform(degree2,k);
-	}
+		else {
+			degree2 += 2*Math.PI/24;
+			counter2++;
+			if(counter2 == 24){
+				counter2 = 0;
+			}
+			affinetransform(degree2, k);
+		}
+	
 	}
 }
 //rust, changing velocity speed according to health
@@ -791,7 +802,7 @@ if(health2 <= 10){
 	affinetransform(degree2, k);
 	}
 	
-
+/*
 velx = velx * velspeed;
 vely = vely * velspeed;
 velx2 = velx2 * velspeed2;
@@ -828,6 +839,60 @@ if (isCollision2()) {
 	dy2 = (int) y2;
 	
 }
+*/
+
+
+
+/////////////////////////////////////////////////////////////////////////////////
+velx = velx * velspeed;
+vely = vely * velspeed;
+velx2 = velx2 * velspeed2;
+vely2 = vely2 * velspeed2;
+if (checkCollision(x + velx, y + vely)) {
+	x -= velx;
+	y -= vely;
+	dx = (int) x;
+	dy = (int) y;
+	
+}
+
+if (checkCollision2(x2 + velx2, y2 + vely2)) {
+	x2 -= velx2;
+	y2 -= vely2;
+	dx2 = (int) x2;
+	dy2 = (int) y2;
+	
+}
+
+
+x += velx;
+y += vely;
+x2 += velx2;
+y2 += vely2;
+
+if (tankCollision()) {
+	x -= velx;
+	y -= vely;
+	x2 -= velx2;
+	y2 -= vely2;
+	dx = (int) x;
+	dy = (int) y;
+	dx2 = (int) x2;
+	dy2 = (int) y2;
+	
+}
+
+
+
+dx = (int) x;
+dy = (int) y;
+dx2 = (int) x2;
+dy2 = (int) y2;
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
 
 
 }
@@ -1039,6 +1104,9 @@ public boolean tankCollision() {
 
 }
 
+
+/*
+
 //wall collision
 public boolean isCollision1() {
 	
@@ -1221,6 +1289,162 @@ public boolean isCollision2() {
 	return false;
 	
 }
+*/
 
+///////////////////////////////////////////////////////////////////////////////
+//wall collision
+public boolean checkCollision(double xFuture, double yFuture) {
+
+	//tank1
+	Line2D line1 = new Line2D.Double();
+	Line2D line2 = new Line2D.Double();
+	Line2D line3 = new Line2D.Double();
+	Line2D line4 = new Line2D.Double();
+			
+			
+	
+			
+	//TR = Top Right, TL = Top Left, BL = Bottom Left, BR = Bottom Right
+	double TRx = 0, TRy = 0, TLx = 0, TLy = 0; 
+	double BLx = 0, BLy = 0, BRx = 0, BRy = 0;
+	double Cx = 0, Cy = 0; //center coordiinates
+		
+			
+		
+	double hypoSmall = 0, hypo = 0;
+		
+		
+			 
+	double trigDegree = (degree - Math.PI/2)* -1;
+	double side = 64; 
+	double halfSide = side / 2;
+		
+	double theta1 = 0, theta2 = 0, theta3 = 0, theta4 = 0; //tank1
+		
+		
+	//tank sprite (10,10) top left. bottom right (54,54) square
+	double tankLength = 44;
+		
+	hypo = Math.sqrt(Math.pow((side)/2, 2) + Math.pow((side)/2, 2));
+	hypoSmall = Math.sqrt(Math.pow((tankLength)/2, 2) + Math.pow((tankLength)/2, 2));
+		
+	//Theta tank 1
+	theta1 = Math.atan((halfSide / halfSide)) - trigDegree; //Top Right
+	theta2 = theta1 + Math.toRadians(90); //Bottom Right
+	theta3 = theta1 + Math.toRadians(180); //Bottom Left
+	theta4 = theta1 + Math.toRadians(270); //Top Left
+			
+			
+			
+		
+	//find center coordinates of sprite
+	Cx = (xFuture + hypo * Math.cos(Math.toRadians(-45)));
+	Cy = (yFuture + hypo * Math.cos(Math.toRadians(-45)));
+			
+			
+	TRx = (hypoSmall * Math.cos(theta1) + Cx); TRy = (hypoSmall * Math.sin(theta1) + Cy);
+	BRx = (hypoSmall * Math.cos(theta2) + Cx); BRy = (hypoSmall * Math.sin(theta2) + Cy);
+	BLx = (hypoSmall * Math.cos(theta3) + Cx); BLy = (hypoSmall * Math.sin(theta3) + Cy);
+	TLx = (hypoSmall * Math.cos(theta4) + Cx); TLy = (hypoSmall * Math.sin(theta4) + Cy);
+			
+
+
+
+
+		
+	//tank1 
+	line1.setLine(TLx, TLy, TRx, TRy);
+	line2.setLine(TRx, TRy, BRx, BRy);
+	line3.setLine(BRx, BRy, BLx, BLy);
+	line4.setLine(BLx, BRy, TLx, TRy);
+		
+	
+	
+	
+	for (int i = 0; i < wall.size(); i++) {
+		if (wall.get(i).intersectsLine(line1) || wall.get(i).intersectsLine(line2) 
+				|| wall.get(i).intersectsLine(line3) || wall.get(i).intersectsLine(line4)) {
+			return true;
+			
+		}
+		
+		
+		
+	}
+	return false;
+
+}
+
+//wall collision
+public boolean checkCollision2(double xFuture, double yFuture) {
+	
+
+
+	//tank2
+	Line2D line1b = new Line2D.Double();
+	Line2D line2b = new Line2D.Double();
+	Line2D line3b = new Line2D.Double();
+	Line2D line4b = new Line2D.Double();
+			
+	//TR = Top Right, TL = Top Left, BL = Bottom Left, BR = Bottom Right
+		
+			
+	double TRx2 = 0, TRy2 = 0, TLx2 = 0, TLy2 = 0; 
+	double BLx2 = 0, BLy2 = 0, BRx2 = 0, BRy2 = 0;
+	double Cx2 = 0, Cy2 = 0;
+		
+	double hypoSmall = 0, hypo = 0;
+		
+		
+			 
+	double trigDegree2 = (degree2 - Math.PI/2) * -1;
+	double side = 64; 
+	double halfSide = side / 2;
+		
+	double theta1b = 0, theta2b = 0, theta3b = 0, theta4b = 0; //tank2
+		
+		
+		
+	//tank sprite (10,10) top left. bottom right (54,54) square
+	double tankLength = 44;
+		
+	hypo = Math.sqrt(Math.pow((side)/2, 2) + Math.pow((side)/2, 2));
+	hypoSmall = Math.sqrt(Math.pow((tankLength)/2, 2) + Math.pow((tankLength)/2, 2));
+
+	//theta tank2
+	theta1b = Math.atan((halfSide / halfSide)) - trigDegree2; //Top Right
+	theta2b = theta1b + Math.toRadians(90); //Bottom Right
+	theta3b = theta1b + Math.toRadians(180); //Bottom Left
+	theta4b = theta1b + Math.toRadians(270); //Top Left
+
+			
+	Cx2 = (xFuture + hypo * Math.cos(Math.toRadians(-45)));
+	Cy2 = (yFuture + hypo * Math.cos(Math.toRadians(-45)));
+		
+			
+	TRx2 = (hypoSmall * Math.cos(theta1b) + Cx2); TRy2 = (hypoSmall * Math.sin(theta1b) + Cy2);
+	BRx2 = (hypoSmall * Math.cos(theta2b) + Cx2); BRy2 = (hypoSmall * Math.sin(theta2b) + Cy2);
+	BLx2 = (hypoSmall * Math.cos(theta3b) + Cx2); BLy2 = (hypoSmall * Math.sin(theta3b) + Cy2);
+	TLx2 = (hypoSmall * Math.cos(theta4b) + Cx2); TLy2 = (hypoSmall * Math.sin(theta4b) + Cy2);
+		
+	line1b.setLine(TLx2, TLy2, TRx2, TRy2);
+	line2b.setLine(TRx2, TRy2, BRx2, BRy2);
+	line3b.setLine(BRx2, BRy2, BLx2, BLy2);
+	line4b.setLine(BLx2, BRy2, TLx2, TRy2);
+	
+	
+	
+	for (int i = 0; i < wall.size(); i++) {
+		if (wall.get(i).intersectsLine(line1b) || wall.get(i).intersectsLine(line2b) 
+				|| wall.get(i).intersectsLine(line3b) || wall.get(i).intersectsLine(line4b)) {
+			return true;
+			
+		}
+			
+	}
+	return false;
+	
+}
+///////////////////////////////////////////////////////////////////////////////
 
 }
