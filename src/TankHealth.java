@@ -42,7 +42,7 @@ public class TankHealth extends JPanel{
 	{	
 		HEALTH -= DAMAGE;
 		
-		if(HEALTH == 0)
+		if(HEALTH <= 0)
 			DAMAGE = 0;
 	}
 	

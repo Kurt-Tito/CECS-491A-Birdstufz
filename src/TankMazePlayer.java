@@ -127,7 +127,7 @@ public void regainHealthP1()
 	health = 100;	
 	}
 	else if(health < 95){
-		health += 10;
+		health += 20;
 	}
 }
 
@@ -137,7 +137,7 @@ public void regainHealthP2()
 		health2 = 100;
 	}
 	else if(health < 95){
-		health2 += 10;
+		health2 += 20;
 	}
 }
 
@@ -892,6 +892,15 @@ if (isCollision2()) {
 				projectile2.setActive(false);
 			}
 		}
+	}
+	
+	if(health < 0)
+	{
+		health = 0;
+	}
+	else if(health2 < 0)
+	{
+		health2 = 0;
 	}
 
 }
