@@ -26,6 +26,12 @@ public class TankProjectile {
 	private Point2D[] points = new Point2D[4];
 	private double[] angles = new double[4];
 	private Line2D[] lines = new Line2D[4];
+	
+	private int collisionPoint_x;
+	private int collisionPoint_y;
+	
+	private boolean spawnBunny = false;
+	
 	static
 	{
 		try
@@ -126,8 +132,6 @@ public class TankProjectile {
 		
 	}
 	
-	
-	
 	private void drawLine(Graphics2D g2, Line2D l)
 	{
 		g2.drawLine((int)l.getX1(), (int)l.getY1(), (int)l.getX2(), (int)l.getY2());
@@ -161,7 +165,41 @@ public class TankProjectile {
 		if(isColliding)
 		{
 			active = false;
+			
+			collisionPoint_x = (int) x;
+			collisionPoint_y = (int) y;
+			
+			spawnBunny = true;
 		}
 			
+	}
+	
+	public Line2D getProjectile(int i)
+	{
+		return lines[i];
+	}
+	
+	
+	public int getProjectileLength()
+	{
+		return lines.length;
+	}
+	
+	public void setActive(boolean f)
+	{
+		if(f == true)
+			active = true;
+		if(f == false)
+			active = false;
+	}
+	
+	public int getCollisionPointX()
+	{
+		return collisionPoint_x;
+	}
+	
+	public int getCollisionPointY()
+	{
+		return collisionPoint_y;
 	}
 }
