@@ -102,7 +102,7 @@ public class TankMaze_Bunny {
 			{	// Animation Components
 				delay++;
 				
-				if(delay == 25)
+				if(delay == 150)
 				{
 					frame++;
 					walk += cellSize/8;
@@ -122,7 +122,7 @@ public class TankMaze_Bunny {
 			{
 				delay++;
 				
-				if(delay == 25)
+				if(delay == 150)
 				{
 					frame++;
 					walk -= cellSize/8;
@@ -142,7 +142,7 @@ public class TankMaze_Bunny {
 			{
 				delay++;
 				
-				if(delay == 25)
+				if(delay == 150)
 				{
 					frame++;
 					walk += 10;
@@ -162,7 +162,7 @@ public class TankMaze_Bunny {
 			{
 				delay++;
 				
-				if(delay == 25)
+				if(delay == 150)
 				{
 					frame++;
 					walk -= 10;

@@ -34,8 +34,9 @@ TankProjectile projectile2;
 Line2D[] P1collisionLines;
 Line2D[] P2collisionLines;
 
-TankMaze_Bunny bunny;
+TankMaze_Bunny bunny, bunny2;
 public boolean bunnyIsWalking = false;
+public boolean bunnyIsWalking2 = false;
 
 Line2D line1_g;
 Line2D line2_g;
@@ -194,12 +195,13 @@ public void draw(Graphics2D g2)
 		projectile2.draw(g2);
 	}
 	
+	checkBunny();
 	if(bunny != null)
 	{
 		bunny.draw(g2, 0, 0);
 	}
 	
-	checkBunny();
+	//checkBunny();
 	
 	if(bunny == null)
 	{
@@ -210,6 +212,24 @@ public void draw(Graphics2D g2)
 	{
 		//System.out.println("Bunny is ALIVE");
 		bunnyIsWalking = true;
+	}
+	
+	checkBunny2();
+	if(bunny2 != null)
+	{
+		bunny2.draw(g2, 0, 0);
+	}
+	
+	
+	if(bunny2 == null)
+	{
+		//System.out.println("Bunny is DEAD");
+		bunnyIsWalking2 = false;
+	}
+	else if(bunny2 != null)
+	{
+		//System.out.println("Bunny is ALIVE");
+		bunnyIsWalking2 = true;
 	}
 	
 	/////////////////////////////////////
@@ -320,10 +340,6 @@ public void draw(Graphics2D g2)
 	bunnyLine3.setLine(BRx2, BRy2, BLx2, BLy2);
 	bunnyLine4.setLine(BLx2, BRy2, TLx2, TRy2);
 	
-	g2.draw(new Line2D.Double(TLx2, TLy2, TRx2, TRy2));
-	g2.draw(new Line2D.Double(TRx2, TRy2, BRx2, BRy2));
-	g2.draw(new Line2D.Double(BRx2, BRy2, BLx2, BLy2));
-	g2.draw(new Line2D.Double(BLx2, BRy2, TLx2, TRy2));
 	
 }
 
@@ -906,7 +922,10 @@ if (checkCollision(x + velx, y + vely) || tankCollision() || (bunny != null && t
 	
 }
 
-if (checkCollision2(x2 + velx2, y2 + vely2) || tankCollision()) {
+
+
+if (checkCollision2(x2 + velx2, y2 + vely2) || tankCollision() || (bunny2 != null && tankToBunnyCollisionP2(bunny2.getX(), bunny2.getY()) == true)) {
+	System.out.println("tank 2 colliding");
 	x2 -= velx2;
 	y2 -= vely2;
 	dx2 = (int) x2;
@@ -1359,6 +1378,7 @@ public void checkBunny()
 		
 	}
 	
+	
 	if(bunny != null && (bunny.walk < -900	 || bunny.walk > 900))
 	{
 		//if(bunny.walk > 500)
@@ -1368,12 +1388,41 @@ public void checkBunny()
 
 	}
 	
+	
 	if(bunny != null && checkCollisionBunnyP1(bunny.getX(), bunny.getY()) == true)
 	{
 		bunny = null;
 		projectile.setSpawnBunny(false);
 
 	}
+}
+
+public void checkBunny2() {
+	if(projectile2 != null && bunny2 == null && projectile2.spawnBunny() == true)
+	{
+		bunny2 = new TankMaze_Bunny(90, projectile2.getCollisionPointX()/90, projectile2.getCollisionPointY()/90);
+		//projectile.setSpawn(false);
+		//bunnyIsWalking = true;
+		
+	}
+	
+	
+	if(bunny2 != null && (bunny2.walk < -900	 || bunny2.walk > 900))
+	{
+		//if(bunny.walk > 500)
+		bunny2 = null;
+		projectile2.setSpawnBunny(false);
+		//bunnyIsWalking = false;
+
+	}
+	
+	if(bunny2 != null && checkCollisionBunnyP1(bunny2.getX(), bunny2.getY()) == true)
+	{
+		bunny2 = null;
+		projectile2.setSpawnBunny(false);
+
+	}
+	
 }
 
 
@@ -1424,6 +1473,8 @@ public boolean checkCollisionBunnyP1(double xFuture, double yFuture) {
 	//find center coordinates of sprite
 	Cx = (xFuture + hypo * Math.cos(Math.toRadians(-45)));
 	Cy = (yFuture + hypo * Math.cos(Math.toRadians(-45)));
+	
+	
 			
 			
 	TRx = (hypoSmall * Math.cos(theta1) + Cx); TRy = (hypoSmall * Math.sin(theta1) + Cy);
@@ -1525,7 +1576,7 @@ public boolean tankToBunnyCollisionP1(double inx, double iny) {
 	Cy = (y + hypo * Math.cos(Math.toRadians(-45)));
 		
 	Cx2 = (inx + hypo * Math.cos(Math.toRadians(-45)));
-	Cy2 = (inx + hypo * Math.cos(Math.toRadians(-45)));
+	Cy2 = ( + hypo * Math.cos(Math.toRadians(-45)));
 		
 		
 		
@@ -1578,6 +1629,122 @@ public boolean tankToBunnyCollisionP1(double inx, double iny) {
 	}
 	if (line4_g.intersectsLine(bunnyLine1) || line4_g.intersectsLine(bunnyLine2) || 
 			line4_g.intersectsLine(bunnyLine3) || line4_g.intersectsLine(bunnyLine4)) {
+		return true;
+	}
+	else {
+		return false;
+		
+	}
+		
+}
+
+public boolean tankToBunnyCollisionP2(double inx, double iny) {
+	
+	
+	//tank2
+	line1b_g = new Line2D.Double();
+	line2b_g = new Line2D.Double();
+	line3b_g = new Line2D.Double();
+	line4b_g = new Line2D.Double();
+		
+	//TR = Top Right, TL = Top Left, BL = Bottom Left, BR = Bottom Right
+	double TRx = 0, TRy = 0, TLx = 0, TLy = 0; 
+	double BLx = 0, BLy = 0, BRx = 0, BRy = 0;
+	double Cx = 0, Cy = 0; //center coordiinates
+		
+		
+	double TRx2 = 0, TRy2 = 0, TLx2 = 0, TLy2 = 0; 
+	double BLx2 = 0, BLy2 = 0, BRx2 = 0, BRy2 = 0;
+	double Cx2 = 0, Cy2 = 0;
+	
+	double hypoSmall = 0, hypo = 0;
+		
+	
+		 
+	double trigDegree = (degree - Math.PI/2)* -1, 
+			trigDegree2 = (degree2 - Math.PI/2) * -1;
+	double side = 64; 
+	double halfSide = side / 2;
+	
+	double theta1 = 0, theta2 = 0, theta3 = 0, theta4 = 0; //tank1
+	double theta1b = 0, theta2b = 0, theta3b = 0, theta4b = 0; //tank2
+	
+	
+	
+	//tank sprite (10,10) top left. bottom right (54,54) square
+	double tankLength = 44;
+	
+	hypo = Math.sqrt(Math.pow((side)/2, 2) + Math.pow((side)/2, 2));
+	hypoSmall = Math.sqrt(Math.pow((tankLength)/2, 2) + Math.pow((tankLength)/2, 2));
+	
+	//Theta tank 1
+	theta1 = Math.atan((halfSide / halfSide)) - trigDegree; //Top Right
+	theta2 = theta1 + Math.toRadians(90); //Bottom Right
+	theta3 = theta1 + Math.toRadians(180); //Bottom Left
+	theta4 = theta1 + Math.toRadians(270); //Top Left
+		
+	//theta tank2
+	theta1b = Math.atan((halfSide / halfSide)) - trigDegree2; //Top Right
+	theta2b = theta1b + Math.toRadians(90); //Bottom Right
+	theta3b = theta1b + Math.toRadians(180); //Bottom Left
+	theta4b = theta1b + Math.toRadians(270); //Top Left
+		
+		
+	
+	//find center coordinates of sprite
+	Cx = (inx + hypo * Math.cos(Math.toRadians(-45)));
+	Cy = (iny + hypo * Math.cos(Math.toRadians(-45)));
+		
+	Cx2 = (x2 + hypo * Math.cos(Math.toRadians(-45)));
+	Cy2 = (y2 + hypo * Math.cos(Math.toRadians(-45)));
+		
+		
+		
+	TRx = (hypo * Math.cos(theta1) + Cx); TRy = (hypo * Math.sin(theta1) + Cy);
+	BRx = (hypo * Math.cos(theta2) + Cx); BRy = (hypo * Math.sin(theta2) + Cy);
+	BLx = (hypo * Math.cos(theta3) + Cx); BLy = (hypo * Math.sin(theta3) + Cy);
+	TLx = (hypo * Math.cos(theta4) + Cx); TLy = (hypo * Math.sin(theta4) + Cy);
+		
+	TRx2 = (hypoSmall * Math.cos(theta1b) + Cx2); TRy2 = (hypoSmall * Math.sin(theta1b) + Cy2);
+	BRx2 = (hypoSmall * Math.cos(theta2b) + Cx2); BRy2 = (hypoSmall * Math.sin(theta2b) + Cy2);
+	BLx2 = (hypoSmall * Math.cos(theta3b) + Cx2); BLy2 = (hypoSmall * Math.sin(theta3b) + Cy2);
+	TLx2 = (hypoSmall * Math.cos(theta4b) + Cx2); TLy2 = (hypoSmall * Math.sin(theta4b) + Cy2);
+
+
+
+
+	
+
+	
+	line1b_g.setLine(TLx2, TLy2, TRx2, TRy2);
+	line2b_g.setLine(TRx2, TRy2, BRx2, BRy2);
+	line3b_g.setLine(BRx2, BRy2, BLx2, BLy2);
+	line4b_g.setLine(BLx2, BRy2, TLx2, TRy2);
+	
+	Line2D bunnyLine1 = new Line2D.Double();
+	Line2D bunnyLine2 = new Line2D.Double();
+	Line2D bunnyLine3 = new Line2D.Double();
+	Line2D bunnyLine4 = new Line2D.Double();
+	
+	bunnyLine1.setLine(TLx, TLy, TRx, TRy);
+	bunnyLine2.setLine(TRx, TRy, BRx, BRy);
+	bunnyLine3.setLine(BRx, BRy, BLx, BLy);
+	bunnyLine4.setLine(BLx, BRy, TLx, TRy);
+	
+	if (line1b_g.intersectsLine(bunnyLine1) || line1b_g.intersectsLine(bunnyLine2) || 
+			line1b_g.intersectsLine(bunnyLine3) || line1b_g.intersectsLine(bunnyLine4)) {
+		return true;
+	}
+	if (line2b_g.intersectsLine(bunnyLine1) || line2b_g.intersectsLine(bunnyLine2) || 
+			line2b_g.intersectsLine(bunnyLine3) || line2b_g.intersectsLine(bunnyLine4)) {
+		return true;
+	}
+	if (line3b_g.intersectsLine(bunnyLine1) || line3b_g.intersectsLine(bunnyLine2) || 
+			line3b_g.intersectsLine(bunnyLine3) || line3b_g.intersectsLine(bunnyLine4)) {
+		return true;
+	}
+	if (line4b_g.intersectsLine(bunnyLine1) || line4b_g.intersectsLine(bunnyLine2) || 
+			line4b_g.intersectsLine(bunnyLine3) || line4b_g.intersectsLine(bunnyLine4)) {
 		return true;
 	}
 	else {
