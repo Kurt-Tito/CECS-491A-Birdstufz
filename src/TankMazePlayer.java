@@ -499,41 +499,48 @@ if(keypress[1] == true){//s
  else if(keypress[2] == true){//a
 	 delay++;
 	 if(delay == 5){
-	delay = 0;
-	degree += -(2*Math.PI/24);
-	counter--;
-	if(counter == -24){
-		counter = 0;
-	}
-	affinetransform(degree, j); 
-	if (isCollision1()) {
-		degree -= -(2*Math.PI/24);
-		counter++;
-		if(counter == 0){
-			counter = -24;
+		delay = 0;
+		if (checkCollision(x, y)  || tankCollision()){
+			degree -= -(2*Math.PI/24);
+			counter++;
+			if(counter == 0){
+				counter = -24;
+			}
+			affinetransform(degree,j);
 		}
-		affinetransform(degree,j);
-	}
+		else {
+			degree += -(2*Math.PI/24);
+			counter--;
+			if(counter == -24){
+				counter = 0;
+			}
+			affinetransform(degree, j); 
+		}
+	
 	 }
+	 
  }
  else if(keypress[3] == true){//d
 	 delay++;
 	 if(delay == 5){
-	delay = 0;
-	degree += 2*Math.PI/24;
-	counter++;
-	if(counter == 24){
-		counter = 0;
-	}
-	affinetransform(degree, j);
-	if (isCollision1()) {
-		degree -= 2*Math.PI/24;
-		counter--;
-		if(counter == 0){
-			counter = 24;
+		delay = 0;
+		if (checkCollision(x, y) || tankCollision()) {
+			degree -= 2*Math.PI/24;
+			counter--;
+			if(counter == 0){
+				counter = 24;
+			}
+			affinetransform(degree,j);
 		}
-		affinetransform(degree,j);
-	}
+		else {
+			degree += 2*Math.PI/24;
+			counter++;
+			if(counter == 24){
+				counter = 0;
+			}
+			affinetransform(degree, j);
+		}
+	
 	 }
  }
 //---------------------------------------------------------------------------------------	
@@ -739,41 +746,46 @@ if(keypress[7] == true && keypress[8] == true){
 else if(keypress[7] == true){//left
 	delay2++;
 	if(delay2 == 5){
-	delay2 = 0;
-	degree2 += -(2*Math.PI/24);
-	counter2--;
-	if(counter2 == -24){
-		counter2 = 0;
-	}
-	affinetransform(degree2, k);
-	if (isCollision2()) {
-		degree -= 2*Math.PI/24;
-		counter--;
-		if(counter2 == 0){
-			counter2 = -24;
+		delay2 = 0;
+		if (checkCollision2(x2, y2) || tankCollision()) {
+			degree2 -= -(2*Math.PI/24);
+			counter2++;
+			if(counter2 == 0){
+				counter2 = -24;
+			}
+			affinetransform(degree2,k);
 		}
-		affinetransform(degree2,k);
-	}
+		else {
+			degree2 += -(2*Math.PI/24);
+			counter2--;
+			if(counter2 == -24){
+				counter2 = 0;
+			}
+			affinetransform(degree2, k); 
+		}
 	}
 }
 else if(keypress[8] == true){//right
 	delay2++;
 	if(delay2 == 5){
-	delay2 = 0;
-	degree2 += 2*Math.PI/24;
-	counter2++;
-	if(counter2 == 24){
-		counter2 = 0;
-	}
-	affinetransform(degree2, k);
-	if (isCollision2()) {
-		degree -= 2*Math.PI/24;
-		counter--;
-		if(counter2 == 0){
-			counter2 = 24;
+		delay2 = 0;
+		if (checkCollision2(x2, y2) || tankCollision()) {
+			degree2 -= 2*Math.PI/24;
+			counter2--;
+			if(counter2 == 0){
+				counter2 = 24;
+			}
+			affinetransform(degree2,k);
 		}
-		affinetransform(degree2,k);
-	}
+		else {
+			degree2 += 2*Math.PI/24;
+			counter2++;
+			if(counter2 == 24){
+				counter2 = 0;
+			}
+			affinetransform(degree2, k);
+		}
+	
 	}
 }
 //rust, changing velocity speed according to health
@@ -823,38 +835,33 @@ velx = velx * velspeed;
 vely = vely * velspeed;
 velx2 = velx2 * velspeed2;
 vely2 = vely2 * velspeed2;
+if (checkCollision(x + velx, y + vely) || tankCollision()) {
+	x -= velx;
+	y -= vely;
+	dx = (int) x;
+	dy = (int) y;
+	
+}
+
+if (checkCollision2(x2 + velx2, y2 + vely2) || tankCollision()) {
+	x2 -= velx2;
+	y2 -= vely2;
+	dx2 = (int) x2;
+	dy2 = (int) y2;
+	
+}
+
+
 x += velx;
 y += vely;
 x2 += velx2;
 y2 += vely2;
+
+
 dx = (int) x;
 dy = (int) y;
 dx2 = (int) x2;
 dy2 = (int) y2;
-if (tankCollision()) {
-	x -= velx;
-	y -= vely;
-	x2 -= velx2;
-	y2 -= vely2;
-	dx = (int) x;
-	dy = (int) y;
-	dx2 = (int) x2;
-	dy2 = (int) y2;
-	
-}
-if (isCollision1()) {
-	x -= velx;
-	y -= vely;
-	dx = (int) x;
-	dy = (int) y;
-}
-if (isCollision2()) {
-	x2 -= velx2;
-	y2 -= vely2;
-	dx2 = (int) x2;
-	dy2 = (int) y2;
-	
-}
 
 	P1collisionLines = new Line2D[4];
 	P2collisionLines = new Line2D[4];
@@ -873,11 +880,13 @@ if (isCollision2()) {
 	{	
 		for(int i = 0; i < projectile.getProjectileLength(); i++)
 		{
-			if(P2collisionLines[i].intersectsLine(projectile.getProjectile(i)))
-			{
-				health2 -= 10;
-				healthbar2.takeDamage();
-				projectile.setActive(false);
+			for (int j = 0; j < P2collisionLines.length; j++) {
+				if(P2collisionLines[i].intersectsLine(projectile.getProjectile(j)))
+				{
+					health2 -= 10;
+					healthbar2.takeDamage();
+					projectile.setActive(false);
+				}
 			}
 		}
 	}
@@ -886,11 +895,15 @@ if (isCollision2()) {
 	{	
 		for(int i = 0; i < projectile2.getProjectileLength(); i++)
 		{
-			if(P1collisionLines[i].intersectsLine(projectile2.getProjectile(i)))
-			{
-				health -= 10;
-				healthbar1.takeDamage();
-				projectile2.setActive(false);
+			for (int j = 0; j < P1collisionLines.length; j++) {
+				
+			
+				if(P1collisionLines[i].intersectsLine(projectile2.getProjectile(j)))
+				{
+					health -= 10;
+					healthbar1.takeDamage();
+					projectile2.setActive(false);
+				}
 			}
 		}
 	}
@@ -1122,10 +1135,9 @@ public boolean tankCollision() {
 
 }
 
-//wall collision
-public boolean isCollision1() {
-	
+///////////////////////////////////////////////////////////////////////////////
 
+public boolean checkCollision(double xFuture, double yFuture) {
 
 	//tank1
 	Line2D line1 = new Line2D.Double();
@@ -1134,11 +1146,7 @@ public boolean isCollision1() {
 	Line2D line4 = new Line2D.Double();
 			
 			
-	//tank2
-	Line2D line1b = new Line2D.Double();
-	Line2D line2b = new Line2D.Double();
-	Line2D line3b = new Line2D.Double();
-	Line2D line4b = new Line2D.Double();
+	
 			
 	//TR = Top Right, TL = Top Left, BL = Bottom Left, BR = Bottom Right
 	double TRx = 0, TRy = 0, TLx = 0, TLy = 0; 
@@ -1146,22 +1154,16 @@ public boolean isCollision1() {
 	double Cx = 0, Cy = 0; //center coordiinates
 		
 			
-	double TRx2 = 0, TRy2 = 0, TLx2 = 0, TLy2 = 0; 
-	double BLx2 = 0, BLy2 = 0, BRx2 = 0, BRy2 = 0;
-	double Cx2 = 0, Cy2 = 0;
 		
 	double hypoSmall = 0, hypo = 0;
 		
 		
 			 
-	double trigDegree = (degree - Math.PI/2)* -1, 
-			trigDegree2 = (degree2 - Math.PI/2) * -1;
+	double trigDegree = (degree - Math.PI/2)* -1;
 	double side = 64; 
 	double halfSide = side / 2;
 		
 	double theta1 = 0, theta2 = 0, theta3 = 0, theta4 = 0; //tank1
-	double theta1b = 0, theta2b = 0, theta3b = 0, theta4b = 0; //tank2
-		
 		
 		
 	//tank sprite (10,10) top left. bottom right (54,54) square
@@ -1176,20 +1178,12 @@ public boolean isCollision1() {
 	theta3 = theta1 + Math.toRadians(180); //Bottom Left
 	theta4 = theta1 + Math.toRadians(270); //Top Left
 			
-	//theta tank2
-	theta1b = Math.atan((halfSide / halfSide)) - trigDegree2; //Top Right
-	theta2b = theta1b + Math.toRadians(90); //Bottom Right
-	theta3b = theta1b + Math.toRadians(180); //Bottom Left
-	theta4b = theta1b + Math.toRadians(270); //Top Left
 			
 			
 		
 	//find center coordinates of sprite
-	Cx = (x + hypo * Math.cos(Math.toRadians(-45)));
-	Cy = (y + hypo * Math.cos(Math.toRadians(-45)));
-			
-	Cx2 = (x2 + hypo * Math.cos(Math.toRadians(-45)));
-	Cy2 = (y2 + hypo * Math.cos(Math.toRadians(-45)));
+	Cx = (xFuture + hypo * Math.cos(Math.toRadians(-45)));
+	Cy = (yFuture + hypo * Math.cos(Math.toRadians(-45)));
 			
 			
 	TRx = (hypoSmall * Math.cos(theta1) + Cx); TRy = (hypoSmall * Math.sin(theta1) + Cy);
@@ -1197,10 +1191,6 @@ public boolean isCollision1() {
 	BLx = (hypoSmall * Math.cos(theta3) + Cx); BLy = (hypoSmall * Math.sin(theta3) + Cy);
 	TLx = (hypoSmall * Math.cos(theta4) + Cx); TLy = (hypoSmall * Math.sin(theta4) + Cy);
 			
-	TRx2 = (hypoSmall * Math.cos(theta1b) + Cx2); TRy2 = (hypoSmall * Math.sin(theta1b) + Cy2);
-	BRx2 = (hypoSmall * Math.cos(theta2b) + Cx2); BRy2 = (hypoSmall * Math.sin(theta2b) + Cy2);
-	BLx2 = (hypoSmall * Math.cos(theta3b) + Cx2); BLy2 = (hypoSmall * Math.sin(theta3b) + Cy2);
-	TLx2 = (hypoSmall * Math.cos(theta4b) + Cx2); TLy2 = (hypoSmall * Math.sin(theta4b) + Cy2);
 
 
 
@@ -1212,10 +1202,6 @@ public boolean isCollision1() {
 	line3.setLine(BRx, BRy, BLx, BLy);
 	line4.setLine(BLx, BRy, TLx, TRy);
 		
-	line1b.setLine(TLx2, TLy2, TRx2, TRy2);
-	line2b.setLine(TRx2, TRy2, BRx2, BRy2);
-	line3b.setLine(BRx2, BRy2, BLx2, BLy2);
-	line4b.setLine(BLx2, BRy2, TLx2, TRy2);
 	
 	
 	
@@ -1234,7 +1220,7 @@ public boolean isCollision1() {
 }
 
 //wall collision
-public boolean isCollision2() {
+public boolean checkCollision2(double xFuture, double yFuture) {
 	
 
 
@@ -1259,7 +1245,6 @@ public boolean isCollision2() {
 	double side = 64; 
 	double halfSide = side / 2;
 		
-	double theta1 = 0, theta2 = 0, theta3 = 0, theta4 = 0; //tank1
 	double theta1b = 0, theta2b = 0, theta3b = 0, theta4b = 0; //tank2
 		
 		
@@ -1277,8 +1262,8 @@ public boolean isCollision2() {
 	theta4b = theta1b + Math.toRadians(270); //Top Left
 
 			
-	Cx2 = (x2 + hypo * Math.cos(Math.toRadians(-45)));
-	Cy2 = (y2 + hypo * Math.cos(Math.toRadians(-45)));
+	Cx2 = (xFuture + hypo * Math.cos(Math.toRadians(-45)));
+	Cy2 = (yFuture + hypo * Math.cos(Math.toRadians(-45)));
 		
 			
 	TRx2 = (hypoSmall * Math.cos(theta1b) + Cx2); TRy2 = (hypoSmall * Math.sin(theta1b) + Cy2);
@@ -1304,6 +1289,10 @@ public boolean isCollision2() {
 	return false;
 	
 }
+///////////////////////////////////////////////////////////////////////////////
+
+
+
 
 
 }
