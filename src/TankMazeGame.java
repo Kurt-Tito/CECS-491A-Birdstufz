@@ -77,7 +77,16 @@ public class TankMazeGame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		player.actionPerformed(arg0);
-		
+		if(player.endGame() == true){
+		System.out.println("Black tank wins");
+		FrogTimer = 0;
+		t.stop();
+		}
+		if(player.endGame2() == true){
+		System.out.println("White tank wins");	
+		FrogTimer = 0;
+		t.stop();
+		}
 		if(frog.checkConsumed(player) == true)
 		{	
 			System.out.println("Frog EATEN");
