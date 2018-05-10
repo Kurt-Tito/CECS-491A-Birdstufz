@@ -110,9 +110,7 @@ public class TankProjectile {
 			move();
 			checkCollisions();
 			f();
-		}
-		System.out.println("Hello");
-		
+		}	
 	}
 	
 	public void draw(Graphics2D g2)
