@@ -110,7 +110,7 @@ public class TankMaze_Bunny {
 				}
 			}
 			
-			g2.drawImage(walkSouth[frame], col*cellSize, row*cellSize + walk, null);
+			g2.drawImage(walkSouth[frame], col*cellSize +cellSize/8, row*cellSize + walk, null);
 		}
 		if(direction == "West")
 		{
@@ -130,7 +130,7 @@ public class TankMaze_Bunny {
 				}
 			}
 			
-			g2.drawImage(walkWest[frame], col*cellSize + walk, row*cellSize, null);
+			g2.drawImage(walkWest[frame], col*cellSize + walk, row*cellSize +cellSize/8, null);
 		}
 		if(direction == "East")
 		{
@@ -150,7 +150,7 @@ public class TankMaze_Bunny {
 				}
 			}
 			
-			g2.drawImage(walkEast[frame], col*cellSize + walk, row*cellSize, null);
+			g2.drawImage(walkEast[frame], col*cellSize + walk, row*cellSize +cellSize/8, null);
 		}
 		if(direction == "North")
 		{
@@ -170,7 +170,7 @@ public class TankMaze_Bunny {
 				}
 			}
 			
-			g2.drawImage(walkNorth[frame], col*cellSize, row*cellSize + walk, null);
+			g2.drawImage(walkNorth[frame], col*cellSize +cellSize/8, row*cellSize + walk, null);
 		}
 	}
 	
@@ -196,5 +196,30 @@ public class TankMaze_Bunny {
 			direction = "East";
 		}
 	}
-
+	
+	public Double getX()
+	{	
+		if(direction == "South")
+			return (double) col*cellSize+cellSize/8;
+		else if(direction == "West")
+			return (double) col*cellSize+cellSize/8 +walk;
+		else if(direction == "East")
+			return (double) col*cellSize+cellSize/8 +walk;
+		else if(direction == "North")
+			return (double) col*cellSize+cellSize/8;
+		return (double) 0;
+	}
+	
+	public Double getY()
+	{
+		if(direction == "South")
+			return (double) row*cellSize+cellSize/8 +walk;
+		else if(direction == "West")
+			return (double) row*cellSize+cellSize/8;
+		else if(direction == "East")
+			return (double) row*cellSize+cellSize/8;
+		else if(direction == "North")
+			return (double) row*cellSize+cellSize/8 +walk;
+		return (double) 0;
+	}
 }
