@@ -39,8 +39,6 @@ public class TankInfoPanel extends JPanel{
 		g2.setColor(Color.RED);
 		g2.fillRect(rect1.x, rect1.y, (int) ((double)rect1.width * (player.health/100.0)), rect1.height);
 		g2.fillRect(rect2.x, rect2.y, (int) ((double)rect2.width * (player.health2/100.0)), rect2.height);
-		
-		System.out.println((player.health/100.0));
 		}
 		
 	}
