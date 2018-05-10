@@ -23,6 +23,7 @@ int health = 100, health2 = 100;
 private BufferedImage[] tank = new BufferedImage[8];
 BufferedImage tank1, tank2;
 int rustcounter = 0, rustcounter2 = 0;
+int ammo1 = 50, ammo2 = 50;
 
 TankHealth healthbar1 = new TankHealth(5, 5, "Player 1");
 TankHealth healthbar2 = new TankHealth(330, 330, "Player 2");
@@ -966,13 +967,15 @@ public void keyReleased(KeyEvent e) {
 	if(keycode == 65){//a
     keypress[2] = false;
 	}
-	if(keycode == 32 && (projectile == null || !projectile.isActive()))
+	if(keycode == 32 && (projectile == null || !projectile.isActive()) && ammo1 > 0)
 	{
 		projectile = new TankProjectile(32 +dx, 32+dy, (degree - (Math.PI /2)));
+		ammo1--;
 	}
-	if(keycode == KeyEvent.VK_ENTER && (projectile2 == null || !projectile2.isActive()))
+	if(keycode == KeyEvent.VK_ENTER && (projectile2 == null || !projectile2.isActive()) && ammo2 > 0)
 	{
 		projectile2 = new TankProjectile(32 +dx2, 32 +dy2, (degree2 - (Math.PI /2)));
+		ammo2--;
 	}
 	else if(keycode == 68){//d
 	keypress[3] = false;
