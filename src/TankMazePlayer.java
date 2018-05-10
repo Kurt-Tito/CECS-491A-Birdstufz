@@ -34,6 +34,9 @@ TankProjectile projectile2;
 Line2D[] P1collisionLines;
 Line2D[] P2collisionLines;
 
+TankMaze_Bunny bunny;
+public boolean bunnyIsWalking = false;
+
 Line2D line1_g;
 Line2D line2_g;
 Line2D line3_g;
@@ -190,6 +193,25 @@ public void draw(Graphics2D g2)
 	{
 		projectile2.draw(g2);
 	}
+	
+	if(bunny != null)
+	{
+		bunny.draw(g2, 0, 0);
+	}
+	
+	checkBunny();
+	
+	if(bunny == null)
+	{
+		System.out.println("Bunny is DEAD");
+		bunnyIsWalking = false;
+	}
+	else if(bunny != null)
+	{
+		System.out.println("Bunny is ALIVE");
+		bunnyIsWalking = true;
+	}
+	
 }
 
 public void actionPerformed(ActionEvent e) {
@@ -908,7 +930,7 @@ public void keyReleased(KeyEvent e) {
 	if(keycode == 65){//a
     keypress[2] = false;
 	}
-	if(keycode == 32 && (projectile == null || !projectile.isActive()) && ammo1 > 0)
+	if(keycode == 32 && (projectile == null || !projectile.isActive()) && ammo1 > 0 && bunnyIsWalking == false)
 	{
 		projectile = new TankProjectile(32 +dx, 32+dy, (degree - (Math.PI /2)));
 		ammo1--;
@@ -1219,8 +1241,26 @@ public boolean checkCollision2(double xFuture, double yFuture) {
 }
 ///////////////////////////////////////////////////////////////////////////////
 
+public void checkBunny()
+{
+	//check here to see if projectile is active 
+	if(projectile != null && bunny == null && projectile.spawnBunny() == true)
+	{
+		bunny = new TankMaze_Bunny(90, projectile.getCollisionPointX()/90, projectile.getCollisionPointY()/90);
+		//projectile.setSpawnBunny(false);
+		//bunnyIsWalking = true;
+		
+	}
+	
+	if(bunny != null && (bunny.walk < -400	 || bunny.walk > 400))
+	{
+		//if(bunny.walk > 500)
+		bunny = null;
+		projectile.setSpawnBunny(false);
+		//bunnyIsWalking = false;
+	}
 
-
+}
 
 
 }

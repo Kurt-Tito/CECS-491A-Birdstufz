@@ -168,7 +168,15 @@ public class TankProjectile {
 			collisionPoint_y = (int) y;
 			
 			spawnBunny = true;
+			
+			System.out.println("IS COLLIDING");
+			System.out.println("Collision Points: " +collisionPoint_x +", " +collisionPoint_y );
 		}
+		else if(!isColliding)
+		{
+			spawnBunny = false;
+		}
+		
 			
 	}
 	
@@ -199,5 +207,19 @@ public class TankProjectile {
 	public int getCollisionPointY()
 	{
 		return collisionPoint_y;
+	}
+	
+	public boolean spawnBunny()
+	{
+		return spawnBunny;
+	}
+	
+	
+	public void setSpawnBunny(boolean f)
+	{
+		if(f == true)
+			spawnBunny = true;
+		if(f == false)
+			spawnBunny = false;
 	}
 }

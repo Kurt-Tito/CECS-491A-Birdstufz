@@ -12,7 +12,7 @@ public class TankMazeGame implements ActionListener {
 	private TankMazePlayer player;
 	private TankMaze_Frog frog;
 	
-	private TankMaze_Bunny bunny;
+	//private TankMaze_Bunny bunny;
 	
 	private int FrogTimer = 0;
 	private int FrogSpawnTime;
@@ -31,7 +31,7 @@ public class TankMazeGame implements ActionListener {
 		{
 			player = new TankMazePlayer(this);
 			frog = new TankMaze_Frog(90);
-			bunny = new TankMaze_Bunny(90, 5, 4, "South"); //(cellSize, col, row, direction)
+			//bunny = new TankMaze_Bunny(90, 5, 4); //(cellSize, col, row, direction)
 			
 			frog.concealFrog();
 			FrogTimer = 0;
@@ -52,8 +52,8 @@ public class TankMazeGame implements ActionListener {
 		
 		frog.draw(g2, 0, 0);
 		
-		if(bunny.walk <= 900)
-			bunny.draw(g2, 0, 0);
+//		if(bunny.walk <= 900)
+//			bunny.draw(g2, 0, 0);
 	}
 
 	public TankMazePlayer getPlayer()

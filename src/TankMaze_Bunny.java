@@ -25,7 +25,7 @@ public class TankMaze_Bunny {
 	private String direction;
 	private int delay = 0;
 
-	public TankMaze_Bunny(int cellSize, int x, int y, String dir)
+	public TankMaze_Bunny(int cellSize, int x, int y)
 	{
 		try
 		{
@@ -42,7 +42,10 @@ public class TankMaze_Bunny {
 		this.cellSize = cellSize;
 		this.col = x;
 		this.row = y;
-		this.direction = dir;
+		//this.direction = dir;
+		
+		randomize();
+		
 	}
 	
 	public BufferedImage[] walkSouth()
@@ -168,6 +171,29 @@ public class TankMaze_Bunny {
 			}
 			
 			g2.drawImage(walkNorth[frame], col*cellSize, row*cellSize + walk, null);
+		}
+	}
+	
+	public void randomize()
+	{
+		Random rand = new Random();
+		int dir = rand.nextInt(4 + 1 - 1) + 1;
+		
+		if(dir == 1)
+		{
+			direction = "North";
+		}
+		else if(dir == 2)
+		{
+			direction = "South";
+		}
+		else if(dir == 3)
+		{
+			direction = "West";
+		}
+		else if(dir == 4)
+		{
+			direction = "East";
 		}
 	}
 
