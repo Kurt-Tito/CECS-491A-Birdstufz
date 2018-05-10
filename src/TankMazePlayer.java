@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class TankMazePlayer implements KeyListener {
-double x = 0, y = 0, x2 = 500, y2 = 400;
+double x = 10, y = 10, x2 = 920, y2 = 740;
 double velx = 0, vely = 0, velx2 = 0, vely2 = 0, degree = 0, degree2 = 0;
 double velspeed = 1, velspeed2 = 1;
 int dx = 0, dy = 0, dx2 = 0, dy2 = 0, j = 0, k = 4;
@@ -122,22 +122,39 @@ public double[] getY2Location()
 	return y2loc;
 }
 
+public boolean endGame(){
+if(health <= 0){
+return true;
+}
+else{
+return false;
+}
+}
+public boolean endGame2(){
+if(health2 <= 0){
+return true;
+}
+else{
+return false;
+}
+}
+
 public void regainHealthP1()
 {	
-	if(health == 95){
+	if(health >= 80){
 	health = 100;	
 	}
-	else if(health < 95){
+	else if(health < 80){
 		health += 20;
 	}
 }
 
 public void regainHealthP2()
 {
-	if(health2 == 95){
+	if(health2 >= 80){
 		health2 = 100;
 	}
-	else if(health < 95){
+	else if(health2 < 80){
 		health2 += 20;
 	}
 }
@@ -278,21 +295,21 @@ if(projectile2 != null && projectile2.isActive())
 	projectile2.update();
 }
 
-if(keypress[0] == true || keypress[1] == true || keypress[2] == true || keypress[3] == true || keypress[4] == true){
+if(keypress[0] == true || keypress[1] == true || keypress[4] == true){
 rustcounter = 0;
 }
-if(rustcounter >= 100){
+if(rustcounter >= 30){
 	rustcounter = 0;
-	health-= 5;
+	health-= 1;
 	healthbar1.takeDamage();
 }
 
-if(keypress[5] == true || keypress[6] == true || keypress[7] == true || keypress[8] == true || keypress[9] == true){
+if(keypress[5] == true || keypress[6] == true || keypress[9] == true){
 rustcounter2 = 0;
 }
-if(rustcounter2 >= 100){
+if(rustcounter2 >= 30){
 	rustcounter2 = 0;
-	health2 -= 5;
+	health2 -= 1;
 	healthbar2.takeDamage();
 }
 //tank boundaries relative to frame size
