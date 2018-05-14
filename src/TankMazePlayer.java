@@ -914,7 +914,7 @@ velx = velx * velspeed;
 vely = vely * velspeed;
 velx2 = velx2 * velspeed2;
 vely2 = vely2 * velspeed2;
-if (checkCollision(x + velx, y + vely) || tankCollision() || (bunny != null && tankToBunnyCollisionP1(bunny.getX(), bunny.getY()) == true)) {
+if (checkCollision(x + velx, y + vely) || tankCollision()) {
 	x -= velx;
 	y -= vely;
 	dx = (int) x;
@@ -924,13 +924,55 @@ if (checkCollision(x + velx, y + vely) || tankCollision() || (bunny != null && t
 
 
 
-if (checkCollision2(x2 + velx2, y2 + vely2) || tankCollision() || (bunny2 != null && tankToBunnyCollisionP2(bunny2.getX(), bunny2.getY()) == true)) {
-	System.out.println("tank 2 colliding");
+if (checkCollision2(x2 + velx2, y2 + vely2) || tankCollision()) {
+	//System.out.println("tank 2 colliding");
 	x2 -= velx2;
 	y2 -= vely2;
 	dx2 = (int) x2;
 	dy2 = (int) y2;
 	
+}
+
+// PLAYER 1 TO BUNNY 1 COLLISION
+if (bunny != null && tankToBunnyCollisionP1(bunny.getX(), bunny.getY()) == true)
+{
+	if(bunny.getDirection() == "South" && y < 735)
+	{
+		y = bunny.getY() + 45;
+	}
+	if(bunny.getDirection() == "North" && y > 10)
+	{
+		y = bunny.getY() - 45;
+	}
+	if(bunny.getDirection() == "East" && x < 900)
+	{
+		x = bunny.getX() + 45;
+	}
+	if(bunny.getDirection() == "West" && x > 10)
+	{
+		x = bunny.getX() - 45;
+	}
+}
+
+// PLAYER 2 TO BUNNY 2 COLLISION
+if (bunny2 != null && tankToBunnyCollisionP2(bunny2.getX(), bunny2.getY()) == true)
+{
+	if(bunny2.getDirection() == "South" && y2 < 735)
+	{
+		y2 = bunny2.getY() + 45;
+	}
+	if(bunny2.getDirection() == "North" && y2 > 10)
+	{
+		y2 = bunny2.getY() - 45;
+	}
+	if(bunny2.getDirection() == "East" && x2 < 900)
+	{
+		x2 = bunny2.getX() + 45;
+	}
+	if(bunny2.getDirection() == "West" && x2 > 10)
+	{
+		x2 = bunny2.getX() - 45;
+	}
 }
 
 x += velx;
@@ -1067,7 +1109,7 @@ public void keyReleased(KeyEvent e) {
 		projectile = new TankProjectile(32 +dx, 32+dy, (degree - (Math.PI /2)));
 		ammo1--;
 	}
-	if(keycode == KeyEvent.VK_ENTER && (projectile2 == null || !projectile2.isActive()) && ammo2 > 0)
+	if(keycode == KeyEvent.VK_ENTER && (projectile2 == null || !projectile2.isActive()) && ammo2 > 0 && bunnyIsWalking2 == false)
 	{
 		projectile2 = new TankProjectile(32 +dx2, 32 +dy2, (degree2 - (Math.PI /2)));
 		ammo2--;
@@ -1576,7 +1618,7 @@ public boolean tankToBunnyCollisionP1(double inx, double iny) {
 	Cy = (y + hypo * Math.cos(Math.toRadians(-45)));
 		
 	Cx2 = (inx + hypo * Math.cos(Math.toRadians(-45)));
-	Cy2 = ( + hypo * Math.cos(Math.toRadians(-45)));
+	Cy2 = (iny + hypo * Math.cos(Math.toRadians(-45)));
 		
 		
 		

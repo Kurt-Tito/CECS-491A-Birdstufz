@@ -102,7 +102,7 @@ public class TankMaze_Bunny {
 			{	// Animation Components
 				delay++;
 				
-				if(delay == 150)
+				if(delay == 25)
 				{
 					frame++;
 					walk += cellSize/8;
@@ -122,7 +122,7 @@ public class TankMaze_Bunny {
 			{
 				delay++;
 				
-				if(delay == 150)
+				if(delay == 25)
 				{
 					frame++;
 					walk -= cellSize/8;
@@ -142,7 +142,7 @@ public class TankMaze_Bunny {
 			{
 				delay++;
 				
-				if(delay == 150)
+				if(delay == 25)
 				{
 					frame++;
 					walk += 10;
@@ -162,7 +162,7 @@ public class TankMaze_Bunny {
 			{
 				delay++;
 				
-				if(delay == 150)
+				if(delay == 25)
 				{
 					frame++;
 					walk -= 10;
@@ -221,5 +221,10 @@ public class TankMaze_Bunny {
 		else if(direction == "North")
 			return (double) row*cellSize+cellSize/8 +walk;
 		return (double) 0;
+	}
+	
+	public String getDirection()
+	{
+		return direction;
 	}
 }
