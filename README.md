@@ -15,7 +15,8 @@ Maze Game: Use arrow keys to navigate through the maze
 Concentration Game: Click to interact and flip cards
 Mini Chess Game: Click to select piece, click on red dot to confirm a valid move
 				 Click on selected piece again to deselect
+Tank Maze Game: Use w, a, s, and d keys for tank 1 movement, spacebar to shoot. Use arrow keys for tank 2 movement, enter to shoot.
 
 
 Testing:
-Currently working on mini chess user story implementations. Concentration game, maze game, and the GamesMaster UI is working.
+All factors of the project are working.
