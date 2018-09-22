@@ -5,9 +5,11 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import java.awt.AlphaComposite;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -18,7 +20,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 public class MenuPanel extends GamePanel implements MouseListener{
-	private JButton mazebutton, concentrationbutton, chessbutton, tankbutton;
+	private JButton mazebutton, concentrationbutton, chessbutton, tankbutton, egghuntbutton;
 	public MenuPanel()
 	{
 		setBackground(new Color(121, 189, 255));
@@ -35,21 +37,27 @@ public class MenuPanel extends GamePanel implements MouseListener{
 		
 		concentrationbutton = new JButton("CONCENTRATION GAME", buttonbg);
 		concentrationbutton.setActionCommand(State.CONCENTRATION.toString());
-		concentrationbutton.setBounds(450, 350, 380, 50);
+		concentrationbutton.setBounds(450, 325, 380, 50);
 		concentrationbutton.setHorizontalTextPosition(JButton.CENTER);
 		concentrationbutton.setVerticalTextPosition(JButton.CENTER);
 		
 		chessbutton = new JButton("CHESS GAME", buttonbg);
 		chessbutton.setActionCommand(State.CHESS.toString());
-		chessbutton.setBounds(450, 450, 380, 50);
+		chessbutton.setBounds(450, 400, 380, 50);
 		chessbutton.setHorizontalTextPosition(JButton.CENTER);
 		chessbutton.setVerticalTextPosition(JButton.CENTER);
 		
 		tankbutton = new JButton("TANK GAME", buttonbg);
 		tankbutton.setActionCommand(State.TANK.toString());
-		tankbutton.setBounds(450, 550, 380, 50);
+		tankbutton.setBounds(450, 475, 380, 50);
 		tankbutton.setHorizontalTextPosition(JButton.CENTER);
 		tankbutton.setVerticalTextPosition(JButton.CENTER);
+		
+		egghuntbutton = new JButton("EGG HUNT GAME", buttonbg);
+		egghuntbutton.setActionCommand(State.EGGHUNT.toString());
+		egghuntbutton.setBounds(450, 550, 380, 50);
+		egghuntbutton.setHorizontalTextPosition(JButton.CENTER);
+		egghuntbutton.setVerticalTextPosition(JButton.CENTER);
 	}
 	
 	@Override
@@ -63,6 +71,7 @@ public class MenuPanel extends GamePanel implements MouseListener{
 		concentrationbutton.addActionListener(al);
 		chessbutton.addActionListener(al);
 		tankbutton.addActionListener(al);
+		egghuntbutton.addActionListener(al);
 	}
 	
 	public void removeListener(ActionListener al)
@@ -71,6 +80,7 @@ public class MenuPanel extends GamePanel implements MouseListener{
 		concentrationbutton.removeActionListener(al);
 		chessbutton.removeActionListener(al);
 		tankbutton.addActionListener(al);
+		egghuntbutton.removeActionListener(al);
 	}
 	
 	public void paintComponent(Graphics g)
@@ -92,6 +102,7 @@ public class MenuPanel extends GamePanel implements MouseListener{
 		add(concentrationbutton);
 		add(chessbutton);
 		add(tankbutton);
+		add(egghuntbutton);
 	}
 	
 	@Override

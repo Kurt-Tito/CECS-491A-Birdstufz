@@ -10,6 +10,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import CECS491B.EggHuntPanel;
+
 public class Game extends JFrame implements ActionListener{
 	private GamePanel currentPanel;
 	private final MenuPanel menupanel = new MenuPanel(); // change assignment to new MazePanel() for maze game
@@ -18,6 +21,7 @@ public class Game extends JFrame implements ActionListener{
 	private final ChessPanel chesspanel = new ChessPanel();
 	private final TankGamePanel tankpanel = new TankGamePanel();
 	private final StatusBar statusbar = new StatusBar();
+	private final EggHuntPanel egghuntpanel = new EggHuntPanel();
 	
 	private java.util.Timer timer;
 	private boolean isRunning = true;
@@ -41,6 +45,7 @@ public class Game extends JFrame implements ActionListener{
 		chesspanel.addListener(this);
 		statusbar.addListener(this);
 		tankpanel.addListener(this);
+		egghuntpanel.addListener(this);
 
 		currentPanel = menupanel;
 		updatePanel();
@@ -69,7 +74,7 @@ public class Game extends JFrame implements ActionListener{
 				timer.cancel();
 			}
 		}
-		
+			
 	}
 	
 	
@@ -92,6 +97,9 @@ public class Game extends JFrame implements ActionListener{
 				break;
 			case TANK:
 				currentPanel = tankpanel;
+				break;
+			case EGGHUNT:
+				currentPanel = egghuntpanel;
 				break;
 		}
 		updatePanel();

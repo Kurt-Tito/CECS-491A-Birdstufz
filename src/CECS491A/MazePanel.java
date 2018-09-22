@@ -16,7 +16,6 @@ public class MazePanel extends GamePanel implements MouseListener, KeyListener{
 	private Maze maze;
 	private MazePlayer player;
 	private MazeExit exit;
-	private TankMaze_Frog frog;
 	private JButton menuButton;
 	
 	public MazePanel()
