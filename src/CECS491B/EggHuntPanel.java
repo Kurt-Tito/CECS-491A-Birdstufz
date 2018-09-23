@@ -15,56 +15,42 @@ public class EggHuntPanel extends GamePanel{
 	private EggHuntWalls leftborder[] = new EggHuntWalls[13];
 	private EggHuntWalls rightborder[] = new EggHuntWalls[13];
 	
+	int cellSize = 64;
+	int horizontalCells = 25;
+	int verticalCells = 13;
+	
 	public EggHuntPanel()
 	{	
 		setPreferredSize(new Dimension(1600, 900));
 		
-		for(int i = 0; i < 25; i++)
+		for(int i = 0; i < horizontalCells; i++)
 		{
 			topborder[i] = new EggHuntWalls();
-		}
-		
-		for(int i = 0; i < 25; i++)
-		{
-			topborder[i].setLocation(0 +i*64, 0);
+			topborder[i].setLocation(i*cellSize, 0);
 		}
 		
 		/////////////////////////////////////////
 		
-		for(int i = 0; i < 25; i++)
+		for(int i = 0; i < horizontalCells; i++)
 		{
 			bottomborder[i] = new EggHuntWalls();
+			bottomborder[i].setLocation(i*cellSize, cellSize*verticalCells);
 		}
-		
-		for(int i = 0; i < 25; i++)
-		{
-			bottomborder[i].setLocation(0 +i*64, 64*13);
-		}
-		
 		/////////////////////////////////////////
 		
-		for(int j = 0; j < 13; j++)
+		for(int j = 0; j < verticalCells; j++)
 		{
 			leftborder[j] = new EggHuntWalls();
-		}
-		
-		for(int j = 0; j < 13; j++)
-		{
-			leftborder[j].setLocation(0, j*64);
+			leftborder[j].setLocation(0, j*cellSize);
 		}
 		
 		/////////////////////////////////////////
 		
-		for(int j = 0; j < 13; j++)
+		for(int j = 0; j < verticalCells; j++)
 		{
 			rightborder[j] = new EggHuntWalls();
+			rightborder[j].setLocation(cellSize*(horizontalCells-1), j*cellSize);
 		}
-		
-		for(int j = 0; j < 13; j++)
-		{
-			rightborder[j].setLocation(64*24, j*64);
-		}
-		
 		
 	}
 	
@@ -90,24 +76,27 @@ public class EggHuntPanel extends GamePanel{
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D) g;
+		
+		//Draw Floor
 		floor.draw(g2);
 		
-		for(int i = 0; i < 25; i++)
+		//Draw Borders
+		for(int i = 0; i < horizontalCells; i++)
 		{
 			topborder[i].draw(g2);
 		}
 		
-		for(int i = 0; i < 25; i++)
+		for(int i = 0; i < horizontalCells; i++)
 		{
 			bottomborder[i].draw(g2);
 		}
 		
-		for(int i = 0; i < 13; i++)
+		for(int i = 0; i < verticalCells; i++)
 		{
 			leftborder[i].draw(g2);
 		}
 		
-		for(int i = 0; i < 13; i++)
+		for(int i = 0; i < verticalCells; i++)
 		{
 			rightborder[i].draw(g2);
 		}
