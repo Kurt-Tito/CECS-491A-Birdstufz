@@ -12,6 +12,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -26,7 +27,13 @@ public class MenuPanel extends GamePanel implements MouseListener{
 		setBackground(new Color(121, 189, 255));
 		setPreferredSize(new Dimension(1280, 720));
 		
-		ImageIcon buttonbg = new ImageIcon("images/ButtonFrame.png");
+		ImageIcon button = new ImageIcon("images/ButtonFrame.png");
+		
+		//Scales buttonbackground to match button size
+		Image image = button.getImage(); // transform it 
+		Image newimg = image.getScaledInstance(400, 60,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		ImageIcon buttonbg = new ImageIcon(newimg);  // transform it back
+		
 		setLayout(null);
 		
 		mazebutton = new JButton("MAZE GAME", buttonbg);
