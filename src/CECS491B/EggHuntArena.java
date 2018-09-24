@@ -25,27 +25,16 @@ public class EggHuntArena {
 		{
 			topborder[i] = new EggHuntWalls();
 			topborder[i].setLocation(i*cellSize, 0);
-		}
-		
-		/////////////////////////////////////////
-		
-		for(int i = 0; i < horizontalCells; i++)
-		{
+			
 			bottomborder[i] = new EggHuntWalls();
 			bottomborder[i].setLocation(i*cellSize, cellSize*verticalCells);
 		}
-		/////////////////////////////////////////
 		
 		for(int j = 0; j < verticalCells; j++)
 		{
 			leftborder[j] = new EggHuntWalls();
 			leftborder[j].setLocation(0, j*cellSize);
-		}
-		
-		/////////////////////////////////////////
-		
-		for(int j = 0; j < verticalCells; j++)
-		{
+			
 			rightborder[j] = new EggHuntWalls();
 			rightborder[j].setLocation(cellSize*(horizontalCells-1), j*cellSize);
 		}
@@ -60,22 +49,15 @@ public class EggHuntArena {
 		for(int i = 0; i < horizontalCells; i++)
 		{
 			topborder[i].draw(g2);
-		}
-		
-		for(int i = 0; i < horizontalCells; i++)
-		{
 			bottomborder[i].draw(g2);
 		}
 		
 		for(int i = 0; i < verticalCells; i++)
 		{
 			leftborder[i].draw(g2);
-		}
-		
-		for(int i = 0; i < verticalCells; i++)
-		{
 			rightborder[i].draw(g2);
 		}
+		
 	}
 	
 }
