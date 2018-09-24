@@ -2,6 +2,8 @@ package CECS491B;
 
 import java.awt.Graphics2D;
 
+import entities.creatures.Player;
+
 public class EggHuntArena {
 	
 	private EggHuntFloor floor = new EggHuntFloor();
@@ -9,6 +11,8 @@ public class EggHuntArena {
 	private EggHuntWalls bottomborder[] = new EggHuntWalls[25];
 	private EggHuntWalls leftborder[] = new EggHuntWalls[13];
 	private EggHuntWalls rightborder[] = new EggHuntWalls[13];
+	
+	private Player p1;
 	
 	int cellSize = 64;
 	int horizontalCells = 25;
@@ -57,6 +61,8 @@ public class EggHuntArena {
 			leftborder[i].draw(g2);
 			rightborder[i].draw(g2);
 		}
+		
+		p1.render(g2);
 		
 	}
 	
