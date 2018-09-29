@@ -1,6 +1,8 @@
 package States;
 
+import CECS491B.*;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import entities.creatures.Player;
 import game.Game;
@@ -8,6 +10,7 @@ import game.Game;
 public class GameState extends State {
 	
 	private Player player;
+	private EggHuntArena arena = new EggHuntArena();
 	
 	public GameState(Game game){
 		super(game);
@@ -21,7 +24,11 @@ public class GameState extends State {
 
 	@Override
 	public void render(Graphics g) {
-		player.render(g);
+		
+		Graphics2D g2 = (Graphics2D) g;
+		
+		arena.draw(g2);
+		player.render(g2);
 	}
 
 }

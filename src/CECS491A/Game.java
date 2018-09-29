@@ -45,7 +45,7 @@ public class Game extends JFrame implements ActionListener{
 		chesspanel.addListener(this);
 		statusbar.addListener(this);
 		tankpanel.addListener(this);
-		egghuntpanel.addListener(this);
+		egghuntpanel.addListener(this); 
 
 		currentPanel = menupanel;
 		updatePanel();
