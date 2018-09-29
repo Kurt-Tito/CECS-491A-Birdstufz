@@ -69,7 +69,7 @@ public class Game extends JFrame implements ActionListener{
 			while(isRunning){
 				//currentPanel.update(getGraphics());
 				currentPanel.repaint();
-				System.out.println("updating");
+				//System.out.println("updating");
 			}
 			
 			if(!isRunning)
