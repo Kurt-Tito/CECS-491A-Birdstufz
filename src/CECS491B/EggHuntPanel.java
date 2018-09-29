@@ -24,6 +24,7 @@ public class EggHuntPanel extends GamePanel{
 		// TODO Auto-generated method stub
 		EggHuntGame.start();
 		
+		
 	}
 
 	@Override

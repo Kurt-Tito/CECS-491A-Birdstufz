@@ -24,7 +24,7 @@ public class Game extends JFrame implements ActionListener{
 	private final EggHuntPanel egghuntpanel = new EggHuntPanel();
 	
 	private java.util.Timer timer;
-	private boolean isRunning = true;
+	private boolean isRunning = false;
 	
 	public Game(String title)
 	{
@@ -53,7 +53,10 @@ public class Game extends JFrame implements ActionListener{
 		repaint();
 		System.out.println("hihi");
 		
-		
+	}
+	
+	private void initLoop()
+	{
 		//Game Loop
 		timer = new Timer();
 		timer.schedule(new GameLoop(), 0, 1000 / 60);
@@ -66,7 +69,7 @@ public class Game extends JFrame implements ActionListener{
 			while(isRunning){
 				//currentPanel.update(getGraphics());
 				currentPanel.repaint();
-				//System.out.println("updating");
+				System.out.println("updating");
 			}
 			
 			if(!isRunning)
@@ -77,6 +80,10 @@ public class Game extends JFrame implements ActionListener{
 			
 	}
 	
+	public void GameLoopSwitch(boolean s)
+	{	
+		isRunning = s;
+	}
 	
 	public void changeState(State s)
 	{
@@ -84,6 +91,7 @@ public class Game extends JFrame implements ActionListener{
 		switch(s)
 		{
 			case MENU:
+				GameLoopSwitch(false);
 				currentPanel = menupanel;
 				break;
 			case MAZE:
@@ -93,12 +101,17 @@ public class Game extends JFrame implements ActionListener{
 				currentPanel = concentrationpanel;
 				break;
 			case CHESS:
+				GameLoopSwitch(true);
+				initLoop();
 				currentPanel = chesspanel;
 				break;
 			case TANK:
+				GameLoopSwitch(true);
+				initLoop();
 				currentPanel = tankpanel;
 				break;
 			case EGGHUNT:
+				GameLoopSwitch(false);
 				currentPanel = egghuntpanel;
 				break;
 		}
