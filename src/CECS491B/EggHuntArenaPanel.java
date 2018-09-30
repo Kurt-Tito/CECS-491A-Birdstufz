@@ -8,11 +8,11 @@ import java.awt.event.ActionListener;
 import CECS491A.GamePanel;
 import game.Game;
 
-public class EggHuntPanel extends GamePanel{
+public class EggHuntArenaPanel extends GamePanel{
 	
 	Game EggHuntGame;
 	
-	public EggHuntPanel()
+	public EggHuntArenaPanel()
 	{	
 		setPreferredSize(new Dimension(1600, 900));
 		

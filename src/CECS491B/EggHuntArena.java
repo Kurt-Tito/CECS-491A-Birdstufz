@@ -1,42 +1,80 @@
 package CECS491B;
 
 import java.awt.Graphics2D;
+import java.util.Random;
 
 public class EggHuntArena {
 	
 	private EggHuntFloor floor = new EggHuntFloor();
-	private EggHuntWalls topborder[] = new EggHuntWalls[25];
-	private EggHuntWalls bottomborder[] = new EggHuntWalls[25];
-	private EggHuntWalls leftborder[] = new EggHuntWalls[13];
-	private EggHuntWalls rightborder[] = new EggHuntWalls[13];
-	
-	int cellSize = 64;
+
+//	int cellSize = 64;
 	int horizontalCells = 25;
-	int verticalCells = 13;
+	int verticalCells = 14;
+	
+	EggHuntArenaCell[][] grid;
 	
 	public EggHuntArena()
 	{
+		initTiles();
 		createBorder();
+		createObstacles();
+	}
+	
+	public void initTiles()
+	{		
+		grid = new EggHuntArenaCell[horizontalCells][verticalCells];
+		
+		for (int i = 0; i < grid[0].length; i++)
+		{
+			for (int j = 0; j < grid.length; j++)
+			{
+				grid[j][i] = new EggHuntArenaCell();
+				grid[j][i].setLocation(j*64, i*64);
+				
+				if (j == 0)
+				{
+					//grid[j][i].setLocation(0, i*64);
+				}
+				if (i == 0)
+				{
+					//grid[j][i].setLocation(j*64, 0);
+				}
+				if (j == grid[0].length)
+				{
+					//grid[j][i].setLocation(grid[0].length*64, i*64);
+				}
+				if (i == grid.length)
+				{
+					//grid[j][i].setLocation(j*64, grid.length*64);
+				}
+				
+			}
+		}
 	}
 	
 	public void createBorder()
 	{
-		for(int i = 0; i < horizontalCells; i++)
+		for (int i = 0; i < grid[0].length; i++)
 		{
-			topborder[i] = new EggHuntWalls();
-			topborder[i].setLocation(i*cellSize, 0);
-			
-			bottomborder[i] = new EggHuntWalls();
-			bottomborder[i].setLocation(i*cellSize, cellSize*verticalCells);
+			for (int j = 0; j < grid.length; j++)
+			{
+				grid[j][0].setTile("FrontWall"); //top wall
+				grid[0][i].setTile("SideWall"); //left wall
+				grid[j][verticalCells-1].setTile("FrontWall"); //bottom wall
+				grid[horizontalCells-1][i].setTile("SideWall"); //right wall
+			}
 		}
-		
-		for(int j = 0; j < verticalCells; j++)
+	}
+	
+	public void createObstacles()
+	{
+		for (int i = 0; i < 25; i++)
 		{
-			leftborder[j] = new EggHuntWalls();
-			leftborder[j].setLocation(0, j*cellSize);
+			Random rand = new Random();
+			int rng_x = rand.nextInt((23-1) + 1) + 1;
+			int rng_y = rand.nextInt((12-1) + 1) + 1;
 			
-			rightborder[j] = new EggHuntWalls();
-			rightborder[j].setLocation(cellSize*(horizontalCells-1), j*cellSize);
+			grid[rng_x][rng_y].setTile("Pumpkin");
 		}
 	}
 	
@@ -45,17 +83,12 @@ public class EggHuntArena {
 		//Draw Floor
 		floor.draw(g2);
 		
-		//Draw Borders
-		for(int i = 0; i < horizontalCells; i++)
+		for(int i = 0; i < grid[0].length; i++)
 		{
-			topborder[i].draw(g2);
-			bottomborder[i].draw(g2);
-		}
-		
-		for(int i = 0; i < verticalCells; i++)
-		{
-			leftborder[i].draw(g2);
-			rightborder[i].draw(g2);
+			for(int j = 0; j < grid.length; j++)
+			{	
+				grid[j][i].draw(g2);
+			}
 		}
 	}
 	

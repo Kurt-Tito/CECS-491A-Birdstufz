@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import CECS491B.EggHuntPanel;
+import CECS491B.EggHuntArenaPanel;
 
 public class Game extends JFrame implements ActionListener{
 	private GamePanel currentPanel;
@@ -21,7 +21,7 @@ public class Game extends JFrame implements ActionListener{
 	private final ChessPanel chesspanel = new ChessPanel();
 	private final TankGamePanel tankpanel = new TankGamePanel();
 	private final StatusBar statusbar = new StatusBar();
-	private final EggHuntPanel egghuntpanel = new EggHuntPanel();
+	private final EggHuntArenaPanel egghuntpanel = new EggHuntArenaPanel();
 	
 	private java.util.Timer timer;
 	private boolean isRunning = false;
