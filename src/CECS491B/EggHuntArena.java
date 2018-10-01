@@ -56,7 +56,7 @@ public class EggHuntArena {
 	{
 		for (int i = 0; i < grid[0].length; i++)
 		{
-			for (int j = 0; j < grid.length; j++)
+			for (int j = 1; j < grid.length-1; j++)
 			{
 				grid[j][0].setTile("FrontWall"); //top wall
 				grid[0][i].setTile("SideWall"); //left wall
@@ -66,13 +66,17 @@ public class EggHuntArena {
 		}
 	}
 	
+	//Placeholder for Obstacle Generator
 	public void createObstacles()
-	{
+	{	
+		int hmax = horizontalCells - 2;
+		int vmax = verticalCells - 2;
+		
 		for (int i = 0; i < 25; i++)
 		{
 			Random rand = new Random();
-			int rng_x = rand.nextInt((23-1) + 1) + 1;
-			int rng_y = rand.nextInt((12-1) + 1) + 1;
+			int rng_x = rand.nextInt((hmax-1) + 1) + 1;
+			int rng_y = rand.nextInt((vmax-1) + 1) + 1;
 			
 			grid[rng_x][rng_y].setTile("Pumpkin");
 		}

@@ -14,7 +14,7 @@ public class EggHuntFloor {
 	public EggHuntFloor()
 	{
 		try {
-			floor[0] = ImageIO.read(new File("images/sprites/grasstile.png"));
+			floor[0] = ImageIO.read(new File("images/sprites/dirt.png"));
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
