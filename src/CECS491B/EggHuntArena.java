@@ -57,7 +57,10 @@ public class EggHuntArena {
 		for (int i = 0; i < grid[0].length; i++)
 		{
 			for (int j = 1; j < grid.length-1; j++)
-			{
+			{	
+				if (i == 6)
+					i = 8;
+				
 				grid[j][0].setTile("FrontWall"); //top wall
 				grid[0][i].setTile("SideWall"); //left wall
 				grid[j][verticalCells-1].setTile("FrontWall"); //bottom wall
