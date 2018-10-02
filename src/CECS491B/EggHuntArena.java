@@ -7,6 +7,10 @@ import AStarTest.Tile;
 
 public class EggHuntArena {
 	
+	/**
+	 * Testing Github
+	 */
+	
 	int horizontalCells = 25;
 	int verticalCells = 14;
 	
