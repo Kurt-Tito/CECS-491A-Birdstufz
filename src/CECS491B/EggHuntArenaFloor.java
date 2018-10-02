@@ -2,22 +2,16 @@ package CECS491B;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
+import gfx.Assets;
 
 public class EggHuntArenaFloor {
 	
-	BufferedImage[] floor = new BufferedImage[1];
+	BufferedImage floor;
 	
 	public EggHuntArenaFloor()
 	{
-		try {
-			floor[0] = ImageIO.read(new File("images/sprites/grasstile_darker.png"));
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
+		//floor[0] = ImageLoader.loadImage("/texture/Floor/grasstile_darker.png");
+		floor = Assets.floor;
 	}
 	
 	public void draw(Graphics2D g2)
@@ -26,7 +20,7 @@ public class EggHuntArenaFloor {
 		{
 			for (int j = 0; j < 900; j = j + 64)
 		    {
-		    	g2.drawImage(floor[0], i, j, null);
+		    	g2.drawImage(floor, i, j, null);
 		    }
 		}
 	}

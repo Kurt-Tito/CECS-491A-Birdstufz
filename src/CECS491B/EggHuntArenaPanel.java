@@ -1,5 +1,4 @@
 package CECS491B;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -15,7 +14,6 @@ public class EggHuntArenaPanel extends GamePanel{
 	public EggHuntArenaPanel()
 	{	
 		setPreferredSize(new Dimension(1600, 900));
-		
 		EggHuntGame = new Game("EggHuntGame", 1600, 900);
 	}
 	

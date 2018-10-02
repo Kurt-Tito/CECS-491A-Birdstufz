@@ -7,10 +7,6 @@ import AStarTest.Tile;
 
 public class EggHuntArena {
 	
-	/**
-	 * Testing Github
-	 */
-	
 	int horizontalCells = 25;
 	int verticalCells = 14;
 	
@@ -26,6 +22,8 @@ public class EggHuntArena {
 		initTiles();
 		createBorder();
 		createObstacles();
+		
+		System.out.println(getTile(10,6));
 	}
 	
 	public void initTiles()
@@ -59,7 +57,6 @@ public class EggHuntArena {
 		}
 	}
 	
-	//Placeholder for Obstacle Generator
 	public void createObstacles()
 	{	
 		for (int i = 0; i < TreeWeightedAmount; i++)
@@ -71,12 +68,12 @@ public class EggHuntArena {
 					|| grid[rng_x][rng_y+1].isBlocked() 
 					|| grid[rng_x+1][rng_y+1].isBlocked()))
 			{	
-				if(rng_x != 1 && rng_y != 6 && rng_x != 1 && rng_y != 7) //for entrance
+				if((rng_x != 1 && rng_y != 6) || (rng_x != 1 && rng_y != 7)) //for entrance grid(1,6) && grid(1,7)
 					grid[rng_x][rng_y].setTile(TileType.TREE1);
 			}
 			else
 			{
-				System.out.println("Tile Blocked");
+				//System.out.println("Tile Blocked");
 			}
 			
 			if (grid[rng_x][rng_y].getTile() == TileType.TREE1)
@@ -93,12 +90,12 @@ public class EggHuntArena {
 			
 			if (!grid[rng_x][rng_y].isBlocked())
 			{
-				if((rng_x != 1 && rng_y != 6) || (rng_x != 1 && rng_y != 7)) //for entrance
+				if((rng_x != 1 && rng_y != 6) || (rng_x != 1 && rng_y != 7)) //for entrance grid(1,6) && grid(1,7)
 					grid[rng_x][rng_y].setTile(TileType.PUMPKIN);
 			}
 			else
 			{
-				System.out.println("Tile Blocked");
+				//System.out.println("Tile Blocked");
 			}
 		}
 	}
@@ -111,6 +108,11 @@ public class EggHuntArena {
 		Random rand = new Random();
 		rng_x = rand.nextInt((hmax-2) + 1) + 1;
 		rng_y = rand.nextInt((vmax-2) + 1) + 1;
+	}
+	
+	public TileType getTile(int j, int i)
+	{
+		return grid[j][i].getTile();
 	}
 	
 	public void draw(Graphics2D g2)

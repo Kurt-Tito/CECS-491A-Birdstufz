@@ -1,45 +1,30 @@
 package CECS491B;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import gfx.Assets;
-
 
 public class EggHuntArenaCell {
 	
 	private static BufferedImage[] images = new BufferedImage[8];
 	private BufferedImage image;
-	//private boolean FrontWall, SideWall, Pumpkin, Floor, Tree1, Tree2, Tree3, Tree4;
 	private TileType tile;
 	
 	int x, y = 0;
 	
 	static {
-		try
-		{
-			images[0] = ImageIO.read(new File("images/sprites/grasstile.png"));
-			images[1] = ImageIO.read(new File("images/sprites/tombstone_front.png"));
-			images[2] = ImageIO.read(new File("images/sprites/tombstone_side.png"));
-			images[3] = ImageIO.read(new File("images/sprites/Pumpkin-sprite.png"));
-			images[4] = Assets.trees[0];
-			images[5] = Assets.trees[1];
-			images[6] = Assets.trees[2];
-			images[7] = Assets.trees[3];
-			
-
-		}catch(IOException e) {
-			e.printStackTrace();
-		}	
+		images[0] = Assets.floor;
+		images[1] = Assets.frontWall;
+		images[2] = Assets.sideWall;
+		images[3] = Assets.pumpkin;
+		images[4] = Assets.trees[0];
+		images[5] = Assets.trees[1];
+		images[6] = Assets.trees[2];
+		images[7] = Assets.trees[3];	
 	}
 	
 	public EggHuntArenaCell () 
 	{
 		tile = TileType.CLEAR;
-		//setImage();
 	}
 	
 	public EggHuntArenaCell (int inx, int iny)
@@ -67,7 +52,6 @@ public class EggHuntArenaCell {
 	public void setTile(TileType intile)
 	{
 		tile = intile;
-		
 		setImage(tile);
 	}
 	
@@ -78,15 +62,6 @@ public class EggHuntArenaCell {
 	
 	private void setImage(TileType intile)
 	{
-//		if(Floor)
-//			image = images[0];
-//		if(FrontWall)
-//			image = images[1];
-//		if(SideWall)
-//			image= images[2];
-//		if(Pumpkin)
-//			image = images[3];
-		
 		tile = intile;
 		
 		if(tile == TileType.CLEAR)
