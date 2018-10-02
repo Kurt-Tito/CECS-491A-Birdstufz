@@ -1,0 +1,5 @@
+package CECS491B;
+
+public enum TileType {
+	PUMPKIN, TREE1, TREE2, TREE3, TREE4, CLEAR, FRONTWALL, SIDEWALL;
+}

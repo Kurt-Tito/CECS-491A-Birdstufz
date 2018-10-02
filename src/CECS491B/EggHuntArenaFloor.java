@@ -7,14 +7,14 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class EggHuntFloor {
+public class EggHuntArenaFloor {
 	
 	BufferedImage[] floor = new BufferedImage[1];
 	
-	public EggHuntFloor()
+	public EggHuntArenaFloor()
 	{
 		try {
-			floor[0] = ImageIO.read(new File("images/sprites/dirt.png"));
+			floor[0] = ImageIO.read(new File("images/sprites/grasstile_darker.png"));
 		}catch(IOException e) {
 			e.printStackTrace();
 		}

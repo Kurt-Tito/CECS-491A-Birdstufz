@@ -3,13 +3,17 @@ package CECS491B;
 import java.awt.Graphics2D;
 import java.util.Random;
 
+import AStarTest.Tile;
+
 public class EggHuntArena {
 	
-	private EggHuntFloor floor = new EggHuntFloor();
-
-//	int cellSize = 64;
 	int horizontalCells = 25;
 	int verticalCells = 14;
+	
+	int TreeWeightedAmount = 25;
+	int PumpkinWeightedAmount = 35;
+	
+	int rng_x, rng_y;
 	
 	EggHuntArenaCell[][] grid;
 	
@@ -30,24 +34,6 @@ public class EggHuntArena {
 			{
 				grid[j][i] = new EggHuntArenaCell();
 				grid[j][i].setLocation(j*64, i*64);
-				
-				if (j == 0)
-				{
-					//grid[j][i].setLocation(0, i*64);
-				}
-				if (i == 0)
-				{
-					//grid[j][i].setLocation(j*64, 0);
-				}
-				if (j == grid[0].length)
-				{
-					//grid[j][i].setLocation(grid[0].length*64, i*64);
-				}
-				if (i == grid.length)
-				{
-					//grid[j][i].setLocation(j*64, grid.length*64);
-				}
-				
 			}
 		}
 	}
@@ -61,10 +47,10 @@ public class EggHuntArena {
 				if (i == 6)
 					i = 8;
 				
-				grid[j][0].setTile("FrontWall"); //top wall
-				grid[0][i].setTile("SideWall"); //left wall
-				grid[j][verticalCells-1].setTile("FrontWall"); //bottom wall
-				grid[horizontalCells-1][i].setTile("SideWall"); //right wall
+				grid[j][0].setTile(TileType.FRONTWALL); //top wall
+				grid[0][i].setTile(TileType.SIDEWALL); //left wall
+				grid[j][verticalCells-1].setTile(TileType.FRONTWALL); //bottom wall
+				grid[horizontalCells-1][i].setTile(TileType.SIDEWALL); //right wall
 			}
 		}
 	}
@@ -72,24 +58,59 @@ public class EggHuntArena {
 	//Placeholder for Obstacle Generator
 	public void createObstacles()
 	{	
-		int hmax = horizontalCells - 2;
-		int vmax = verticalCells - 2;
-		
-		for (int i = 0; i < 25; i++)
+		for (int i = 0; i < TreeWeightedAmount; i++)
 		{
-			Random rand = new Random();
-			int rng_x = rand.nextInt((hmax-1) + 1) + 1;
-			int rng_y = rand.nextInt((vmax-1) + 1) + 1;
+			ObstacleRandomizer();
 			
-			grid[rng_x][rng_y].setTile("Pumpkin");
+			if (!(grid[rng_x][rng_y].isBlocked() 
+					|| grid[rng_x+1][rng_y].isBlocked() 
+					|| grid[rng_x][rng_y+1].isBlocked() 
+					|| grid[rng_x+1][rng_y+1].isBlocked()))
+			{	
+				if(rng_x != 1 && rng_y != 6 && rng_x != 1 && rng_y != 7) //for entrance
+					grid[rng_x][rng_y].setTile(TileType.TREE1);
+			}
+			else
+			{
+				System.out.println("Tile Blocked");
+			}
+			
+			if (grid[rng_x][rng_y].getTile() == TileType.TREE1)
+			{
+				grid[rng_x+1][rng_y].setTile(TileType.TREE2);
+				grid[rng_x][rng_y+1].setTile(TileType.TREE3);
+				grid[rng_x+1][rng_y+1].setTile(TileType.TREE4);
+			}
+		}
+		
+		for (int i = 0; i < PumpkinWeightedAmount; i++)
+		{			
+			ObstacleRandomizer();
+			
+			if (!grid[rng_x][rng_y].isBlocked())
+			{
+				if((rng_x != 1 && rng_y != 6) || (rng_x != 1 && rng_y != 7)) //for entrance
+					grid[rng_x][rng_y].setTile(TileType.PUMPKIN);
+			}
+			else
+			{
+				System.out.println("Tile Blocked");
+			}
 		}
 	}
 	
-	public void draw(Graphics2D g2)
-	{		
-		//Draw Floor
-		floor.draw(g2);
+	public void ObstacleRandomizer()
+	{
+		int hmax = horizontalCells - 2;
+		int vmax = verticalCells - 2;
 		
+		Random rand = new Random();
+		rng_x = rand.nextInt((hmax-2) + 1) + 1;
+		rng_y = rand.nextInt((vmax-2) + 1) + 1;
+	}
+	
+	public void draw(Graphics2D g2)
+	{				
 		for(int i = 0; i < grid[0].length; i++)
 		{
 			for(int j = 0; j < grid.length; j++)

@@ -6,12 +6,15 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import gfx.Assets;
+
 
 public class EggHuntArenaCell {
 	
-	private static BufferedImage[] images = new BufferedImage[4];
+	private static BufferedImage[] images = new BufferedImage[8];
 	private BufferedImage image;
-	private boolean FrontWall, SideWall, Pumpkin, Floor;
+	//private boolean FrontWall, SideWall, Pumpkin, Floor, Tree1, Tree2, Tree3, Tree4;
+	private TileType tile;
 	
 	int x, y = 0;
 	
@@ -22,6 +25,10 @@ public class EggHuntArenaCell {
 			images[1] = ImageIO.read(new File("images/sprites/tombstone_front.png"));
 			images[2] = ImageIO.read(new File("images/sprites/tombstone_side.png"));
 			images[3] = ImageIO.read(new File("images/sprites/Pumpkin-sprite.png"));
+			images[4] = Assets.trees[0];
+			images[5] = Assets.trees[1];
+			images[6] = Assets.trees[2];
+			images[7] = Assets.trees[3];
 			
 
 		}catch(IOException e) {
@@ -31,7 +38,7 @@ public class EggHuntArenaCell {
 	
 	public EggHuntArenaCell () 
 	{
-		FrontWall = SideWall = Pumpkin = Floor = false;
+		tile = TileType.CLEAR;
 		//setImage();
 	}
 	
@@ -57,50 +64,72 @@ public class EggHuntArenaCell {
 		return y;
 	}
 	
-	public void setTile(String tile)
+	public void setTile(TileType intile)
 	{
-		if(tile == "Floor")
-		{
-			Floor = true;
-			Pumpkin = false;
-			FrontWall = false;
-			SideWall = false;
-		}
-		if(tile == "FrontWall")
-		{
-			Floor = false;
-			Pumpkin = false;
-			FrontWall = true;
-			SideWall = false;
-		}
-		if(tile == "SideWall")
-		{
-			Floor = false;
-			Pumpkin = false;
-			FrontWall = false;
-			SideWall = true;
-		}
-		if(tile == "Pumpkin")
-		{
-			Floor = false;
-			Pumpkin = true;
-			FrontWall = false;
-			SideWall = false;
-		}
+		tile = intile;
 		
-		setImage();
+		setImage(tile);
 	}
 	
-	private void setImage()
+	public TileType getTile()
 	{
-		if(Floor)
-			image = images[0];
-		if(FrontWall)
+		return tile;
+	}
+	
+	private void setImage(TileType intile)
+	{
+//		if(Floor)
+//			image = images[0];
+//		if(FrontWall)
+//			image = images[1];
+//		if(SideWall)
+//			image= images[2];
+//		if(Pumpkin)
+//			image = images[3];
+		
+		tile = intile;
+		
+		if(tile == TileType.CLEAR)
+		{
+			image = null;
+		}
+		if(tile == TileType.FRONTWALL)
+		{
 			image = images[1];
-		if(SideWall)
-			image= images[2];
-		if(Pumpkin)
+		}
+		if(tile == TileType.SIDEWALL)
+		{
+			image = images[2];
+		}
+		if(tile == TileType.PUMPKIN)
+		{
 			image = images[3];
+		}
+		if(tile == TileType.TREE1)
+		{
+			image = images[4];
+		}
+		if(tile == TileType.TREE2)
+		{
+			image = images[5];
+		}
+		if(tile == TileType.TREE3)
+		{
+			image = images[6];
+		}
+		if(tile == TileType.TREE4)
+		{
+			image = images[7];
+		}
+		
+	}
+	
+	public boolean isBlocked()
+	{
+		if (tile == TileType.CLEAR)
+			return false;
+		
+		return true;
 	}
 	
 	public void draw(Graphics2D g2)

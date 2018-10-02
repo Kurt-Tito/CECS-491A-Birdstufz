@@ -24,8 +24,6 @@ public abstract class Entity {
 	public Orientation getDir() {
 		return dir;
 	}
-	
-	
 
 	public float getX() {
 		return x;

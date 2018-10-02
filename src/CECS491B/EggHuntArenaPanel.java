@@ -23,8 +23,6 @@ public class EggHuntArenaPanel extends GamePanel{
 	public void reset() {
 		// TODO Auto-generated method stub
 		EggHuntGame.start();
-		
-		
 	}
 
 	@Override
