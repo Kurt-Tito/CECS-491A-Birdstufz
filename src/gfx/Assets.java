@@ -11,7 +11,7 @@ public class Assets {
 
 	public static void init(){
 		
-		SpriteSheet tree = new SpriteSheet(ImageLoader.loadImage("/texture/Obstacle/Tree.png"));
+		SpriteSheet tree = new SpriteSheet(ImageLoader.loadImage("/texture/Obstacle/sprite_tree0.png"));
 		
 		floor = ImageLoader.loadImage("/texture/Floor/grasstile_darker.png");
 		sideWall = ImageLoader.loadImage("/texture/Obstacle/tombstone_side.png");
