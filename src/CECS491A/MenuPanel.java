@@ -61,7 +61,7 @@ public class MenuPanel extends GamePanel implements MouseListener{
 		tankbutton.setVerticalTextPosition(JButton.CENTER);
 		
 		egghuntbutton = new JButton("EGG HUNT GAME", buttonbg);
-		egghuntbutton.setActionCommand(State.EGGHUNT.toString());
+		egghuntbutton.setActionCommand(State.EGGHUNTMENU.toString());
 		egghuntbutton.setBounds(450, 550, 380, 50);
 		egghuntbutton.setHorizontalTextPosition(JButton.CENTER);
 		egghuntbutton.setVerticalTextPosition(JButton.CENTER);
