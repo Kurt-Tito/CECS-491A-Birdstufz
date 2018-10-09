@@ -8,6 +8,7 @@ public class Assets {
 	
 	public static BufferedImage  floor, sideWall, frontWall, pumpkin, playerShooter;
 	public static BufferedImage[] trees = new BufferedImage[4];
+	public static BufferedImage[] zombies = new BufferedImage[4];
 
 	public static void init(){
 		
@@ -18,6 +19,11 @@ public class Assets {
 		frontWall = ImageLoader.loadImage("/texture/Obstacle/tombstone_front.png");
 		frontWall = ImageLoader.loadImage("/texture/Obstacle/tombstone_front.png");
 		pumpkin = ImageLoader.loadImage("/texture/Obstacle/Pumpkin.png");
+		
+		zombies[0] = ImageLoader.loadImage("/texture/Enemy/zombie07.png");
+		zombies[1] = ImageLoader.loadImage("/texture/Enemy/zombie10.png");
+		zombies[2] = ImageLoader.loadImage("/texture/Enemy/zombie04.png");
+		zombies[3] = ImageLoader.loadImage("/texture/Enemy/zombie01.png");
 		
 		playerShooter = ImageLoader.loadImage("/texture/player.png");
 		
