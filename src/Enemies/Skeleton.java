@@ -1,4 +1,4 @@
-package AStarTest;
+package Enemies;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -22,6 +22,12 @@ public class Skeleton {
 		waypoints = new LinkedList<Point>();
 	}
 	
+	public boolean isWaiting()
+	{
+		if(location.equals(target) && waypoints.isEmpty())
+			return true;
+		return false;
+	}
 	public Point2D getLocation()
 	{
 		return location;
@@ -78,26 +84,25 @@ public class Skeleton {
 	
 	public void draw(Graphics2D g2)
 	{
-		g2.setColor(Color.red);
+		g2.setColor(Color.GREEN);
 		g2.fillOval((int)location.getX() - (width/2), (int)location.getY() - (height/2), width, height);
 		g2.setColor(Color.black);
 		g2.fillArc((int)location.getX() - (width/2), (int)location.getY() - (height/2), width, height, (int)(rotation * 180 / Math.PI) - 45, 90);
 		
+		/**
 		g2.setColor(Color.RED);
 		g2.fillOval((int)target.getX() - 5, (int)target.getY() - 5, 10, 10);
 		for(Point i: waypoints)
 		{
 			g2.fillOval((int)i.getX() - 5, (int)i.getY() - 5, 10, 10);
 		}
+		*/
 	}
 	
 	public void updatePath(LinkedList<Point> waypoints)
 	{
-		if(!waypoints.isEmpty())
-		{
-			this.waypoints = waypoints;
-			//target = waypoints.poll();
-		}
+		this.waypoints = waypoints;
+		//target = waypoints.poll();
 	}
 	
 	public void update()

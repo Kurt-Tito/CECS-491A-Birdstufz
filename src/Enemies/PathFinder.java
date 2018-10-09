@@ -1,4 +1,4 @@
-package AStarTest;
+package Enemies;
 import java.awt.Point;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -18,7 +18,7 @@ public class PathFinder {
 			if(current.getLocation().equals(end))
 			{
 				//return solution
-				while(current.getPrev() != null)
+				while(current != null)
 				{
 					solution.add(0, current.getLocation());
 					current = current.getPrev();

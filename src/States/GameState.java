@@ -1,6 +1,8 @@
 package States;
 
 import CECS491B.*;
+import Enemies.SkeletonController;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -12,6 +14,7 @@ public class GameState extends State {
 	private EggHuntArenaFloor floor = new EggHuntArenaFloor();
 	private Player player;
 	private EggHuntArena arena = new EggHuntArena();
+	private SkeletonController skeletons;
 	
 	int col = 1;
 	int row = 6;
@@ -19,11 +22,13 @@ public class GameState extends State {
 	public GameState(Game game){
 		super(game);
 		player = new Player(game, col*64, row*64);
+		skeletons = new SkeletonController(player, player, arena);
 	}
 	
 	@Override
 	public void tick() {
 		player.tick();
+		skeletons.tick();
 	}
 
 	@Override
@@ -35,6 +40,7 @@ public class GameState extends State {
 		floor.draw(g2);
 		player.render(g2);
 		arena.draw(g2);
+		skeletons.draw(g2);
 	}
 
 }

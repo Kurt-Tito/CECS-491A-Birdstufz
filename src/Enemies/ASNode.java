@@ -1,4 +1,4 @@
-package AStarTest;
+package Enemies;
 import java.awt.Point;
 
 public class ASNode implements Comparable<ASNode>{

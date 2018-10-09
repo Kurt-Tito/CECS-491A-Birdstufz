@@ -14,6 +14,10 @@ import java.util.LinkedList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import Enemies.Map;
+import Enemies.PathFinder;
+import Enemies.Skeleton;
+
 
 public class AnimationPanel2 extends JPanel implements Runnable, KeyListener, MouseListener{
 	private final int FRAME_RATE = 60;
