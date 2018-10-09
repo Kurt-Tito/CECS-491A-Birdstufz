@@ -57,8 +57,6 @@ public class SkeletonController {
 			Point2D location2 = new Point((int)players[1].getX(), (int)players[1].getY());
 			Point2D target = location1;
 			Point2D targetTile = grid.getTileFromPoint(target);
-			System.out.println(location1);
-			System.out.println(targetTile);
 			if(skel.isWaiting())
 			{
 				if(!grid.isBlocked(targetTile))

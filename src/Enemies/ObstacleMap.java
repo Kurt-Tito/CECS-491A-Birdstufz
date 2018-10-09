@@ -17,9 +17,7 @@ public class ObstacleMap {
 			for(int j = 0; j < grid[0].length; j++)
 			{
 				grid[i][j] = (arena.getTile(j, i) == TileType.CLEAR) ? false : true;
-				System.out.print((grid[i][j])? "1 " : "0 ");
 			}
-			System.out.println();
 		}
 		tileSize = 64;
 	}
