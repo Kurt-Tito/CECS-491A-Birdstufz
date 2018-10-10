@@ -10,8 +10,8 @@ public class EggHuntArena {
 	int horizontalCells = 25;
 	int verticalCells = 14;
 	
-	int TreeWeightedAmount = 25;
-	int PumpkinWeightedAmount = 35;
+	int TreeWeightedAmount = 10;
+	int PumpkinWeightedAmount = 20;
 	
 	int rng_x, rng_y;
 	

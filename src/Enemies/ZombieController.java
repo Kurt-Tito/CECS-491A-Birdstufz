@@ -75,14 +75,14 @@ public class ZombieController {
 	
 	public void doAction(Zombie zomb)
 	{
-		if(zomb.isWaiting())
+		if(!zomb.isPaused())
 		{
-			Point2D location1 = new Point((int)players[0].getX() + 32, (int)players[0].getY() + 32);
-			Point2D location2 = new Point((int)players[1].getX(), (int)players[1].getY());
-			Point2D target = location1;
-			Point2D targetTile = grid.getTileFromPoint(target);
-			if(zomb.isWaiting())
+			if(!zomb.hasMoves())
 			{
+				Point2D location1 = new Point((int)players[0].getX() + 32, (int)players[0].getY() + 32);
+				Point2D location2 = new Point((int)players[1].getX(), (int)players[1].getY());
+				Point2D target = location1;
+				Point2D targetTile = grid.getTileFromPoint(target);
 				if(!grid.isBlocked(targetTile))
 				{
 					LinkedList<Point> path = null;
@@ -95,6 +95,10 @@ public class ZombieController {
 							i.setLocation(grid.getTileCenter(i));
 						}
 						zomb.updatePath(path);
+					}
+					else
+					{
+						zomb.pause(60);
 					}
 				}
 			}

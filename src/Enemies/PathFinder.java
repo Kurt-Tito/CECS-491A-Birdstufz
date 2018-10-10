@@ -46,7 +46,7 @@ public class PathFinder {
 			}
 			
 		}
-		return null;
+		return solution;
 	}
 	
 	private static LinkedList<Point> getAdjacentNodes(boolean[][] grid, Point parent)

@@ -1,4 +1,4 @@
-package Enemies;
+ package Enemies;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -15,26 +15,37 @@ public class Zombie {
 	private Point2D location;
 	private int width, height;
 	private double rotation;
+	private Orientation orientation;
 	private double speed;
 	private Point2D target;
 	private LinkedList<Point> waypoints;
+	private long waitTime;
 	
 	public Zombie(double x, double y, int width, int height, double rotationDegrees, double speed)
 	{
 		location = new Point2D.Double(x,y);
 		this.width = width;
 		this.height = height;
-		this.rotation = rotationDegrees * (double)Math.PI / 180; //degrees to radians;
+		setRotation(rotationDegrees * (double)Math.PI / 180); //degrees to radians;
 		this.speed = speed;
 		target = (Point2D) location.clone();
 		waypoints = new LinkedList<Point>();
+		waitTime = 0;
 	}
 	
-	public boolean isWaiting()
+	public boolean hasMoves()
 	{
 		if(location.equals(target) && waypoints.isEmpty())
-			return true;
-		return false;
+			return false;
+		return true;
+	}
+	public boolean isPaused()
+	{
+		return waitTime > 0;
+	}
+	public void pause(long waitTime)
+	{
+		this.waitTime = waitTime;
 	}
 	public Point2D getLocation()
 	{
@@ -52,9 +63,15 @@ public class Zombie {
 		setDestination(p.getX(), p.getY());
 	}
 	
-	public void move(double rotation)
+	private void setRotation(double rotation)
 	{
 		this.rotation = rotation;
+		updateOrientation();
+	}
+	
+	private void move(double rotation)
+	{
+		setRotation(rotation);
 		
 		double dx, dy;
 		dx = Math.cos(rotation) * speed;
@@ -63,7 +80,7 @@ public class Zombie {
 		moveY(dy);
 	}
 	
-	public void moveTo(double x, double y)
+	private void moveTo(double x, double y)
 	{
 		if(Point2D.distance(location.getX(), location.getY(), x, y) <= speed)
 		{
@@ -75,7 +92,7 @@ public class Zombie {
 		}
 	}
 	
-	public void moveTo(Point2D p)
+	private void moveTo(Point2D p)
 	{
 		moveTo(p.getX(), p.getY());
 	}
@@ -92,7 +109,7 @@ public class Zombie {
 	
 	public void draw(Graphics2D g2)
 	{
-		g2.drawImage(getImage(getOrientation()), (int) (location.getX() - width/2), (int) (location.getY() - height/2), width, height, null);
+		g2.drawImage(getImage(), (int) (location.getX() - width/2), (int) (location.getY() - height/2), width, height, null);
 		/**
 		g2.setColor(Color.GREEN);
 		g2.fillOval((int)location.getX() - (width/2), (int)location.getY() - (height/2), width, height);
@@ -116,34 +133,39 @@ public class Zombie {
 		//target = waypoints.poll();
 	}
 	
-	private Orientation getOrientation()
+	private void updateOrientation()
 	{
-		if(rotation >= Math.PI / 4 && rotation <= 3 * Math.PI / 4)
-			return Orientation.NORTH;
-		if(rotation >= 3 * Math.PI / 4 && rotation <= Math.PI)
-			return Orientation.WEST;
-		if(rotation >= -Math.PI && rotation <= -3 * Math.PI / 4)
-			return Orientation.WEST;
-		if(rotation >= -3 * Math.PI / 4 && rotation <= -Math.PI / 4)
-			return Orientation.SOUTH;
-		return Orientation.EAST;
+		double b1, b2, b3, b4;
+		b1 = Math.PI / 3;
+		b2 = 2 * Math.PI / 3;
+		b3 = -2 * Math.PI / 3;
+		b4 = -Math.PI / 3;
+		if(rotation >= b1 && rotation <= b2)
+			orientation = Orientation.NORTH;
+		else if(rotation >= b2 && rotation <= Math.PI)
+			orientation = Orientation.WEST;
+		else if(rotation >= -Math.PI && rotation <= b3)
+			orientation = Orientation.WEST;
+		else if(rotation >= b3 && rotation <= -Math.PI / 3)
+			orientation = Orientation.SOUTH;
+		else orientation = Orientation.EAST;
 	}
 	
-	private BufferedImage getImage(Orientation o)
+	private BufferedImage getImage()
 	{
-		if(o == Orientation.EAST)
+		if(orientation == Orientation.EAST || orientation == Orientation.NORTHEAST || orientation == Orientation.SOUTHEAST)
 		{
 			return Assets.zombies[0];
 		}
-		if(o == Orientation.NORTH)
+		if(orientation == Orientation.NORTH)
 		{
 			return Assets.zombies[1];
 		}
-		if(o == Orientation.WEST)
+		if(orientation == Orientation.WEST || orientation == Orientation.NORTHWEST || orientation == Orientation.SOUTHWEST)
 		{
 			return Assets.zombies[2];
 		}
-		if(o == Orientation.SOUTH)
+		if(orientation == Orientation.SOUTH)
 		{
 			return Assets.zombies[3];
 		}
@@ -152,12 +174,19 @@ public class Zombie {
 	
 	public void update()
 	{
-		moveTo(target);
-		if(location.equals(target))
+		if(waitTime > 0)
 		{
-			if(!waypoints.isEmpty())
+			waitTime--;
+		}
+		else
+		{
+			moveTo(target);
+			if(location.equals(target))
 			{
-				target = waypoints.poll();
+				if(!waypoints.isEmpty())
+				{
+					target = waypoints.poll();
+				}
 			}
 		}
 	}
