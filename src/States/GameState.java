@@ -16,6 +16,7 @@ public class GameState extends State {
 	private Player player;
 	private EggHuntArena arena = new EggHuntArena();
 	private ZombieController zombies;
+	private HighScore score = new HighScore();
 	
 	int col = 1;
 	int row = 6;
@@ -42,6 +43,7 @@ public class GameState extends State {
 		player.render(g2);
 		arena.draw(g2);
 		zombies.draw(g2);
+		score.DrawScore(g2);
 	}
 
 }
