@@ -9,6 +9,11 @@ public class Assets {
 	public static BufferedImage  floor, sideWall, frontWall, pumpkin, playerShooter;
 	public static BufferedImage[] trees = new BufferedImage[4];
 	public static BufferedImage[] zombies = new BufferedImage[4];
+	
+	
+	//player animation
+	public static BufferedImage pU, pD, pL, pR, pUR, pUL, pDL, pDR;
+	public static BufferedImage[] idle, meleeAttack, rifleMove, rifleShoot;
 
 	public static void init(){
 		
@@ -31,5 +36,41 @@ public class Assets {
 		trees[1] = tree.crop(width, 0, width, height);
 		trees[2] = tree.crop(0, height, width, height);
 		trees[3] = tree.crop(width, height, width, height);
+		
+		//load player animation
+		pU = ImageLoader.loadImage("/Player/PlayerOrientation/north.png");
+		pD = ImageLoader.loadImage("/Player/PlayerOrientation/south.png");
+		pL = ImageLoader.loadImage("/Player/PlayerOrientation/west.png");
+		pR = ImageLoader.loadImage("/Player/PlayerOrientation/east.png");
+		
+				
+		pUR = ImageLoader.loadImage("/Player/PlayerOrientation/northeast.png");
+		pUL = ImageLoader.loadImage("/Player/PlayerOrientation/northwest.png");
+		pDL = ImageLoader.loadImage("/Player/PlayerOrientation/southwest.png");
+		pDR = ImageLoader.loadImage("/Player/PlayerOrientation/southeast.png");
+				
+				
+		idle = new BufferedImage[20];
+		meleeAttack = new BufferedImage[15];
+		rifleMove = new BufferedImage[20];
+		rifleShoot = new BufferedImage[3];
+				
+		for (int i = 0; i < 20; i++) {
+			idle[i] = ImageLoader.loadImage("/Player/survivor-idle_rifle_" + i + ".png");
+		}
+				
+		for (int i = 0; i < 15; i++) {
+			meleeAttack[i] = ImageLoader.loadImage("/Player/MeleeAttack/survivor-meleeattack_rifle_" + 
+													i + ".png");		
+		}
+				
+		for (int i = 0; i < 20; i++) {
+			rifleMove[i] = ImageLoader.loadImage("/Player/RifleMove/survivor-move_rifle_" + 
+												i + ".png");
+		}
+		for (int i = 0; i < rifleShoot.length; i++) {
+			rifleShoot[i] = ImageLoader.loadImage("/Player/RifleShoot/survivor-shoot_rifle_" +
+											i + ".png");
+		}
 	}
 }
