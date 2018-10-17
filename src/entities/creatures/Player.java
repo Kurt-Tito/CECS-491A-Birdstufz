@@ -1,13 +1,17 @@
 package entities.creatures;
 
 import java.awt.Graphics;
+
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.HashSet;
+import java.util.Set;
 
 import game.Game;
 import gfx.Animation;
 import gfx.Assets;
+import input.KeyManager;
 
 public class Player extends Creature {
 
@@ -51,48 +55,55 @@ public class Player extends Creature {
 		
 		
 		
-		if(game.getKeyManager().up && game.getKeyManager().left) {
-			yMove = -speed/2;
-			xMove = -speed/2;
-			setDirection(2);
-			System.out.println("Moving: up left");
-			System.out.println(getDirection());
-		}
-		if(game.getKeyManager().down && game.getKeyManager().left) {
-			yMove = speed/2;
-			xMove = -speed/2;
-			setDirection(4);
-			System.out.println("Moving: down left");
-		}
-		if(game.getKeyManager().down && game.getKeyManager().right) {
-			yMove = speed/2;
-			xMove = speed/2;
-			setDirection(6);
-			System.out.println("Moving: down right");
-		}
-		if(game.getKeyManager().up && game.getKeyManager().right) {
-			yMove = -speed/2;
-			xMove = speed/2;
-			setDirection(8);
-			System.out.println("Moving: up right");
-			System.out.println(getDirection());
+		if (game.getKeyManager().pressed.size() > 1) {
+			if(game.getKeyManager().up && game.getKeyManager().left) {
+				yMove = -speed;
+				xMove = -speed;
+				setDirection(2);
+				System.out.println("Moving: up left");
+				System.out.println(getDirection());
+				
+			}
+			if(game.getKeyManager().down && game.getKeyManager().left) {
+				yMove = speed;
+				xMove = -speed;
+				setDirection(4);
+				System.out.println("Moving: down left");
+			}
+			if(game.getKeyManager().down && game.getKeyManager().right) {
+				yMove = speed;
+				xMove = speed;
+				setDirection(6);
+				System.out.println("Moving: down right");
+			}
+			if(game.getKeyManager().up && game.getKeyManager().right) {
+				yMove = -speed;
+				xMove = speed;
+				setDirection(8);
+				System.out.println("Moving: up right");
+				System.out.println(getDirection());
+			}
 		}
 		
-		if(game.getKeyManager().up) {
-			setDirection(1);
-			yMove = -speed;
-		}
-		if(game.getKeyManager().left) {
-			xMove = -speed;
-			setDirection(3);
-		}
-		if(game.getKeyManager().down) {
-			yMove = speed;
-			setDirection(5);	
-		}
-		if(game.getKeyManager().right) {
-			xMove = speed;
-			setDirection(7);
+		else {
+		
+			if(game.getKeyManager().up) {
+				setDirection(1);
+				yMove = -speed;
+			}
+			
+			if(game.getKeyManager().left) {
+				xMove = -speed;
+				setDirection(3);
+			}
+			if(game.getKeyManager().down) {
+				yMove = speed;
+				setDirection(5);	
+			}
+			if(game.getKeyManager().right) {
+				xMove = speed;
+				setDirection(7);
+			}
 		}
 		
 	}
@@ -157,7 +168,6 @@ public class Player extends Creature {
 		
 			
 	}
-	
 	public void setDirection(int direction) {
 		this.direction = direction;
 	}
@@ -165,5 +175,6 @@ public class Player extends Creature {
 	public int getDirection() {
 		return direction;
 	}
+	
 
 }
