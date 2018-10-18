@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import CECS491B.EggHuntArenaPanel;
+import CECS491B.EggHuntHTPPanel;
 import CECS491B.EggHuntMenuPanel;
 
 public class Game extends JFrame implements ActionListener{
@@ -24,6 +25,7 @@ public class Game extends JFrame implements ActionListener{
 	private final StatusBar statusbar = new StatusBar();
 	private final EggHuntMenuPanel egghuntmenupanel = new EggHuntMenuPanel();
 	private final EggHuntArenaPanel egghuntarenapanel = new EggHuntArenaPanel();
+	private final EggHuntHTPPanel egghunthtppanel = new EggHuntHTPPanel();
 	
 	private java.util.Timer timer;
 	private boolean isRunning = false;
@@ -120,6 +122,8 @@ public class Game extends JFrame implements ActionListener{
 				GameLoopSwitch(true);
 				currentPanel = egghuntarenapanel;
 				break;
+			case EGGHUNTHTP:
+				currentPanel = egghunthtppanel;
 		}
 		updatePanel();
 	}

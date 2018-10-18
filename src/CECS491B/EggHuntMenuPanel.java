@@ -21,7 +21,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 public class EggHuntMenuPanel extends GamePanel implements MouseListener{
-	private JButton egghuntjbutton;
+	private JButton egghuntjbutton,egghunthtpjbutton;
 	private static final String PATH_HALLOWBANNER = "images/UIHallow.png";
 	protected static BufferedImage hallowbanner;
 	static
@@ -50,9 +50,16 @@ public class EggHuntMenuPanel extends GamePanel implements MouseListener{
 		
 		egghuntjbutton = new JButton("EGG HUNT GAME", buttonbg);
 		egghuntjbutton.setActionCommand(State.EGGHUNT.toString());
-		egghuntjbutton.setBounds(550, 400, 300, 100);
+		egghuntjbutton.setBounds(550, 380, 300, 100);
 		egghuntjbutton.setHorizontalTextPosition(JButton.CENTER);
 		egghuntjbutton.setVerticalTextPosition(JButton.CENTER);
+		
+		egghunthtpjbutton = new JButton("How To Play", buttonbg);
+		egghunthtpjbutton.setActionCommand(State.EGGHUNTHTP.toString());
+		egghunthtpjbutton.setBounds(550, 520, 300, 100);
+		egghunthtpjbutton.setHorizontalTextPosition(JButton.CENTER);
+		egghunthtpjbutton.setVerticalTextPosition(JButton.CENTER);
+		
 	}
 	
 	@Override
@@ -63,11 +70,13 @@ public class EggHuntMenuPanel extends GamePanel implements MouseListener{
 	@Override
 	public void addListener(ActionListener al) {
 		egghuntjbutton.addActionListener(al);
+		egghunthtpjbutton.addActionListener(al);
 	}
 	
 	public void removeListener(ActionListener al)
 	{
 		egghuntjbutton.removeActionListener(al);
+		egghunthtpjbutton.removeActionListener(al);
 	}
 	
 	public void paintComponent(Graphics g)
@@ -86,6 +95,7 @@ public class EggHuntMenuPanel extends GamePanel implements MouseListener{
 	public void addButtons()
 	{	
 		add(egghuntjbutton);
+		add(egghunthtpjbutton);
 	}
 	
 	@Override
