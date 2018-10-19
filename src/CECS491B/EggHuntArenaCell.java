@@ -1,9 +1,11 @@
 package CECS491B;
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import gfx.Assets;
 
-public class EggHuntArenaCell {
+public class EggHuntArenaCell extends Rectangle {
 	
 	private static BufferedImage[] images = new BufferedImage[8];
 	private BufferedImage image;
@@ -37,6 +39,8 @@ public class EggHuntArenaCell {
 	{
 		x = inx;
 		y = iny;
+		
+		setBounds(x, y, 64, 64);
 	}
 	
 	public int getXLoc ()
@@ -110,6 +114,13 @@ public class EggHuntArenaCell {
 	public void draw(Graphics2D g2)
 	{		
 		g2.drawImage(image, x, y, 64, 64, null);
+		
+		if(this.isBlocked())
+		{
+			g2.setColor(Color.WHITE);
+			g2.drawRect(x, y, 64, 64);
+		}
+		
 	}
 
 }

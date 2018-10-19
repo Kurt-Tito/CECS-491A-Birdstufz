@@ -13,7 +13,7 @@ public abstract class Creature extends Entity {
 	protected float speed;
 	protected float xMove, yMove;
 
-	public Creature(float x, float y, int width, int height) {
+	public Creature(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		health = DEFAULT_HEALTH;
 		speed = DEFAULT_SPEED;
@@ -24,6 +24,8 @@ public abstract class Creature extends Entity {
 	public void move(){
 		x += xMove;
 		y += yMove;
+		
+		//setBounds(x, y, 64, 64);
 	}
 	
 	//GETTERS SETTERS

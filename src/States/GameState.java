@@ -23,7 +23,7 @@ public class GameState extends State {
 	
 	public GameState(Game game){
 		super(game);
-		player = new Player(game, col*64, row*64);
+		player = new Player(game, col*64, row*64, arena);
 		zombies = new ZombieController(player, player, arena);
 	}
 	
@@ -40,8 +40,9 @@ public class GameState extends State {
 		
 		//arena.draw(g2);
 		floor.draw(g2);
-		player.render(g2);
+		//player.render(g2);
 		arena.draw(g2);
+		player.render(g2);
 		zombies.draw(g2);
 		score.DrawScore(g2);
 	}

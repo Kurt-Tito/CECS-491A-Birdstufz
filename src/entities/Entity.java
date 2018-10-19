@@ -1,20 +1,23 @@
 package entities;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.Enumeration;
 
-public abstract class Entity {
+public abstract class Entity extends Rectangle{
 
-	protected float x, y;
+	protected int x, y;
 	protected int width, height;
 	protected Orientation dir;
 	
 	
-	public Entity(float x, float y, int width, int height){
+	public Entity(int x, int y, int width, int height){
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		
+		setBounds(x, y, 64, 64);
 	}
 	
 	public abstract void tick();
@@ -25,23 +28,23 @@ public abstract class Entity {
 		return dir;
 	}
 
-	public float getX() {
+	public double getX() {
 		return x;
 	}
 
-	public void setX(float x) {
+	public void setX(int x) {
 		this.x = x;
 	}
 
-	public float getY() {
+	public double getY() {
 		return y;
 	}
 
-	public void setY(float y) {
+	public void setY(int y) {
 		this.y = y;
 	}
 
-	public int getWidth() {
+	public double getWidth() {
 		return width;
 	}
 
@@ -49,7 +52,7 @@ public abstract class Entity {
 		this.width = width;
 	}
 
-	public int getHeight() {
+	public double getHeight() {
 		return height;
 	}
 

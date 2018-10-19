@@ -115,6 +115,17 @@ public class EggHuntArena {
 		return grid[j][i].getTile();
 	}
 	
+	public EggHuntArenaCell getCell(int j, int i)
+	{
+		return grid[j][i];
+	}
+	
+	public EggHuntArenaCell[][] getGrid()
+	{
+		return grid;
+	}
+	
+	
 	public void draw(Graphics2D g2)
 	{				
 		for(int i = 0; i < grid[0].length; i++)
