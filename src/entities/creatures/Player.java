@@ -258,6 +258,11 @@ public class Player extends Creature {
 		
 			
 	}
+	
+	public Rectangle getBoundingBox()
+	{
+		return new Rectangle(x, y, width - 16, height - 16);
+	}
 	public void setDirection(int direction) {
 		this.direction = direction;
 	}
