@@ -7,6 +7,7 @@ import Enemies.ZombieController;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import entities.creatures.Bird;
 import entities.creatures.Player;
 import game.Game;
 
@@ -18,6 +19,7 @@ public class GameState extends State {
 	private ZombieController zombies;
 	private SkeletonController skeletons;
 	private HighScore score = new HighScore();
+	private Bird bird;
 	
 	int col = 1;
 	int row = 6;
@@ -25,6 +27,7 @@ public class GameState extends State {
 	public GameState(Game game){
 		super(game);
 		player = new Player(game, col*64, row*64, arena);
+		bird = new Bird(0, row * 64, 64, 64);
 		zombies = new ZombieController(player, player, arena);
 		skeletons = new SkeletonController(player, player, arena);
 	}
@@ -34,6 +37,7 @@ public class GameState extends State {
 		player.tick();
 		zombies.tick();
 		skeletons.tick();
+		bird.tick();
 	}
 
 	@Override
@@ -49,6 +53,7 @@ public class GameState extends State {
 		zombies.draw(g2);
 		skeletons.draw(g2);
 		score.DrawScore(g2);
+		bird.render(g2);
 	}
 
 }
