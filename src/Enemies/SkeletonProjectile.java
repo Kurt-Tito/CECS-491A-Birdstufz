@@ -2,6 +2,7 @@ package Enemies;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 
 import gfx.Assets;
@@ -26,10 +27,15 @@ public class SkeletonProjectile {
 		location = new Point2D.Double(x,y);
 		this.width = 32;
 		this.height = 32;
-		this.speed = 9;
+		this.speed = 8;
 		dx = Math.cos(rotation) * speed;
 		dy = Math.sin(rotation) * speed * -1;
 		
+	}
+	
+	public Rectangle getBoundingBox()
+	{
+		return new Rectangle((int)location.getX() - (width/2), (int)location.getY() - (height/2), width, height);
 	}
 	
 	private void moveX(double dx)

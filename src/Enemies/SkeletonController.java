@@ -2,6 +2,7 @@ package Enemies;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -14,8 +15,10 @@ import entities.creatures.Player;
 public class SkeletonController {
 	private List<Skeleton> skeletons;
 	private List<SkeletonProjectile> projectiles;
+	private List<Rectangle> shootObstacles;
 	private Player[] players = new Player[2];
-	private ObstacleMap grid;
+	private ObstacleMap moveGrid;
+	private ObstacleMap shootGrid;
 	
 	public SkeletonController(Player p1, Player p2, EggHuntArena arena)
 	{
@@ -23,7 +26,10 @@ public class SkeletonController {
 		players[1] = p2;
 		skeletons = new ArrayList<Skeleton>();
 		projectiles = new ArrayList<SkeletonProjectile>();
-		grid = getMap(arena);
+		
+		moveGrid = new ObstacleMap(arena, false);
+		shootGrid = new ObstacleMap(arena, true);
+		shootObstacles = getObstacles();
 		
 		boolean x = false;
 		int sCount = 2;
@@ -34,34 +40,68 @@ public class SkeletonController {
 			while(!valid)
 			{
 				Random random = new Random(System.nanoTime());
-				col = random.nextInt(grid.getObstacleGrid()[0].length);
-				row = random.nextInt(grid.getObstacleGrid().length);
-				if(!grid.isBlocked(col, row))
+				col = random.nextInt(moveGrid.getObstacleGrid()[0].length);
+				row = random.nextInt(moveGrid.getObstacleGrid().length);
+				if(!moveGrid.isBlocked(col, row))
 				{
 					valid = true;
 				}
 			}
-			Point2D loc = grid.getTileCenter(col, row);
+			Point2D loc = moveGrid.getTileCenter(col, row);
 			skeletons.add(new Skeleton(loc.getX(), loc.getY(), 64, 64));
 			sCount--;
 		}
 	}
 	
-	private ObstacleMap getMap(EggHuntArena arena)
+	private List<Rectangle> getObstacles()
 	{
-		ObstacleMap map = new ObstacleMap(arena);
-		return map;
+		List<Rectangle> obstacles = new ArrayList<Rectangle>();
+		boolean[][] grid = shootGrid.getObstacleGrid();
+		for(int i = 0; i < grid.length; i++)
+		{
+			for(int j = 0; j < grid[0].length; j++)
+			{
+				if(grid[i][j] == true)
+				{
+					obstacles.add(new Rectangle(j * shootGrid.getTileSize(), i * shootGrid.getTileSize(), shootGrid.getTileSize(), shootGrid.getTileSize()));
+				}
+			}
+		}
+		return obstacles;
 	}
 	
 	public void tick()
 	{
+		Rectangle playerRectangle = players[0].getBoundingBox();
 		for(Skeleton i: skeletons)
 		{
 			doAction(i);
 		}
-		for(SkeletonProjectile i: projectiles)
+		for(int i = 0; i < projectiles.size(); i++)
 		{
-			i.tick();
+			projectiles.get(i).tick();
+			if(projectiles.get(i).getBoundingBox().intersects(playerRectangle))
+			{
+				System.out.println("Player hit");
+				projectiles.remove(i);
+				i--;
+			}
+			else
+			{
+				int j = 0;
+				boolean collided = false;
+				while(!collided && j < shootObstacles.size())
+				{
+					if(projectiles.get(i).getBoundingBox().intersects(shootObstacles.get(j)))
+					{
+						System.out.println("hit");
+						projectiles.remove(i);
+						i--;
+						collided = true;
+					}
+					j++;
+				}
+			}
 		}
 	}
 	

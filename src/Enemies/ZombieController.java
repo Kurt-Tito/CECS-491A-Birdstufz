@@ -61,7 +61,7 @@ public class ZombieController {
 	
 	private ObstacleMap getMap(EggHuntArena arena)
 	{
-		ObstacleMap map = new ObstacleMap(arena);
+		ObstacleMap map = new ObstacleMap(arena, false);
 		return map;
 	}
 	

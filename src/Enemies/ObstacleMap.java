@@ -8,18 +8,43 @@ import CECS491B.TileType;
 
 public class ObstacleMap {
 	private boolean[][] grid;
+	private EggHuntArena arena;
+	private MapType type;
 	private int tileSize;
-	public ObstacleMap(EggHuntArena arena)
+	public ObstacleMap(EggHuntArena arena, boolean type)
+	{
+		this.arena = arena;
+		if(type == false)
+			this.type = MapType.MOVE;
+		else
+			this.type = MapType.SHOOT;
+		initializeGrid();
+		tileSize = 64;
+	}
+	
+	private void initializeGrid()
 	{
 		grid = new boolean[14][25];
-		for(int i = 0; i < grid.length; i++)
+		if(type == MapType.MOVE)
 		{
-			for(int j = 0; j < grid[0].length; j++)
+			for(int i = 0; i < grid.length; i++)
 			{
-				grid[i][j] = (arena.getTile(j, i) == TileType.CLEAR) ? false : true;
+				for(int j = 0; j < grid[0].length; j++)
+				{
+					grid[i][j] = (arena.getTile(j, i) == TileType.CLEAR) ? false : true;
+				}
 			}
 		}
-		tileSize = 64;
+		else if(type == MapType.SHOOT)
+		{
+			for(int i = 0; i < grid.length; i++)
+			{
+				for(int j = 0; j < grid[0].length; j++)
+				{
+					grid[i][j] = (arena.getTile(j, i) == TileType.CLEAR || arena.getTile(j, i) == TileType.PUMPKIN) ? false : true;
+				}
+			}
+		}
 	}
 	
 	public boolean[][] getObstacleGrid()
@@ -71,5 +96,10 @@ public class ObstacleMap {
 	public int getTileSize()
 	{
 		return tileSize;
+	}
+	
+	public enum MapType
+	{
+		MOVE, SHOOT
 	}
 }

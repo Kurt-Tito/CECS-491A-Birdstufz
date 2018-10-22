@@ -65,7 +65,7 @@ public class Skeleton {
 		if(canShoot())
 		{
 			SkeletonProjectile projectile = new SkeletonProjectile(location.getX(), location.getY(), rotation);
-			reloadTimer += System.nanoTime() % 120 + 180;
+			reloadTimer += System.nanoTime() % 120 + 120;
 			return projectile;
 		}
 		return null;
