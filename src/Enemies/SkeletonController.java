@@ -6,12 +6,14 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import CECS491B.EggHuntArena;
 import entities.creatures.Player;
 
 public class SkeletonController {
 	private List<Skeleton> skeletons;
+	private List<SkeletonProjectile> projectiles;
 	private Player[] players = new Player[2];
 	private ObstacleMap grid;
 	
@@ -20,18 +22,28 @@ public class SkeletonController {
 		players[0] = p1;
 		players[1] = p2;
 		skeletons = new ArrayList<Skeleton>();
+		projectiles = new ArrayList<SkeletonProjectile>();
 		grid = getMap(arena);
 		
 		boolean x = false;
-		for(int i = 0; i < grid.getObstacleGrid().length - 1; i++)
+		int sCount = 2;
+		while(sCount > 0)
 		{
-			Point2D loc = grid.getTileCenter(3, i);
-			if(!grid.getObstacleGrid()[i][3] && !x)
+			boolean valid = false;
+			int col = 0, row = 0;
+			while(!valid)
 			{
-				skeletons.add(new Skeleton(loc.getX(), loc.getY(), 64, 64, 0, 3));
-				x = true;
+				Random random = new Random(System.nanoTime());
+				col = random.nextInt(grid.getObstacleGrid()[0].length);
+				row = random.nextInt(grid.getObstacleGrid().length);
+				if(!grid.isBlocked(col, row))
+				{
+					valid = true;
+				}
 			}
-			
+			Point2D loc = grid.getTileCenter(col, row);
+			skeletons.add(new Skeleton(loc.getX(), loc.getY(), 64, 64));
+			sCount--;
 		}
 	}
 	
@@ -47,35 +59,21 @@ public class SkeletonController {
 		{
 			doAction(i);
 		}
+		for(SkeletonProjectile i: projectiles)
+		{
+			i.tick();
+		}
 	}
 	
 	public void doAction(Skeleton skel)
 	{
-		if(skel.isWaiting())
-		{
-			Point2D location1 = new Point((int)players[0].getX() + 32, (int)players[0].getY() + 32);
-			Point2D location2 = new Point((int)players[1].getX(), (int)players[1].getY());
-			Point2D target = location1;
-			Point2D targetTile = grid.getTileFromPoint(target);
-			if(skel.isWaiting())
-			{
-				if(!grid.isBlocked(targetTile))
-				{
-					LinkedList<Point> path = null;
-					path = PathFinder.findPath(grid.getObstacleGrid(), (Point)grid.getTileFromPoint(skel.getLocation()), (Point) grid.getTileFromPoint(target));
-					
-					if(path != null && !path.isEmpty())
-					{
-						for(Point i: path)
-						{
-							i.setLocation(grid.getTileCenter(i));
-						}
-						skel.updatePath(path);
-					}
-				}
-			}
-		}
 		skel.update();
+		Point2D location = new Point((int)players[0].getX() + 32, (int)players[0].getY() + 32);
+		SkeletonProjectile projectile = skel.fire(location);
+		if(projectile != null)
+		{
+			projectiles.add(projectile);
+		}
 	}
 	
 	public void addSkeleton(Skeleton skel)
@@ -86,6 +84,10 @@ public class SkeletonController {
 	public void draw(Graphics2D g2)
 	{
 		for(Skeleton i: skeletons)
+		{
+			i.draw(g2);
+		}
+		for(SkeletonProjectile i: projectiles)
 		{
 			i.draw(g2);
 		}

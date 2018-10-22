@@ -6,9 +6,10 @@ public class Assets {
 	
 	private static final int width = 64, height = 64;
 	
-	public static BufferedImage  floor, sideWall, frontWall, pumpkin, playerShooter;
+	public static BufferedImage  floor, sideWall, frontWall, pumpkin, playerShooter, skeletonProjectile;
 	public static BufferedImage[] trees = new BufferedImage[4];
 	public static BufferedImage[] zombies = new BufferedImage[4];
+	public static BufferedImage[] skeletons = new BufferedImage[4];
 	
 	
 	//player animation
@@ -24,11 +25,17 @@ public class Assets {
 		frontWall = ImageLoader.loadImage("/texture/Obstacle/tombstone_front.png");
 		frontWall = ImageLoader.loadImage("/texture/Obstacle/tombstone_front.png");
 		pumpkin = ImageLoader.loadImage("/texture/Obstacle/Pumpkin.png");
+		skeletonProjectile = ImageLoader.loadImage("/texture/Enemy/fireball.png");
 		
 		zombies[0] = ImageLoader.loadImage("/texture/Enemy/zombie07.png");
 		zombies[1] = ImageLoader.loadImage("/texture/Enemy/zombie10.png");
 		zombies[2] = ImageLoader.loadImage("/texture/Enemy/zombie04.png");
 		zombies[3] = ImageLoader.loadImage("/texture/Enemy/zombie01.png");
+		
+		skeletons[0] = ImageLoader.loadImage("/texture/Enemy/skeletonarcher07.png");
+		skeletons[1] = ImageLoader.loadImage("/texture/Enemy/skeletonarcher10.png");
+		skeletons[2] = ImageLoader.loadImage("/texture/Enemy/skeletonarcher04.png");
+		skeletons[3] = ImageLoader.loadImage("/texture/Enemy/skeletonarcher01.png");
 		
 		playerShooter = ImageLoader.loadImage("/texture/player.png");
 		

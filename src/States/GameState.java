@@ -16,6 +16,7 @@ public class GameState extends State {
 	private Player player;
 	private EggHuntArena arena = new EggHuntArena();
 	private ZombieController zombies;
+	private SkeletonController skeletons;
 	private HighScore score = new HighScore();
 	
 	int col = 1;
@@ -25,12 +26,14 @@ public class GameState extends State {
 		super(game);
 		player = new Player(game, col*64, row*64, arena);
 		zombies = new ZombieController(player, player, arena);
+		skeletons = new SkeletonController(player, player, arena);
 	}
 	
 	@Override
 	public void tick() {
 		player.tick();
 		zombies.tick();
+		skeletons.tick();
 	}
 
 	@Override
@@ -44,6 +47,7 @@ public class GameState extends State {
 		arena.draw(g2);
 		player.render(g2);
 		zombies.draw(g2);
+		skeletons.draw(g2);
 		score.DrawScore(g2);
 	}
 
