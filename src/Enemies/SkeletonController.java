@@ -72,35 +72,68 @@ public class SkeletonController {
 	
 	public void tick()
 	{
-		Rectangle playerRectangle = players[0].getBoundingBox();
-		for(Skeleton i: skeletons)
+		Rectangle[] playerRectangles = new Rectangle[players.length];
+		for(int i = 0; i < playerRectangles.length; i++)
 		{
-			doAction(i);
+			playerRectangles[i] = players[i].getBoundingBox();
 		}
-		for(int i = 0; i < projectiles.size(); i++)
+		int i = 0;
+		while(i < skeletons.size())
 		{
-			projectiles.get(i).tick();
-			if(projectiles.get(i).getBoundingBox().intersects(playerRectangle))
+			if(skeletons.get(i).getHealth() == 0)
 			{
-				System.out.println("Player hit");
-				projectiles.remove(i);
-				i--;
+				skeletons.remove(i);
 			}
 			else
 			{
-				int j = 0;
-				boolean collided = false;
-				while(!collided && j < shootObstacles.size())
+				doAction(skeletons.get(i));
+				for(int p = 0; p < playerRectangles.length;p++)
 				{
-					if(projectiles.get(i).getBoundingBox().intersects(shootObstacles.get(j)))
+					if(playerRectangles[p].intersects(skeletons.get(i).getBoundingBox()))
 					{
-						System.out.println("hit");
-						projectiles.remove(i);
-						i--;
-						collided = true;
+						//Player p takes damage
+						System.out.println("Skeleton hit");
 					}
+				}
+				i++;
+			}
+		}
+		
+		i = 0;
+		while(i < projectiles.size())
+		{
+			projectiles.get(i).tick();
+			
+			int j = 0;
+			boolean collided = false;
+			while(!collided && j < playerRectangles.length)
+			{
+				if(projectiles.get(i).getBoundingBox().intersects(playerRectangles[j]))
+				{
+					//Player takes damage
+					System.out.println("Skeleton attacks Player " + (j+1));
+					
+					collided = true;
+					projectiles.remove(i);
+				}
+				else
+				{
 					j++;
 				}
+			}
+			j = 0;
+			while(!collided && j < shootObstacles.size())
+			{
+				if(projectiles.get(i).getBoundingBox().intersects(shootObstacles.get(j)))
+				{
+					projectiles.remove(i);
+					collided = true;
+				}
+				j++;
+			}
+			if(!collided)
+			{
+				i++;
 			}
 		}
 	}
@@ -108,8 +141,15 @@ public class SkeletonController {
 	public void doAction(Skeleton skel)
 	{
 		skel.update();
-		Point2D location = new Point((int)players[0].getX() + 32, (int)players[0].getY() + 32);
-		SkeletonProjectile projectile = skel.fire(location);
+		Point2D location1 = new Point((int)players[0].getX() + 32, (int)players[0].getY() + 32);
+		Point2D location2 = new Point((int)players[1].getX() + 32, (int)players[1].getY() + 32);
+		
+		double dist1 = Math.max(Math.abs(location1.getX() - skel.getLocation().getX()), location1.getY() - skel.getLocation().getY());
+		double dist2 = Math.max(Math.abs(location2.getX() - skel.getLocation().getX()), location2.getY() - skel.getLocation().getY());
+		
+		
+		Point2D target = (dist1 > dist2) ? location2 : location1;
+		SkeletonProjectile projectile = skel.fire(target);
 		if(projectile != null)
 		{
 			projectiles.add(projectile);

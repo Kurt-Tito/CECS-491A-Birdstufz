@@ -8,9 +8,9 @@ import java.util.LinkedList;
 
 import entities.Orientation;
 import gfx.Assets;
-public class Skeleton {
-	private Point2D location;
-	private int width, height;
+public class Skeleton extends Monster{
+	private final int MAX_HEALTH = 3;
+	
 	private long reloadTimer;
 	private Orientation orientation;
 	public Skeleton(double x, double y, int width, int height)
@@ -20,34 +20,17 @@ public class Skeleton {
 		this.height = height;
 		reloadTimer = 0;
 		orientation = Orientation.SOUTH;
+		healthRemaining = MAX_HEALTH;
 	}
 	
 	public boolean canShoot()
 	{
 		return reloadTimer == 0;
 	}
-	public Point2D getLocation()
-	{
-		return location;
-	}
 	
 	public void draw(Graphics2D g2)
 	{
 		g2.drawImage(getImage(), (int) (location.getX() - width/2), (int) (location.getY() - height/2), width, height, null);
-		/**
-		g2.setColor(Color.GREEN);
-		g2.fillOval((int)location.getX() - (width/2), (int)location.getY() - (height/2), width, height);
-		g2.setColor(Color.black);
-		g2.fillArc((int)location.getX() - (width/2), (int)location.getY() - (height/2), width, height, (int)(rotation * 180 / Math.PI) - 45, 90);
-		*/
-		/**
-		g2.setColor(Color.RED);
-		g2.fillOval((int)target.getX() - 5, (int)target.getY() - 5, 10, 10);
-		for(Point i: waypoints)
-		{
-			g2.fillOval((int)i.getX() - 5, (int)i.getY() - 5, 10, 10);
-		}
-		*/
 	}
 
 	public void update()

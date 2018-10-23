@@ -12,23 +12,24 @@ import java.util.LinkedList;
 import entities.Orientation;
 import gfx.Assets;
 
-public class Zombie {
-	private Point2D location;
-	private int width, height;
+public class Zombie extends Monster{
+	private final int MAX_HEALTH = 5;
+	private final int MOVE_SPEED = 3;
+	
 	private double rotation;
-	private Orientation orientation;
 	private double speed;
 	private Point2D target;
 	private LinkedList<Point> waypoints;
 	private long waitTime;
 	
-	public Zombie(double x, double y, int width, int height, double rotationDegrees, double speed)
+	public Zombie(double x, double y, int width, int height)
 	{
 		location = new Point2D.Double(x,y);
 		this.width = width;
 		this.height = height;
-		setRotation(rotationDegrees * (double)Math.PI / 180); //degrees to radians;
-		this.speed = speed;
+		healthRemaining = MAX_HEALTH;
+		setRotation(0); //degrees to radians;
+		this.speed = MOVE_SPEED;
 		target = (Point2D) location.clone();
 		waypoints = new LinkedList<Point>();
 		waitTime = 0;
@@ -46,11 +47,8 @@ public class Zombie {
 	}
 	public void pause(long waitTime)
 	{
-		this.waitTime = waitTime;
-	}
-	public Point2D getLocation()
-	{
-		return location;
+		if(waitTime == 0)
+			this.waitTime = waitTime;
 	}
 	public void setDestination(double x, double y)
 	{
@@ -110,21 +108,6 @@ public class Zombie {
 	public void draw(Graphics2D g2)
 	{
 		g2.drawImage(getImage(), (int) (location.getX() - width/2), (int) (location.getY() - height/2), width, height, null);
-		/**
-		g2.setColor(Color.GREEN);
-		g2.fillOval((int)location.getX() - (width/2), (int)location.getY() - (height/2), width, height);
-		g2.setColor(Color.black);
-		g2.fillArc((int)location.getX() - (width/2), (int)location.getY() - (height/2), width, height, (int)(rotation * 180 / Math.PI) - 45, 90);
-		*/
-		
-		/**
-		g2.setColor(Color.RED);
-		g2.fillOval((int)target.getX() - 5, (int)target.getY() - 5, 10, 10);
-		for(Point i: waypoints)
-		{
-			g2.fillOval((int)i.getX() - 5, (int)i.getY() - 5, 10, 10);
-		}
-		*/
 	}
 	
 	public void updatePath(LinkedList<Point> waypoints)

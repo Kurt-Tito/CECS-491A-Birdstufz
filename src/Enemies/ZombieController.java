@@ -2,6 +2,7 @@ package Enemies;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -42,7 +43,7 @@ public class ZombieController {
 				}
 			}
 			Point2D loc = grid.getTileCenter(col, row);
-			zombies.add(new Zombie(loc.getX(), loc.getY(), 64, 64, 0, 3));
+			zombies.add(new Zombie(loc.getX(), loc.getY(), 64, 64));
 			zCount--;
 		}
 		/**
@@ -67,9 +68,31 @@ public class ZombieController {
 	
 	public void tick()
 	{
-		for(Zombie i: zombies)
+		Rectangle[] playerRectangles = new Rectangle[players.length];
+		for(int i = 0; i < playerRectangles.length; i++)
 		{
-			doAction(i);
+			playerRectangles[i] = players[i].getBoundingBox();
+		}
+		int i = 0;
+		while(i < zombies.size())
+		{
+			if(zombies.get(i).getHealth() == 0)
+			{
+				zombies.remove(i);
+			}
+			else
+			{
+				doAction(zombies.get(i));
+				for(int p = 0; p < playerRectangles.length;p++)
+				{
+					if(playerRectangles[p].intersects(zombies.get(i).getBoundingBox()))
+					{
+						//Player p takes damage
+						System.out.println("Zombie attacks Player " + (p+1));
+					}
+				}
+				i++;
+			}
 		}
 	}
 	
@@ -80,8 +103,13 @@ public class ZombieController {
 			if(!zomb.hasMoves())
 			{
 				Point2D location1 = new Point((int)players[0].getX() + 32, (int)players[0].getY() + 32);
-				Point2D location2 = new Point((int)players[1].getX(), (int)players[1].getY());
-				Point2D target = location1;
+				Point2D location2 = new Point((int)players[1].getX() + 32, (int)players[1].getY() + 32);
+				
+				double dist1 = Math.max(Math.abs(location1.getX() - zomb.getLocation().getX()), location1.getY() - zomb.getLocation().getY());
+				double dist2 = Math.max(Math.abs(location2.getX() - zomb.getLocation().getX()), location2.getY() - zomb.getLocation().getY());
+				
+				
+				Point2D target = (dist1 > dist2) ? location2 : location1;
 				Point2D targetTile = grid.getTileFromPoint(target);
 				if(!grid.isBlocked(targetTile))
 				{

@@ -30,8 +30,8 @@ public class GameState extends State {
 		player2 = new Player(game, col*64, (row+1)*64, arena, 2);
 		
 		bird = new Bird(0, row * 64, 64, 64);
-		zombies = new ZombieController(player, player, arena);
-		skeletons = new SkeletonController(player, player, arena);
+		zombies = new ZombieController(player, player2, arena);
+		skeletons = new SkeletonController(player, player2, arena);
 	}
 	
 	@Override
