@@ -34,7 +34,7 @@ public class Player extends Creature {
 	private Rectangle LEFT = new Rectangle();
 	private Rectangle RIGHT = new Rectangle();
 
-    private int counter = 0;
+    private int counter = 0, active = 0;
 	private int direction;
 	private int id; //1 for player1, 2 for player2
 	private EggHuntArenaCell[][] grid;
@@ -63,8 +63,16 @@ public class Player extends Creature {
 		counter++;
 		if(projectile != null && projectile.isActive())
 		{
+			active++;
 			counter = 0;
 			projectile.update();
+			if(active > 200) {
+				projectile.setActive(false);
+				active = 0;
+			}
+		}
+		else {
+			active = 0;
 		}
 		if (counter < 50) {
 			game.getKeyManager().space = false;
