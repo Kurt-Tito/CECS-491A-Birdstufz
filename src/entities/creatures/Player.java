@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 import CECS491B.EggHuntArena;
 import CECS491B.EggHuntArenaCell;
+import CECS491B.PlayerHealthBar;
 import CECS491B.PlayerProjectile;
 import game.Game;
 import gfx.Animation;
@@ -22,6 +23,7 @@ public class Player extends Creature {
 
 	private Game game;
 	private PlayerProjectile projectile;
+	private PlayerHealthBar health;
 	private Animation idle, meleeAttack, rifleMove, rifleShoot;
 	
 	private Rectangle nextMoveUP = new Rectangle();
@@ -51,6 +53,8 @@ public class Player extends Creature {
 		meleeAttack = new Animation(50, Assets.meleeAttack);
 		rifleMove = new Animation(20, Assets.rifleMove);
 		rifleShoot = new Animation(100, Assets.rifleShoot);
+		
+		health = new PlayerHealthBar(id);
 	}
 	
 
@@ -236,23 +240,21 @@ public class Player extends Creature {
 			}
 		}
 		
+		health.update(x, y);
+		
 	}
 
 	@Override
 	public void render(Graphics g) {
 		
-		//if (id == 1)
-			g.drawImage(getCurrentAnimationFrame(), (int) x, (int) y, width, height, null);
-	//	if (id == 2)
-			//g.drawImage(getCurrentAnimationFrame(), (int) x, (int) y, width, height, null); // diff color?
-		
-//		g.setColor(Color.GREEN);
-//		g.drawRect(x, y, 48, 48);
+		g.drawImage(getCurrentAnimationFrame(), (int) x, (int) y, width, height, null);
 		
 		if(projectile != null)
 		{
 			projectile.draw(g);
 		}
+		
+		health.draw(g);
 	}
 	
 	private BufferedImage getCurrentAnimationFrame() {
