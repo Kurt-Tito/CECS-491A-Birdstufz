@@ -14,7 +14,7 @@ import game.Game;
 public class GameState extends State {
 	
 	private EggHuntArenaFloor floor = new EggHuntArenaFloor();
-	private Player player;
+	private Player player, player2;
 	private EggHuntArena arena = new EggHuntArena();
 	private ZombieController zombies;
 	private SkeletonController skeletons;
@@ -26,7 +26,9 @@ public class GameState extends State {
 	
 	public GameState(Game game){
 		super(game);
-		player = new Player(game, col*64, row*64, arena);
+		player = new Player(game, col*64, row*64, arena, 1);
+		player2 = new Player(game, col*64, (row+1)*64, arena, 2);
+		
 		bird = new Bird(0, row * 64, 64, 64);
 		zombies = new ZombieController(player, player, arena);
 		skeletons = new SkeletonController(player, player, arena);
@@ -35,6 +37,7 @@ public class GameState extends State {
 	@Override
 	public void tick() {
 		player.tick();
+		player2.tick();
 		zombies.tick();
 		skeletons.tick();
 		bird.tick();
@@ -50,6 +53,7 @@ public class GameState extends State {
 		//player.render(g2);
 		arena.draw(g2);
 		player.render(g2);
+		player2.render(g2);
 		zombies.draw(g2);
 		skeletons.draw(g2);
 		score.DrawScore(g2);

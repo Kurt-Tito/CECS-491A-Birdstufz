@@ -34,12 +34,14 @@ public class Player extends Creature {
 
 
 	private int direction;
+	private int id; //1 for player1, 2 for player2
 	private EggHuntArenaCell[][] grid;
 	
-	public Player(Game game, int x, int y, EggHuntArena arena) {
+	public Player(Game game, int x, int y, EggHuntArena arena, int id) {
 		super(x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
 		this.game = game;
 		this.grid = arena.getGrid();
+		this.id = id;
 		
 		direction = 7;
 		
@@ -85,25 +87,53 @@ public class Player extends Creature {
 		{
 			for (int j = 0; j < grid.length; j++)
 			{
-				if (game.getKeyManager().up && (!nextMoveUP.intersects(grid[j][i])) && !grid[j][i].isBlocked())
-					yMove = -speed;
-				if (game.getKeyManager().up && (nextMoveUP.intersects(grid[j][i])) && grid[j][i].isBlocked())
-					y += speed;
 				
-				if (game.getKeyManager().down  && (!nextMoveDWN.intersects(grid[j][i])) && !grid[j][i].isBlocked())
-					yMove = speed;
-				if (game.getKeyManager().down  && (nextMoveDWN.intersects(grid[j][i])) && grid[j][i].isBlocked())
-					y -= speed;
+				if (id == 1)
+				{
+					if (game.getKeyManager().up && (!nextMoveUP.intersects(grid[j][i])) && !grid[j][i].isBlocked())
+						yMove = -speed;
+					if (game.getKeyManager().up && (nextMoveUP.intersects(grid[j][i])) && grid[j][i].isBlocked())
+						y += speed;
+					
+					if (game.getKeyManager().down  && (!nextMoveDWN.intersects(grid[j][i])) && !grid[j][i].isBlocked())
+						yMove = speed;
+					if (game.getKeyManager().down  && (nextMoveDWN.intersects(grid[j][i])) && grid[j][i].isBlocked())
+						y -= speed;
+					
+					if (game.getKeyManager().left && (!nextMoveLFT.intersects(grid[j][i])) && !grid[j][i].isBlocked())
+						xMove = -speed;
+					if (game.getKeyManager().left && (nextMoveLFT.intersects(grid[j][i])) && grid[j][i].isBlocked())
+						x += speed;
+					
+					if (game.getKeyManager().right && (!nextMoveRT.intersects(grid[j][i])) && !grid[j][i].isBlocked())
+						xMove = speed;
+					if (game.getKeyManager().right && (nextMoveRT.intersects(grid[j][i])) && grid[j][i].isBlocked())
+						x -= speed;
+				}
+				else if (id == 2)
+				{
+					if (game.getKeyManager().d_up && (!nextMoveUP.intersects(grid[j][i])) && !grid[j][i].isBlocked())
+						yMove = -speed;
+					if (game.getKeyManager().d_up && (nextMoveUP.intersects(grid[j][i])) && grid[j][i].isBlocked())
+						y += speed;
+					
+					if (game.getKeyManager().d_down  && (!nextMoveDWN.intersects(grid[j][i])) && !grid[j][i].isBlocked())
+						yMove = speed;
+					if (game.getKeyManager().d_down  && (nextMoveDWN.intersects(grid[j][i])) && grid[j][i].isBlocked())
+						y -= speed;
+					
+					if (game.getKeyManager().d_left && (!nextMoveLFT.intersects(grid[j][i])) && !grid[j][i].isBlocked())
+						xMove = -speed;
+					if (game.getKeyManager().d_left && (nextMoveLFT.intersects(grid[j][i])) && grid[j][i].isBlocked())
+						x += speed;
+					
+					if (game.getKeyManager().d_right && (!nextMoveRT.intersects(grid[j][i])) && !grid[j][i].isBlocked())
+						xMove = speed;
+					if (game.getKeyManager().d_right && (nextMoveRT.intersects(grid[j][i])) && grid[j][i].isBlocked())
+						x -= speed;
+				}
 				
-				if (game.getKeyManager().left && (!nextMoveLFT.intersects(grid[j][i])) && !grid[j][i].isBlocked())
-					xMove = -speed;
-				if (game.getKeyManager().left && (nextMoveLFT.intersects(grid[j][i])) && grid[j][i].isBlocked())
-					x += speed;
 				
-				if (game.getKeyManager().right && (!nextMoveRT.intersects(grid[j][i])) && !grid[j][i].isBlocked())
-					xMove = speed;
-				if (game.getKeyManager().right && (nextMoveRT.intersects(grid[j][i])) && grid[j][i].isBlocked())
-					x -= speed;
 				if(UP.intersects(grid[j][i]) && grid[j][i].isBlocked()) {
 					projectile.setActive(false);
 						}
@@ -141,28 +171,28 @@ public class Player extends Creature {
 		}
 		if (game.getKeyManager().pressed.size() > 1) {
 			if(game.getKeyManager().up && game.getKeyManager().left) {
-				yMove = -speed;
-				xMove = -speed;
+//				yMove = -speed;
+//				xMove = -speed;
 				setDirection(2);
 				System.out.println("Moving: up left");
 				System.out.println(getDirection());
 				
 			}
 			if(game.getKeyManager().down && game.getKeyManager().left) {
-				yMove = speed;
-				xMove = -speed;
+//				yMove = speed;
+//				xMove = -speed;
 				setDirection(4);
 				System.out.println("Moving: down left");
 			}
 			if(game.getKeyManager().down && game.getKeyManager().right) {
-				yMove = speed;
-				xMove = speed;
+//				yMove = speed;
+//				xMove = speed;
 				setDirection(6);
 				System.out.println("Moving: down right");
 			}
 			if(game.getKeyManager().up && game.getKeyManager().right) {
-				yMove = -speed;
-				xMove = speed;
+//				yMove = -speed;
+//				xMove = speed;
 				setDirection(8);
 				System.out.println("Moving: up right");
 				System.out.println(getDirection());
@@ -173,19 +203,19 @@ public class Player extends Creature {
 		
 			if(game.getKeyManager().up) {
 				setDirection(1);
-				yMove = -speed;
+				//yMove = -speed;
 			}
 			
 			if(game.getKeyManager().left) {
-				xMove = -speed;
+				//xMove = -speed;
 				setDirection(3);
 			}
 			if(game.getKeyManager().down) {
-				yMove = speed;
+				//yMove = speed;
 				setDirection(5);	
 			}
 			if(game.getKeyManager().right) {
-				xMove = speed;
+				//xMove = speed;
 				setDirection(7);
 			}
 		}
@@ -194,7 +224,11 @@ public class Player extends Creature {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(getCurrentAnimationFrame(), (int) x, (int) y, width, height, null);
+		
+		if (id == 1)
+			g.drawImage(getCurrentAnimationFrame(), (int) x, (int) y, width, height, null);
+		if (id == 2)
+			//g.drawImage(getCurrentAnimationFrame(), (int) x, (int) y, width, height, null); // diff color?
 		
 //		g.setColor(Color.GREEN);
 //		g.drawRect(x, y, 48, 48);
