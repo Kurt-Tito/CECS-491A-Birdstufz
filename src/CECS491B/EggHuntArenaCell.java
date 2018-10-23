@@ -115,11 +115,11 @@ public class EggHuntArenaCell extends Rectangle {
 	{		
 		g2.drawImage(image, x, y, 64, 64, null);
 		
-		if(this.isBlocked())
-		{
-			g2.setColor(Color.WHITE);
-			g2.drawRect(x, y, 64, 64);
-		}
+//		if(this.isBlocked())
+//		{
+//			g2.setColor(Color.WHITE);
+//			g2.drawRect(x, y, 64, 64);
+//		}
 		
 	}
 

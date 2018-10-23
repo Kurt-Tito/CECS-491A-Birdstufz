@@ -67,16 +67,16 @@ public class Player extends Creature {
 	private void getInput(){
 		xMove = 0;
 		yMove = 0;
-		nextMoveUP.setBounds(x+5, y-5-(int)speed, 48, 48);
-		nextMoveDWN.setBounds(x+5, y+5+(int)speed, 48, 48);
-		nextMoveLFT.setBounds(x-5-(int)speed, y+5, 48, 48);
-		nextMoveRT.setBounds(x+5+(int)speed, y+5, 48, 48);
+		nextMoveUP.setBounds(x+3, y-3-(int)speed, 48, 48);
+		nextMoveDWN.setBounds(x+3, y+3+(int)speed, 48, 48);
+		nextMoveLFT.setBounds(x-3-(int)speed, y+3, 48, 48);
+		nextMoveRT.setBounds(x+3+(int)speed, y+3, 48, 48);
 		
 		if(projectile != null) {
-		UP.setBounds((int)projectile.getPx(), (int)projectile.getPy()-(int)speed, 5, 5);
-		DOWN.setBounds((int)projectile.getPx(), (int)projectile.getPy()+(int)speed, 5, 5);
-		LEFT.setBounds((int)projectile.getPx()-(int)speed,(int)projectile.getPy(), 5, 5);
-		RIGHT.setBounds((int)projectile.getPx()+(int)speed, (int)projectile.getPy(), 5, 5);
+		UP.setBounds((int)projectile.getPx(), (int)projectile.getPy()-(int)speed, 1, 1);
+		DOWN.setBounds((int)projectile.getPx(), (int)projectile.getPy()+(int)speed, 1, 1);
+		LEFT.setBounds((int)projectile.getPx()-(int)speed,(int)projectile.getPy(), 1, 1);
+		RIGHT.setBounds((int)projectile.getPx()+(int)speed, (int)projectile.getPy(), 1, 1);
 		}
 
        
@@ -196,13 +196,15 @@ public class Player extends Creature {
 	public void render(Graphics g) {
 		g.drawImage(getCurrentAnimationFrame(), (int) x, (int) y, width, height, null);
 		
-		g.setColor(Color.GREEN);
-		g.drawRect(x, y, 48, 48);
+//		g.setColor(Color.GREEN);
+//		g.drawRect(x, y, 48, 48);
+		
 		if(projectile != null)
 		{
 			projectile.draw(g);
 		}
 	}
+	
 	private BufferedImage getCurrentAnimationFrame() {
 		
 		switch(direction) {
@@ -224,39 +226,13 @@ public class Player extends Creature {
 			return Assets.pUR;
 		default:
 			return null;
-	
+			}			
+		
 	}
-				
-//		if (direction == 2) { 
-//			return Assets.pUL;
-//		}
-//		else if (direction == 4) { 
-//			return Assets.pDL;
-//		}
-//		else if (direction == 6) {
-//			return Assets.pDR;
-//		}
-//		else if (direction == 8) { 
-//			return Assets.pUR;
-//		}
-//		else if (direction == 1) { 
-//			return Assets.pU;
-//		}
-//		else if (direction == 3) {
-//			return Assets.pL;
-//		}
-//		else if (direction == 5) { 
-//			return Assets.pD;
-//		}
-//		else if (direction == 7) { 
-//			return Assets.pR;
-//		}
-//		else{
-//			return null;
-//		}
-		
-		
-			
+	
+	public Rectangle getBoundingBox()
+	{
+		return new Rectangle(x, y, width - 16, height - 16);
 	}
 	public void setDirection(int direction) {
 		this.direction = direction;

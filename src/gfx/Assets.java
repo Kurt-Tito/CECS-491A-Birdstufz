@@ -12,9 +12,10 @@ public class Assets {
 	public static BufferedImage[] skeletons = new BufferedImage[4];
 	
 	
-	//player animation
+	//animation
 	public static BufferedImage pU, pD, pL, pR, pUR, pUL, pDL, pDR;
 	public static BufferedImage[] idle, meleeAttack, rifleMove, rifleShoot;
+	public static BufferedImage[] idleBird = new BufferedImage[2];
 
 	public static void init(){
 		
@@ -61,6 +62,11 @@ public class Assets {
 		meleeAttack = new BufferedImage[15];
 		rifleMove = new BufferedImage[20];
 		rifleShoot = new BufferedImage[3];
+		
+		
+		idleBird[0] = ImageLoader.loadImage("/Bird/idle/frame-1.png");
+		idleBird[1] = ImageLoader.loadImage("/Bird/idle/frame-2.png");
+		
 				
 		for (int i = 0; i < 20; i++) {
 			idle[i] = ImageLoader.loadImage("/Player/survivor-idle_rifle_" + i + ".png");
