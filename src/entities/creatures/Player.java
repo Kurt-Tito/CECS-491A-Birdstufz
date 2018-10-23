@@ -189,7 +189,7 @@ public class Player extends Creature {
 			}
 		}
 
-		if (game.getKeyManager().pressed.size() > 1) {
+		
 			if(game.getKeyManager().up && game.getKeyManager().left) {
 //				yMove = -speed;
 //				xMove = -speed;
@@ -198,47 +198,46 @@ public class Player extends Creature {
 				System.out.println(getDirection());
 				
 			}
-			if(game.getKeyManager().down && game.getKeyManager().left) {
+			else if(game.getKeyManager().down && game.getKeyManager().left) {
 //				yMove = speed;
 //				xMove = -speed;
 				setDirection(4);
 				System.out.println("Moving: down left");
 			}
-			if(game.getKeyManager().down && game.getKeyManager().right) {
+			else if(game.getKeyManager().down && game.getKeyManager().right) {
 //				yMove = speed;
 //				xMove = speed;
 				setDirection(6);
 				System.out.println("Moving: down right");
 			}
-			if(game.getKeyManager().up && game.getKeyManager().right) {
+			else if(game.getKeyManager().up && game.getKeyManager().right) {
 //				yMove = -speed;
 //				xMove = speed;
 				setDirection(8);
 				System.out.println("Moving: up right");
 				System.out.println(getDirection());
 			}
-		}
 		
-		else {
 		
-			if(game.getKeyManager().up) {
+		
+			else if(game.getKeyManager().up) {
 				setDirection(1);
 				//yMove = -speed;
 			}
 			
-			if(game.getKeyManager().left) {
+			else if(game.getKeyManager().left) {
 				//xMove = -speed;
 				setDirection(3);
 			}
-			if(game.getKeyManager().down) {
+			else if(game.getKeyManager().down) {
 				//yMove = speed;
 				setDirection(5);	
 			}
-			if(game.getKeyManager().right) {
+			else if(game.getKeyManager().right) {
 				//xMove = speed;
 				setDirection(7);
 			}
-		}
+		
 		
 		health.update(x, y);
 		
