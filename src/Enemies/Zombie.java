@@ -8,6 +8,7 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
+
 import entities.Orientation;
 import gfx.Assets;
 
@@ -72,7 +73,6 @@ public class Zombie {
 	private void move(double rotation)
 	{
 		setRotation(rotation);
-		
 		double dx, dy;
 		dx = Math.cos(rotation) * speed;
 		dy = Math.sin(rotation) * speed * -1;

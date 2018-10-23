@@ -1,5 +1,7 @@
 package entities.creatures;
 
+import java.awt.Rectangle;
+
 import entities.Entity;
 
 public abstract class Creature extends Entity {
@@ -12,7 +14,7 @@ public abstract class Creature extends Entity {
 	protected int health;
 	protected float speed;
 	protected float xMove, yMove;
-
+	private Player player;
 	public Creature(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		health = DEFAULT_HEALTH;
@@ -24,7 +26,6 @@ public abstract class Creature extends Entity {
 	public void move(){
 		x += xMove;
 		y += yMove;
-		
 		//setBounds(x, y, 64, 64);
 	}
 	

@@ -19,7 +19,6 @@ public class Player extends Creature {
 
 	private Game game;
 	private PlayerProjectile projectile;
-	
 	private Animation idle, meleeAttack, rifleMove, rifleShoot;
 	
 	private Rectangle nextMoveUP = new Rectangle();
@@ -152,21 +151,21 @@ public class Player extends Creature {
 		if(game.getKeyManager().space){
 			switch(getDirection()){
 			case 1:
-				projectile = new PlayerProjectile(48 + x, y, -Math.PI/2); break;//up
+				projectile = new PlayerProjectile(48 + x, 16 + y, -Math.PI/2); break;//up
 			case 2:
-				projectile = new PlayerProjectile(16 + x, 16 + y, (-3*Math.PI)/4); break;//upleft
+				projectile = new PlayerProjectile(22 + x, 16 + y, (-3*Math.PI)/4); break;//upleft
 			case 3:
-				projectile = new PlayerProjectile(x, 16 + y, Math.PI); break;//left
+				projectile = new PlayerProjectile(16 + x, 16 + y, Math.PI); break;//left
 			case 4:
-				projectile = new PlayerProjectile(x, 48 + y, (3*Math.PI)/4); break;//downleft
+				projectile = new PlayerProjectile(16 + x, 48 + y, (3*Math.PI)/4); break;//downleft
 			case 5:
 				projectile = new PlayerProjectile(16 + x, 48 + y, Math.PI/2); break;//down
 			case 6:
-				projectile = new PlayerProjectile(48 + x, 48 + y, Math.PI/4); break;//downright
+				projectile = new PlayerProjectile(50 + x, 56 + y, Math.PI/4); break;//downright
 			case 7:
 				projectile = new PlayerProjectile(48 + x, 48 + y, 0); break;//right
 			case 8:
-				projectile = new PlayerProjectile(48 + x, 16 + y, -Math.PI/4); break;//upright
+				projectile = new PlayerProjectile(52 + x, 25 + y, -Math.PI/4); break;//upright
 			}
 		}
 		if (game.getKeyManager().pressed.size() > 1) {
@@ -225,9 +224,9 @@ public class Player extends Creature {
 	@Override
 	public void render(Graphics g) {
 		
-		if (id == 1)
+		//if (id == 1)
 			g.drawImage(getCurrentAnimationFrame(), (int) x, (int) y, width, height, null);
-		if (id == 2)
+	//	if (id == 2)
 			//g.drawImage(getCurrentAnimationFrame(), (int) x, (int) y, width, height, null); // diff color?
 		
 //		g.setColor(Color.GREEN);
