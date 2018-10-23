@@ -6,6 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import CECS491B.EggHuntArena;
 import CECS491B.EggHuntArenaCell;
@@ -31,7 +34,7 @@ public class Player extends Creature {
 	private Rectangle LEFT = new Rectangle();
 	private Rectangle RIGHT = new Rectangle();
 
-
+    private int counter = 0;
 	private int direction;
 	private int id; //1 for player1, 2 for player2
 	private EggHuntArenaCell[][] grid;
@@ -57,9 +60,14 @@ public class Player extends Creature {
 		meleeAttack.tick();
 		rifleMove.tick();
 		rifleShoot.tick();
+		counter++;
 		if(projectile != null && projectile.isActive())
 		{
+			counter = 0;
 			projectile.update();
+		}
+		if (counter < 50) {
+			game.getKeyManager().space = false;
 		}
 		getInput();
 		move();
@@ -147,8 +155,8 @@ public class Player extends Creature {
 				}
 			}
 		}
-	
-		if(game.getKeyManager().space){
+		
+		if(game.getKeyManager().space){		
 			switch(getDirection()){
 			case 1:
 				projectile = new PlayerProjectile(48 + x, 16 + y, -Math.PI/2); break;//up
@@ -168,6 +176,7 @@ public class Player extends Creature {
 				projectile = new PlayerProjectile(52 + x, 25 + y, -Math.PI/4); break;//upright
 			}
 		}
+
 		if (game.getKeyManager().pressed.size() > 1) {
 			if(game.getKeyManager().up && game.getKeyManager().left) {
 //				yMove = -speed;
