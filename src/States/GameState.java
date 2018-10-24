@@ -19,8 +19,9 @@ public class GameState extends State {
 	private ZombieController zombies;
 	private SkeletonController skeletons;
 	private HighScore score = new HighScore();
+	private PlayerHealthBar health;
 	private Bird bird;
-	
+	private int c1 = 0, c2 = 0;
 	int col = 1;
 	int row = 6;
 	
@@ -52,6 +53,22 @@ public class GameState extends State {
 		floor.draw(g2);
 		//player.render(g2);
 		arena.draw(g2);
+		if(player.getInvincible() == true){	
+		c1++;
+		player.InvincibilityFrames(g2);
+		if(c1 > 100){
+		player.setInvincible(false);
+		c1 = 0;
+		}
+		}
+		if(player2.getInvincible() == true){	
+			c2++;
+			player2.InvincibilityFrames(g2);
+			if(c2 > 100){
+			player2.setInvincible(false);
+			c2 = 0;
+			}
+			}
 		player.render(g2);
 		player2.render(g2);
 		zombies.draw(g2);

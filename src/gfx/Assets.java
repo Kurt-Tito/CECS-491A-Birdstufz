@@ -13,7 +13,7 @@ public class Assets {
 	
 	
 	//animation
-	public static BufferedImage pU, pD, pL, pR, pUR, pUL, pDL, pDR;
+	public static BufferedImage pU, pD, pL, pR, pUR, pUL, pDL, pDR, invincibility;
 	public static BufferedImage[] idle, meleeAttack, rifleMove, rifleShoot;
 	public static BufferedImage[] idleBird = new BufferedImage[2];
 
@@ -45,6 +45,7 @@ public class Assets {
 		trees[2] = tree.crop(0, height, width, height);
 		trees[3] = tree.crop(width, height, width, height);
 		
+		invincibility = ImageLoader.loadImage("/Player/PlayerOrientation/invincible.png");
 		//load player animation
 		pU = ImageLoader.loadImage("/Player/PlayerOrientation/north.png");
 		pD = ImageLoader.loadImage("/Player/PlayerOrientation/south.png");

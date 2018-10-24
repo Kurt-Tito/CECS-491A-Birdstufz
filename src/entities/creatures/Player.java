@@ -40,6 +40,7 @@ public class Player extends Creature {
 	private int direction;
 	private int id; //1 for player1, 2 for player2
 	private EggHuntArenaCell[][] grid;
+	private boolean invincible;
 	
 	public Player(Game game, int x, int y, EggHuntArena arena, int id) {
 		super(x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
@@ -65,6 +66,7 @@ public class Player extends Creature {
 		rifleMove.tick();
 		rifleShoot.tick();
 		counter++;
+		if(id == 1) {
 		if(projectile != null && projectile.isActive())
 		{
 			active++;
@@ -78,8 +80,27 @@ public class Player extends Creature {
 		else {
 			active = 0;
 		}
-		if (counter < 50) {
+		if (counter < 40) {
 			game.getKeyManager().space = false;
+		}
+		}
+		else if(id == 2) {
+		if(projectile != null && projectile.isActive())
+		{
+			active++;
+			counter = 0;
+			projectile.update();
+			if(active > 200) {
+				projectile.setActive(false);
+				active = 0;
+			}
+		}
+		else {
+			active = 0;
+		}
+		if (counter < 40) {
+			game.getKeyManager().enter = false;
+		}
 		}
 		getInput();
 		move();
@@ -354,14 +375,20 @@ public class Player extends Creature {
 		return new Rectangle(x, y, width - 16, height - 16);
 	}
 	
-	public void takeDamage()
+	/*public void takeDamage()
 	{
+		setInvincible(true);
 		health.takeDamage();
-	}
+	}*/
 	
 	public void takeSetDamage(int indamage)
 	{
+		if(getInvincible() == true) {
+		//health.takeSetDamage(0);
+		}
+		else {
 		health.takeSetDamage(indamage);
+		}
 	}
 	
 	public int getHealth()
@@ -377,6 +404,16 @@ public class Player extends Creature {
 		return direction;
 	}
 	
+	public void InvincibilityFrames(Graphics g){
+		g.drawImage(Assets.invincibility, (int) x - 8, (int) y - 8, width + 20, height + 20, null);		
+		}
+
+		public void setInvincible(boolean invincible) {
+			this.invincible = invincible;
+		}
+		public boolean getInvincible() {
+			return invincible;
+		}
 
 }
 

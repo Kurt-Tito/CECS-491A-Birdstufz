@@ -90,7 +90,8 @@ public class ZombieController {
 						//Player p takes damage
 						System.out.println("Zombie attacks Player " + (p+1));
 						
-						players[p].takeDamage();
+						players[p].takeSetDamage(5);
+						players[p].setInvincible(true);
 					}
 				}
 				i++;

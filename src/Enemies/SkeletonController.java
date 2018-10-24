@@ -93,7 +93,8 @@ public class SkeletonController {
 					{
 						//Player p takes damage
 						System.out.println("Skeleton hit");
-						players[p].takeDamage();
+						players[p].takeSetDamage(5);
+						players[p].setInvincible(true);
 					}
 				}
 				i++;
@@ -114,7 +115,7 @@ public class SkeletonController {
 					//Player takes damage
 					System.out.println("Skeleton attacks Player " + (j+1));
 					players[j].takeSetDamage(15);
-					
+					players[j].setInvincible(true);
 					collided = true;
 					projectiles.remove(i);
 				}
