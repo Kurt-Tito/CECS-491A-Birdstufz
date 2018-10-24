@@ -6,7 +6,7 @@ import java.awt.Graphics;
 public class PlayerHealthBar {
 	
 	private int health = 75;
-	private int damage = 5;
+	private int damage = 2;
 	private int pid;
 	private float locx, locy;
 	
@@ -25,6 +25,14 @@ public class PlayerHealthBar {
 	{
 		if (health > 0)
 			health -= damage;
+		else 
+			health = 0;
+	}
+	
+	public void takeSetDamage(int indamage)
+	{
+		if (health > 0)
+			health -= indamage;
 		else 
 			health = 0;
 	}

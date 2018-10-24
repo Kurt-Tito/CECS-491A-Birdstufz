@@ -93,6 +93,7 @@ public class SkeletonController {
 					{
 						//Player p takes damage
 						System.out.println("Skeleton hit");
+						players[p].takeDamage();
 					}
 				}
 				i++;
@@ -112,6 +113,7 @@ public class SkeletonController {
 				{
 					//Player takes damage
 					System.out.println("Skeleton attacks Player " + (j+1));
+					players[j].takeSetDamage(15);
 					
 					collided = true;
 					projectiles.remove(i);

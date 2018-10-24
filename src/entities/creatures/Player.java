@@ -101,7 +101,7 @@ public class Player extends Creature {
 		}
 
        
-		System.out.println(getDirection());
+//		System.out.println(getDirection());
 		for (int i = 0; i < grid[0].length; i++)
 		{
 			for (int j = 0; j < grid.length; j++)
@@ -194,28 +194,28 @@ public class Player extends Creature {
 //				yMove = -speed;
 //				xMove = -speed;
 				setDirection(2);
-				System.out.println("Moving: up left");
-				System.out.println(getDirection());
+//				System.out.println("Moving: up left");
+//				System.out.println(getDirection());
 				
 			}
 			else if(game.getKeyManager().down && game.getKeyManager().left) {
 //				yMove = speed;
 //				xMove = -speed;
 				setDirection(4);
-				System.out.println("Moving: down left");
+//				System.out.println("Moving: down left");
 			}
 			else if(game.getKeyManager().down && game.getKeyManager().right) {
 //				yMove = speed;
 //				xMove = speed;
 				setDirection(6);
-				System.out.println("Moving: down right");
+//				System.out.println("Moving: down right");
 			}
 			else if(game.getKeyManager().up && game.getKeyManager().right) {
 //				yMove = -speed;
 //				xMove = speed;
 				setDirection(8);
-				System.out.println("Moving: up right");
-				System.out.println(getDirection());
+//				System.out.println("Moving: up right");
+//				System.out.println(getDirection());
 			}
 		
 		
@@ -285,6 +285,22 @@ public class Player extends Creature {
 	{
 		return new Rectangle(x, y, width - 16, height - 16);
 	}
+	
+	public void takeDamage()
+	{
+		health.takeDamage();
+	}
+	
+	public void takeSetDamage(int indamage)
+	{
+		health.takeSetDamage(indamage);
+	}
+	
+	public int getHealth()
+	{
+		return health.getHealth();
+	}
+	
 	public void setDirection(int direction) {
 		this.direction = direction;
 	}

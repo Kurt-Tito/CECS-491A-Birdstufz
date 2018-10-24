@@ -89,6 +89,8 @@ public class ZombieController {
 					{
 						//Player p takes damage
 						System.out.println("Zombie attacks Player " + (p+1));
+						
+						players[p].takeDamage();
 					}
 				}
 				i++;
