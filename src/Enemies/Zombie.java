@@ -7,14 +7,14 @@ import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
-
+import java.util.Random;
 
 import entities.Orientation;
 import gfx.Assets;
 
 public class Zombie extends Monster{
 	private final int MAX_HEALTH = 5;
-	private final int MOVE_SPEED = 3;
+	private final double MOVE_SPEED = 2.5;
 	
 	private double rotation;
 	private double speed;
@@ -29,7 +29,8 @@ public class Zombie extends Monster{
 		this.height = height;
 		healthRemaining = MAX_HEALTH;
 		setRotation(0); //degrees to radians;
-		this.speed = MOVE_SPEED;
+		Random r = new Random(System.nanoTime());
+		this.speed = MOVE_SPEED + r.nextDouble() - .5;
 		target = (Point2D) location.clone();
 		waypoints = new LinkedList<Point>();
 		waitTime = 0;

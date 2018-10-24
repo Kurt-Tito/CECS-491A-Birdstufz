@@ -13,12 +13,15 @@ import CECS491B.EggHuntArena;
 import entities.creatures.Player;
 
 public class SkeletonController {
+	private final int MAX_SKELETONS = 5;
+	private final int SPAWN_DELAY = 300;
 	private List<Skeleton> skeletons;
 	private List<SkeletonProjectile> projectiles;
 	private List<Rectangle> shootObstacles;
 	private Player[] players = new Player[2];
 	private ObstacleMap moveGrid;
 	private ObstacleMap shootGrid;
+	private int spawnTimer;
 	
 	public SkeletonController(Player p1, Player p2, EggHuntArena arena)
 	{
@@ -31,26 +34,7 @@ public class SkeletonController {
 		shootGrid = new ObstacleMap(arena, true);
 		shootObstacles = getObstacles();
 		
-		boolean x = false;
-		int sCount = 2;
-		while(sCount > 0)
-		{
-			boolean valid = false;
-			int col = 0, row = 0;
-			while(!valid)
-			{
-				Random random = new Random(System.nanoTime());
-				col = random.nextInt(moveGrid.getObstacleGrid()[0].length);
-				row = random.nextInt(moveGrid.getObstacleGrid().length);
-				if(!moveGrid.isBlocked(col, row))
-				{
-					valid = true;
-				}
-			}
-			Point2D loc = moveGrid.getTileCenter(col, row);
-			skeletons.add(new Skeleton(loc.getX(), loc.getY(), 64, 64));
-			sCount--;
-		}
+		spawnTimer = SPAWN_DELAY;
 	}
 	
 	private List<Rectangle> getObstacles()
@@ -138,6 +122,36 @@ public class SkeletonController {
 			{
 				i++;
 			}
+		}
+		if(spawnTimer > 0)
+		{
+			spawnTimer--;
+		}
+		else
+		{
+			spawn();
+		}
+	}
+	
+	public void spawn()
+	{
+		if(skeletons.size() < MAX_SKELETONS)
+		{
+			boolean valid = false;
+			int col = 0, row = 0;
+			while(!valid)
+			{
+				Random random = new Random(System.nanoTime());
+				col = random.nextInt(moveGrid.getObstacleGrid()[0].length);
+				row = random.nextInt(moveGrid.getObstacleGrid().length);
+				if(!moveGrid.isBlocked(col, row))
+				{
+					valid = true;
+				}
+			}
+			Point2D loc = moveGrid.getTileCenter(col, row);
+			skeletons.add(new Skeleton(loc.getX(), loc.getY(), 64, 64));
+			spawnTimer += SPAWN_DELAY;
 		}
 	}
 	

@@ -53,6 +53,8 @@ public class GameState extends State {
 		floor.draw(g2);
 		//player.render(g2);
 		arena.draw(g2);
+		zombies.draw(g2);
+		skeletons.draw(g2);
 		if(player.getInvincible() == true){	
 		c1++;
 		player.InvincibilityFrames(g2);
@@ -71,8 +73,6 @@ public class GameState extends State {
 			}
 		player.render(g2);
 		player2.render(g2);
-		zombies.draw(g2);
-		skeletons.draw(g2);
 		score.DrawScore(g2);
 		bird.render(g2);
 	}

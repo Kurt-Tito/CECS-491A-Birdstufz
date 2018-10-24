@@ -13,9 +13,12 @@ import CECS491B.EggHuntArena;
 import entities.creatures.Player;
 
 public class ZombieController {
+	private final int MAX_ZOMBIES = 10;
+	private final int SPAWN_DELAY = 180;
 	private List<Zombie> zombies;
 	private Player[] players = new Player[2];
 	private ObstacleMap grid;
+	private int spawnTimer;
 	
 	public ZombieController(Player p1, Player p2, EggHuntArena arena)
 	{
@@ -24,40 +27,7 @@ public class ZombieController {
 		zombies = new ArrayList<Zombie>();
 		grid = getMap(arena);
 		
-		boolean x = false;
-		
-		// Zombie spawn
-		int zCount = 5;
-		while(zCount > 0)
-		{
-			boolean valid = false;
-			int col = 0, row = 0;
-			while(!valid)
-			{
-				Random random = new Random(System.nanoTime());
-				col = random.nextInt(grid.getObstacleGrid()[0].length);
-				row = random.nextInt(grid.getObstacleGrid().length);
-				if(!grid.isBlocked(col, row))
-				{
-					valid = true;
-				}
-			}
-			Point2D loc = grid.getTileCenter(col, row);
-			zombies.add(new Zombie(loc.getX(), loc.getY(), 64, 64));
-			zCount--;
-		}
-		/**
-		for(int i = 0; i < grid.getObstacleGrid().length - 1; i++)
-		{
-			Point2D loc = grid.getTileCenter(3, i);
-			if(!grid.getObstacleGrid()[i][3] && !x)
-			{
-				zombies.add(new Zombie(loc.getX(), loc.getY(), 64, 64, 0, 3));
-				x = true;
-			}
-			
-		}
-		*/
+		spawnTimer = SPAWN_DELAY;
 	}
 	
 	private ObstacleMap getMap(EggHuntArena arena)
@@ -96,6 +66,36 @@ public class ZombieController {
 				}
 				i++;
 			}
+		}
+		if(spawnTimer > 0)
+		{
+			spawnTimer--;
+		}
+		else
+		{
+			spawn();
+		}
+	}
+	
+	public void spawn()
+	{
+		if(zombies.size() < MAX_ZOMBIES)
+		{
+			boolean valid = false;
+			int col = 0, row = 0;
+			while(!valid)
+			{
+				Random random = new Random(System.nanoTime());
+				col = random.nextInt(grid.getObstacleGrid()[0].length);
+				row = random.nextInt(grid.getObstacleGrid().length);
+				if(!grid.isBlocked(col, row))
+				{
+					valid = true;
+				}
+			}
+			Point2D loc = grid.getTileCenter(col, row);
+			zombies.add(new Zombie(loc.getX(), loc.getY(), 64, 64));
+			spawnTimer += SPAWN_DELAY;
 		}
 	}
 	
