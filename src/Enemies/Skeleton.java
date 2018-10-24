@@ -10,6 +10,7 @@ import entities.Orientation;
 import gfx.Assets;
 public class Skeleton extends Monster{
 	private final int MAX_HEALTH = 3;
+	private final int RELOAD_TIME = 120;
 	
 	private long reloadTimer;
 	private Orientation orientation;
@@ -18,7 +19,7 @@ public class Skeleton extends Monster{
 		location = new Point2D.Double(x,y);
 		this.width = width;
 		this.height = height;
-		reloadTimer = 0;
+		reloadTimer = RELOAD_TIME;
 		orientation = Orientation.SOUTH;
 		healthRemaining = MAX_HEALTH;
 	}
@@ -48,7 +49,7 @@ public class Skeleton extends Monster{
 		if(canShoot())
 		{
 			SkeletonProjectile projectile = new SkeletonProjectile(location.getX(), location.getY(), rotation);
-			reloadTimer += System.nanoTime() % 120 + 120;
+			reloadTimer += RELOAD_TIME;
 			return projectile;
 		}
 		return null;
