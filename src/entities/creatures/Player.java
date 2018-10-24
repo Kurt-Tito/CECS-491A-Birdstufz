@@ -336,12 +336,18 @@ public class Player extends Creature {
 	public void render(Graphics g) {
 		
 		g.drawImage(getCurrentAnimationFrame(), (int) x, (int) y, width, height, null);
-		
+	if(id == 1){
 		if(projectile != null)
 		{
 			projectile.draw(g);
 		}
-		
+	}
+	else{
+		if(projectile != null)
+		{
+			projectile.draw2(g);
+		}
+	}
 		health.draw(g);
 	}
 	
@@ -403,7 +409,7 @@ public class Player extends Creature {
 	public int getDirection() {
 		return direction;
 	}
-	
+
 	public void InvincibilityFrames(Graphics g){
 		g.drawImage(Assets.invincibility, (int) x - 8, (int) y - 8, width + 20, height + 20, null);		
 		}

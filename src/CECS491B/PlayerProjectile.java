@@ -17,10 +17,13 @@ import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
 
+import entities.creatures.Player;
+
 
 public class PlayerProjectile {
 	private static final String IMG_PATH = "images/Bulletr.png";
-	private static BufferedImage img;
+	private static final String IMG_PATH2 = "images/Bulletb.png";
+	private static BufferedImage img, img2;
 	private final double SPEED = 7;
 	private final double WIDTH = 20;
 	private final double HEIGHT = 15;
@@ -30,7 +33,7 @@ public class PlayerProjectile {
 	private double dx, dy;
 	private double[] angles = new double[4];
 	private Line2D[] lines = new Line2D[4];
-
+	private Player player;
 	
 	private LinkedList<Point> collisionpoints = new LinkedList<Point>();
 	
@@ -39,18 +42,27 @@ public class PlayerProjectile {
 		try
 		{
 			img = ImageIO.read(new File(IMG_PATH));
+			img2 = ImageIO.read(new File(IMG_PATH2));
 		}catch(IOException e)
 		{
 			e.printStackTrace();
 		}
 	}
 	
+
 	private BufferedImage getTransformedImage()
 	{
 		AffineTransform transform = new AffineTransform();
 		transform.rotate(rotation + (Math.PI/2), img.getWidth() / 2, img.getHeight() / 2);
 		AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
 		return op.filter(img, null);
+	}
+	private BufferedImage getTransformedImage2()
+	{
+		AffineTransform transform = new AffineTransform();
+		transform.rotate(rotation + (Math.PI/2), img.getWidth() / 2, img.getHeight() / 2);
+		AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
+		return op.filter(img2, null);
 	}
 	public PlayerProjectile(double px, double py, double rotation)
 	{
@@ -121,21 +133,20 @@ public class PlayerProjectile {
 	{
 		if(active)
 		{
-			g.setColor(Color.red);
 			BufferedImage drawImage = getTransformedImage();
 			g.drawImage(drawImage, (int)px - (drawImage.getWidth()/2), (int)py - (drawImage.getHeight()/2), null);
 		}
 		
 	}
-	
-	
-	
-	public int getProjectileLength()
+	public void draw2(Graphics g)
 	{
-		return lines.length;
-	}
-	
-	
+		if(active)
+		{
+			BufferedImage drawImage = getTransformedImage2();
+			g.drawImage(drawImage, (int)px - (drawImage.getWidth()/2), (int)py - (drawImage.getHeight()/2), null);
+		}
+		
+	}	
 
 }
 
