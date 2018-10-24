@@ -168,29 +168,29 @@ public class Player extends Creature {
 			}
 		}
 		
-		if(game.getKeyManager().space){		
-			switch(getDirection()){
-			case 1:
-				projectile = new PlayerProjectile(48 + x, 16 + y, -Math.PI/2); break;//up
-			case 2:
-				projectile = new PlayerProjectile(22 + x, 16 + y, (-3*Math.PI)/4); break;//upleft
-			case 3:
-				projectile = new PlayerProjectile(16 + x, 16 + y, Math.PI); break;//left
-			case 4:
-				projectile = new PlayerProjectile(16 + x, 48 + y, (3*Math.PI)/4); break;//downleft
-			case 5:
-				projectile = new PlayerProjectile(16 + x, 48 + y, Math.PI/2); break;//down
-			case 6:
-				projectile = new PlayerProjectile(50 + x, 56 + y, Math.PI/4); break;//downright
-			case 7:
-				projectile = new PlayerProjectile(48 + x, 48 + y, 0); break;//right
-			case 8:
-				projectile = new PlayerProjectile(52 + x, 25 + y, -Math.PI/4); break;//upright
-			}
-		}
 
 		if (id == 1)
 		{
+			if(game.getKeyManager().space){		
+				switch(getDirection()){
+				case 1:
+					projectile = new PlayerProjectile(48 + x, 16 + y, -Math.PI/2); break;//up
+				case 2:
+					projectile = new PlayerProjectile(22 + x, 16 + y, (-3*Math.PI)/4); break;//upleft
+				case 3:
+					projectile = new PlayerProjectile(16 + x, 16 + y, Math.PI); break;//left
+				case 4:
+					projectile = new PlayerProjectile(16 + x, 48 + y, (3*Math.PI)/4); break;//downleft
+				case 5:
+					projectile = new PlayerProjectile(16 + x, 48 + y, Math.PI/2); break;//down
+				case 6:
+					projectile = new PlayerProjectile(50 + x, 56 + y, Math.PI/4); break;//downright
+				case 7:
+					projectile = new PlayerProjectile(48 + x, 48 + y, 0); break;//right
+				case 8:
+					projectile = new PlayerProjectile(52 + x, 25 + y, -Math.PI/4); break;//upright
+				}
+			}
 			if(game.getKeyManager().up && game.getKeyManager().left) {
 //				yMove = -speed;
 //				xMove = -speed;
@@ -240,6 +240,26 @@ public class Player extends Creature {
 		}
 		else if (id == 2)
 		{
+			if (game.getKeyManager().enter) {
+				switch(getDirection()){
+				case 1:
+					projectile = new PlayerProjectile(48 + x, 16 + y, -Math.PI/2); break;//up
+				case 2:
+					projectile = new PlayerProjectile(22 + x, 16 + y, (-3*Math.PI)/4); break;//upleft
+				case 3:
+					projectile = new PlayerProjectile(16 + x, 16 + y, Math.PI); break;//left
+				case 4:
+					projectile = new PlayerProjectile(16 + x, 48 + y, (3*Math.PI)/4); break;//downleft
+				case 5:
+					projectile = new PlayerProjectile(16 + x, 48 + y, Math.PI/2); break;//down
+				case 6:
+					projectile = new PlayerProjectile(50 + x, 56 + y, Math.PI/4); break;//downright
+				case 7:
+					projectile = new PlayerProjectile(48 + x, 48 + y, 0); break;//right
+				case 8:
+					projectile = new PlayerProjectile(52 + x, 25 + y, -Math.PI/4); break;//upright
+				}
+			}
 			if(game.getKeyManager().d_up && game.getKeyManager().d_left) {
 //				yMove = -speed;
 //				xMove = -speed;
