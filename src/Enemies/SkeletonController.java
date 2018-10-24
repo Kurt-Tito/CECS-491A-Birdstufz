@@ -57,9 +57,19 @@ public class SkeletonController {
 	public void tick()
 	{
 		Rectangle[] playerRectangles = new Rectangle[players.length];
+		Rectangle[] playerProjectiles = new Rectangle[players.length];
+		
 		for(int i = 0; i < playerRectangles.length; i++)
 		{
 			playerRectangles[i] = players[i].getBoundingBox();
+		}
+		for(int i = 0; i < playerProjectiles.length; i++)
+		{	
+			if(players[i].isBulletActive())
+			{
+				playerProjectiles[i] = players[i].getProjectile();
+				System.out.println("Bullet is Active");
+			}
 		}
 		int i = 0;
 		while(i < skeletons.size())
@@ -80,6 +90,20 @@ public class SkeletonController {
 						players[p].takeSetDamage(5);
 						players[p].setInvincible(true);
 					}
+				}
+				for(int z = 0; z < playerProjectiles.length; z++)
+				{
+					if(players[z].isBulletActive())
+					{
+						if(playerProjectiles[z].intersects(skeletons.get(i).getBoundingBox()))
+						{
+							skeletons.get(i).healthRemaining--;
+							players[z].setBulletActive(false);
+							players[z].deleteProjectile();
+							System.out.println("Bullet hit Skeleton");
+						}
+					}
+
 				}
 				i++;
 			}

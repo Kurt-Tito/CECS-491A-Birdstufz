@@ -41,6 +41,7 @@ public class Player extends Creature {
 	private int id; //1 for player1, 2 for player2
 	private EggHuntArenaCell[][] grid;
 	private boolean invincible;
+	private boolean bulletActive;
 	
 	public Player(Game game, int x, int y, EggHuntArena arena, int id) {
 		super(x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
@@ -72,7 +73,7 @@ public class Player extends Creature {
 			active++;
 			counter = 0;
 			projectile.update();
-			if(active > 200) {
+			if(active > 100) {
 				projectile.setActive(false);
 				active = 0;
 			}
@@ -80,7 +81,7 @@ public class Player extends Creature {
 		else {
 			active = 0;
 		}
-		if (counter < 40) {
+		if (counter < 30) {
 			game.getKeyManager().space = false;
 		}
 		}
@@ -90,7 +91,7 @@ public class Player extends Creature {
 			active++;
 			counter = 0;
 			projectile.update();
-			if(active > 200) {
+			if(active > 100) {
 				projectile.setActive(false);
 				active = 0;
 			}
@@ -98,7 +99,7 @@ public class Player extends Creature {
 		else {
 			active = 0;
 		}
-		if (counter < 40) {
+		if (counter < 30) {
 			game.getKeyManager().enter = false;
 		}
 		}
@@ -174,16 +175,16 @@ public class Player extends Creature {
 				}
 				
 				
-				if(UP.intersects(grid[j][i]) && grid[j][i].isBlocked()) {
+				if(UP.intersects(grid[j][i]) && grid[j][i].isBlocked() && projectile != null) {
 					projectile.setActive(false);
 						}
-				if(DOWN.intersects(grid[j][i]) && grid[j][i].isBlocked()) {
+				if(DOWN.intersects(grid[j][i]) && grid[j][i].isBlocked() && projectile != null) {
 					projectile.setActive(false);
 				}
-				if(LEFT.intersects(grid[j][i]) && grid[j][i].isBlocked()) {
+				if(LEFT.intersects(grid[j][i]) && grid[j][i].isBlocked() && projectile != null) {
 					projectile.setActive(false);
 				}
-				if(RIGHT.intersects(grid[j][i]) && grid[j][i].isBlocked()) {
+				if(RIGHT.intersects(grid[j][i]) && grid[j][i].isBlocked() && projectile != null) {
 					projectile.setActive(false);
 				}
 			}
@@ -195,21 +196,39 @@ public class Player extends Creature {
 			if(game.getKeyManager().space){		
 				switch(getDirection()){
 				case 1:
-					projectile = new PlayerProjectile(48 + x, 16 + y, -Math.PI/2); break;//up
+					projectile = new PlayerProjectile(48 + x, 16 + y, -Math.PI/2);
+					bulletActive = true;
+					break;//up
 				case 2:
-					projectile = new PlayerProjectile(22 + x, 16 + y, (-3*Math.PI)/4); break;//upleft
+					projectile = new PlayerProjectile(22 + x, 16 + y, (-3*Math.PI)/4);
+					bulletActive = true;
+					break;//upleft
 				case 3:
-					projectile = new PlayerProjectile(16 + x, 16 + y, Math.PI); break;//left
+					projectile = new PlayerProjectile(16 + x, 16 + y, Math.PI);
+					bulletActive = true;
+					break;//left
 				case 4:
-					projectile = new PlayerProjectile(16 + x, 48 + y, (3*Math.PI)/4); break;//downleft
+					projectile = new PlayerProjectile(16 + x, 48 + y, (3*Math.PI)/4);
+					bulletActive = true;
+					break;//downleft
 				case 5:
-					projectile = new PlayerProjectile(16 + x, 48 + y, Math.PI/2); break;//down
+					projectile = new PlayerProjectile(16 + x, 48 + y, Math.PI/2);
+					bulletActive = true;
+					break;//down
 				case 6:
-					projectile = new PlayerProjectile(50 + x, 56 + y, Math.PI/4); break;//downright
+					projectile = new PlayerProjectile(50 + x, 56 + y, Math.PI/4);
+					bulletActive = true;
+					break;//downright
 				case 7:
-					projectile = new PlayerProjectile(48 + x, 48 + y, 0); break;//right
+					projectile = new PlayerProjectile(48 + x, 48 + y, 0);
+					bulletActive = true;
+					break;//right
 				case 8:
-					projectile = new PlayerProjectile(52 + x, 25 + y, -Math.PI/4); break;//upright
+					projectile = new PlayerProjectile(52 + x, 25 + y, -Math.PI/4);
+					bulletActive = true;
+					break;//upright
+				default: 
+					bulletActive = false;
 				}
 			}
 			if(game.getKeyManager().up && game.getKeyManager().left) {
@@ -264,21 +283,41 @@ public class Player extends Creature {
 			if (game.getKeyManager().enter) {
 				switch(getDirection()){
 				case 1:
-					projectile = new PlayerProjectile(48 + x, 16 + y, -Math.PI/2); break;//up
+				{
+					projectile = new PlayerProjectile(48 + x, 16 + y, -Math.PI/2);//up
+					bulletActive = true;
+					break;
+				}
 				case 2:
-					projectile = new PlayerProjectile(22 + x, 16 + y, (-3*Math.PI)/4); break;//upleft
+					projectile = new PlayerProjectile(22 + x, 16 + y, (-3*Math.PI)/4);
+					bulletActive = true;
+					break;//upleft
 				case 3:
-					projectile = new PlayerProjectile(16 + x, 16 + y, Math.PI); break;//left
+					projectile = new PlayerProjectile(16 + x, 16 + y, Math.PI);
+					bulletActive = true;
+					break;//left
 				case 4:
-					projectile = new PlayerProjectile(16 + x, 48 + y, (3*Math.PI)/4); break;//downleft
+					projectile = new PlayerProjectile(16 + x, 48 + y, (3*Math.PI)/4);
+					bulletActive = true;
+					break;//downleft
 				case 5:
-					projectile = new PlayerProjectile(16 + x, 48 + y, Math.PI/2); break;//down
+					projectile = new PlayerProjectile(16 + x, 48 + y, Math.PI/2);
+					bulletActive = true;
+					break;//down
 				case 6:
-					projectile = new PlayerProjectile(50 + x, 56 + y, Math.PI/4); break;//downright
+					projectile = new PlayerProjectile(50 + x, 56 + y, Math.PI/4);
+					bulletActive = true;
+					break;//downright
 				case 7:
-					projectile = new PlayerProjectile(48 + x, 48 + y, 0); break;//right
+					projectile = new PlayerProjectile(48 + x, 48 + y, 0);
+					bulletActive = true;
+					break;//right
 				case 8:
-					projectile = new PlayerProjectile(52 + x, 25 + y, -Math.PI/4); break;//upright
+					projectile = new PlayerProjectile(52 + x, 25 + y, -Math.PI/4);
+					bulletActive = true;
+					break;//upright
+				default:
+					bulletActive = false;
 				}
 			}
 			if(game.getKeyManager().d_up && game.getKeyManager().d_left) {
@@ -386,6 +425,27 @@ public class Player extends Creature {
 		setInvincible(true);
 		health.takeDamage();
 	}*/
+	
+	public Rectangle getProjectile()
+	{
+		return projectile.getBoundingBox();
+	}
+	
+	public void setBulletActive(boolean f)
+	{
+		projectile.setActive(f);
+	}
+	
+	public boolean isBulletActive()
+	{
+		return bulletActive;
+	}
+	
+	public void deleteProjectile()
+	{
+		projectile = null;
+		bulletActive = false;
+	}
 	
 	public void takeSetDamage(int indamage)
 	{

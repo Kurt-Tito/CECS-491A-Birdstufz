@@ -24,7 +24,7 @@ public class PlayerProjectile {
 	private static final String IMG_PATH = "images/Bulletr.png";
 	private static final String IMG_PATH2 = "images/Bulletb.png";
 	private static BufferedImage img, img2;
-	private final double SPEED = 7;
+	private final double SPEED = 14;
 	private final double WIDTH = 20;
 	private final double HEIGHT = 15;
 	private boolean active;
@@ -129,6 +129,14 @@ public class PlayerProjectile {
 	public void setPy(int py) {
 		this.py = py;
 	}
+	
+	public Rectangle getBoundingBox()
+	{
+		Rectangle bounds = new Rectangle();
+		bounds.setBounds((int)px, (int)py, 5, 5);
+		return bounds;
+	}
+	
 	public void draw(Graphics g)
 	{
 		if(active)
