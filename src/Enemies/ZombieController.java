@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 import CECS491B.EggHuntArena;
+import CECS491B.HighScore;
 import entities.creatures.Player;
 
 public class ZombieController {
@@ -19,6 +20,7 @@ public class ZombieController {
 	private Player[] players = new Player[2];
 	private ObstacleMap grid;
 	private int spawnTimer;
+	private HighScore score = new HighScore();
 	
 	public ZombieController(Player p1, Player p2, EggHuntArena arena)
 	{
@@ -59,6 +61,7 @@ public class ZombieController {
 			if(zombies.get(i).getHealth() == 0)
 			{
 				zombies.remove(i);
+				score.addScore(1);
 			}
 			else
 			{

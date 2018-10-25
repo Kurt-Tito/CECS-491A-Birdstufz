@@ -12,7 +12,8 @@ import javax.swing.JTextArea;
 public class HighScore {
 	private int score = 0;
 	private String highScore = "";
-	
+	private int addScore = 0;
+	private int t = 100;
 	public String ReadHighScore() {
 		FileReader readFile = null;
 		BufferedReader reader = null;
@@ -34,12 +35,32 @@ public class HighScore {
 			}
 		}
 	}
+	public void addScore(int i) {
+		if(i == 1) {//adds 100 for zombies
+		score += t;
+		}
+		else {//adds 200 for skeleton
+		score += (2 * t);
+		}
+	}
+
+	public void compareScores() {
+		if(getScore() > Integer.parseInt(highScore)) {
+		highScore = Integer.toString(score);
+		}
+	}
+	public void setScore(int score) {
+	this.score = score;
+	}
+	public int getScore() {
+		return score;
+	}
 	
 	public void DrawScore(Graphics g) {
 		g.setFont(new Font("Helvetica", Font.PLAIN, 15)); 
 		g.setColor(Color.WHITE);
-		g.drawString("Score: " + score, 20, 20);
-		g.drawString("Highscore: " + ReadHighScore(), 1485, 20);
+		g.drawString("Score: " + getScore(), 20, 20);
+		//g.drawString("Highscore: " + ReadHighScore(), 1480, 20);
 	}
 }
 

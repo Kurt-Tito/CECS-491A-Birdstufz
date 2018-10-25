@@ -14,6 +14,7 @@ import game.Game;
 public class GameState extends State {
 	
 	private EggHuntArenaFloor floor = new EggHuntArenaFloor();
+	private EggHuntHTPPanel htp = new EggHuntHTPPanel();
 	private Player player, player2;
 	private EggHuntArena arena = new EggHuntArena();
 	private ZombieController zombies;
@@ -75,6 +76,9 @@ public class GameState extends State {
 		player2.render(g2);
 		score.DrawScore(g2);
 		bird.render(g2);
+		if(player.getHealth() <= 0 && player2.getHealth() <= 0) {
+		floor.drawGameOver(g2);	
+		}
 	}
 
 }

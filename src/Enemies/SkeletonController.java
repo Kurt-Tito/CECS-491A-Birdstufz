@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 import CECS491B.EggHuntArena;
+import CECS491B.HighScore;
 import entities.creatures.Player;
 
 public class SkeletonController {
@@ -22,7 +23,7 @@ public class SkeletonController {
 	private ObstacleMap moveGrid;
 	private ObstacleMap shootGrid;
 	private int spawnTimer;
-	
+	private HighScore score = new HighScore();
 	public SkeletonController(Player p1, Player p2, EggHuntArena arena)
 	{
 		players[0] = p1;
@@ -75,8 +76,9 @@ public class SkeletonController {
 		while(i < skeletons.size())
 		{
 			if(skeletons.get(i).getHealth() == 0)
-			{
+			{			
 				skeletons.remove(i);
+				score.addScore(2);
 			}
 			else
 			{
@@ -205,7 +207,7 @@ public class SkeletonController {
 	public void draw(Graphics2D g2)
 	{
 		for(Skeleton i: skeletons)
-		{
+		{	
 			i.draw(g2);
 		}
 		for(SkeletonProjectile i: projectiles)
