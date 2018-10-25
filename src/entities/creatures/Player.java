@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -23,6 +24,7 @@ public class Player extends Creature {
 
 	private Game game;
 	private PlayerProjectile projectile;
+	private ArrayList<PlayerProjectile> projectiles;
 	private PlayerHealthBar health;
 	private Animation idle, meleeAttack, rifleMove, rifleShoot;
 	
@@ -43,6 +45,9 @@ public class Player extends Creature {
 	private boolean invincible;
 	private boolean bulletActive;
 	
+	private long firingTimer;
+	private long firingDelay;
+	
 	public Player(Game game, int x, int y, EggHuntArena arena, int id) {
 		super(x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
 		this.game = game;
@@ -57,6 +62,10 @@ public class Player extends Creature {
 		rifleShoot = new Animation(100, Assets.rifleShoot);
 		
 		health = new PlayerHealthBar(id);
+		
+		projectiles = new ArrayList<PlayerProjectile>();
+		firingTimer = System.nanoTime();
+		firingDelay = 200; //change firing delay in ms
 	}
 	
 
@@ -66,45 +75,14 @@ public class Player extends Creature {
 		meleeAttack.tick();
 		rifleMove.tick();
 		rifleShoot.tick();
-		counter++;
-		if(id == 1) {
-		if(projectile != null && projectile.isActive())
-		{
-			active++;
-			counter = 0;
-			projectile.update();
-			if(active > 100) {
-				projectile.setActive(false);
-				active = 0;
-			}
-		}
-		else {
-			active = 0;
-		}
-		if (counter < 30) {
-			game.getKeyManager().space = false;
-		}
-		}
-		else if(id == 2) {
-		if(projectile != null && projectile.isActive())
-		{
-			active++;
-			counter = 0;
-			projectile.update();
-			if(active > 100) {
-				projectile.setActive(false);
-				active = 0;
-			}
-		}
-		else {
-			active = 0;
-		}
-		if (counter < 30) {
-			game.getKeyManager().enter = false;
-		}
-		}
+	
 		getInput();
 		move();
+		for (PlayerProjectile p: projectiles) {
+			if(p.isActive()) {
+				p.update();
+			}
+		}
 	}
 	
 	private void getInput(){
@@ -115,15 +93,16 @@ public class Player extends Creature {
 		nextMoveLFT.setBounds(x-3-(int)speed, y+3, 48, 48);
 		nextMoveRT.setBounds(x+3+(int)speed, y+3, 48, 48);
 		
-		if(projectile != null) {
-		UP.setBounds((int)projectile.getPx(), (int)projectile.getPy()-(int)speed, 1, 1);
-		DOWN.setBounds((int)projectile.getPx(), (int)projectile.getPy()+(int)speed, 1, 1);
-		LEFT.setBounds((int)projectile.getPx()-(int)speed,(int)projectile.getPy(), 1, 1);
-		RIGHT.setBounds((int)projectile.getPx()+(int)speed, (int)projectile.getPy(), 1, 1);
+		if(projectiles.size() > 0) {
+			for (PlayerProjectile p: projectiles) {
+				UP.setBounds((int)p.getPx(), (int)p.getPy()-(int)speed, 1, 1);
+				DOWN.setBounds((int)p.getPx(), (int)p.getPy()+(int)speed, 1, 1);
+				LEFT.setBounds((int)p.getPx()-(int)speed,(int)p.getPy(), 1, 1);
+				RIGHT.setBounds((int)p.getPx()+(int)speed, (int)p.getPy(), 1, 1);
+			}
 		}
 
        
-//		System.out.println(getDirection());
 		for (int i = 0; i < grid[0].length; i++)
 		{
 			for (int j = 0; j < grid.length; j++)
@@ -175,17 +154,19 @@ public class Player extends Creature {
 				}
 				
 				
-				if(UP.intersects(grid[j][i]) && grid[j][i].isBlocked() && projectile != null) {
-					projectile.setActive(false);
-						}
-				if(DOWN.intersects(grid[j][i]) && grid[j][i].isBlocked() && projectile != null) {
-					projectile.setActive(false);
-				}
-				if(LEFT.intersects(grid[j][i]) && grid[j][i].isBlocked() && projectile != null) {
-					projectile.setActive(false);
-				}
-				if(RIGHT.intersects(grid[j][i]) && grid[j][i].isBlocked() && projectile != null) {
-					projectile.setActive(false);
+				for (PlayerProjectile p: projectiles) {
+					if(UP.intersects(grid[j][i]) && grid[j][i].isBlocked() && p != null) {
+						p.setActive(false);
+							}
+					if(DOWN.intersects(grid[j][i]) && grid[j][i].isBlocked() && p != null) {
+						p.setActive(false);
+					}
+					if(LEFT.intersects(grid[j][i]) && grid[j][i].isBlocked() && p != null) {
+						p.setActive(false);
+					}
+					if(RIGHT.intersects(grid[j][i]) && grid[j][i].isBlocked() && p != null) {
+						p.setActive(false);
+					}
 				}
 			}
 		}
@@ -194,86 +175,71 @@ public class Player extends Creature {
 		if (id == 1)
 		{
 			if(game.getKeyManager().space){		
-				switch(getDirection()){
-				case 1:
-					projectile = new PlayerProjectile(48 + x, 16 + y, -Math.PI/2);
-					bulletActive = true;
-					break;//up
-				case 2:
-					projectile = new PlayerProjectile(22 + x, 16 + y, (-3*Math.PI)/4);
-					bulletActive = true;
-					break;//upleft
-				case 3:
-					projectile = new PlayerProjectile(16 + x, 16 + y, Math.PI);
-					bulletActive = true;
-					break;//left
-				case 4:
-					projectile = new PlayerProjectile(16 + x, 48 + y, (3*Math.PI)/4);
-					bulletActive = true;
-					break;//downleft
-				case 5:
-					projectile = new PlayerProjectile(16 + x, 48 + y, Math.PI/2);
-					bulletActive = true;
-					break;//down
-				case 6:
-					projectile = new PlayerProjectile(50 + x, 56 + y, Math.PI/4);
-					bulletActive = true;
-					break;//downright
-				case 7:
-					projectile = new PlayerProjectile(48 + x, 48 + y, 0);
-					bulletActive = true;
-					break;//right
-				case 8:
-					projectile = new PlayerProjectile(52 + x, 25 + y, -Math.PI/4);
-					bulletActive = true;
-					break;//upright
-				default: 
-					bulletActive = false;
+				long elapsed = (System.nanoTime() - firingTimer) / 1000000;
+				if (elapsed > firingDelay) {
+					switch(getDirection()){
+					case 1:
+						projectile = new PlayerProjectile(48 + x, 16 + y, -Math.PI/2);
+						bulletActive = true;
+						break;//up
+					case 2:
+						projectile = new PlayerProjectile(22 + x, 16 + y, (-3*Math.PI)/4);
+						bulletActive = true;
+						break;//upleft
+					case 3:
+						projectile = new PlayerProjectile(16 + x, 16 + y, Math.PI);
+						bulletActive = true;
+						break;//left
+					case 4:
+						projectile = new PlayerProjectile(16 + x, 48 + y, (3*Math.PI)/4);
+						bulletActive = true;
+						break;//downleft
+					case 5:
+						projectile = new PlayerProjectile(16 + x, 48 + y, Math.PI/2);
+						bulletActive = true;
+						break;//down
+					case 6:
+						projectile = new PlayerProjectile(50 + x, 56 + y, Math.PI/4);
+						bulletActive = true;
+						break;//downright
+					case 7:
+						projectile = new PlayerProjectile(48 + x, 48 + y, 0);
+						bulletActive = true;
+						break;//right
+					case 8:
+						projectile = new PlayerProjectile(52 + x, 25 + y, -Math.PI/4);
+						bulletActive = true;
+						break;//upright
+					default: 
+						bulletActive = false;
+					}
+					projectiles.add(projectile);
+					firingTimer = System.nanoTime();
 				}
 			}
 			if(game.getKeyManager().up && game.getKeyManager().left) {
-//				yMove = -speed;
-//				xMove = -speed;
 				setDirection(2);
-//				System.out.println("Moving: up left");
-//				System.out.println(getDirection());
-				
 			}
-			else if(game.getKeyManager().down && game.getKeyManager().left) {
-//				yMove = speed;
-//				xMove = -speed;
+			else if(game.getKeyManager().down && game.getKeyManager().left) {				
 				setDirection(4);
-//				System.out.println("Moving: down left");
 			}
 			else if(game.getKeyManager().down && game.getKeyManager().right) {
-//				yMove = speed;
-//				xMove = speed;
 				setDirection(6);
-//				System.out.println("Moving: down right");
 			}
 			else if(game.getKeyManager().up && game.getKeyManager().right) {
-//				yMove = -speed;
-//				xMove = speed;
 				setDirection(8);
-//				System.out.println("Moving: up right");
-//				System.out.println(getDirection());
 			}
 			
 			else if(game.getKeyManager().up) {
 				setDirection(1);
-				//yMove = -speed;
 			}
-			
 			else if(game.getKeyManager().left) {
-				//xMove = -speed;
 				setDirection(3);
 			}
 			else if(game.getKeyManager().down) {
-				//yMove = speed;
 				setDirection(5);	
 			}
 			else if(game.getKeyManager().right) {
-				//xMove = speed;
 				setDirection(7);
 			}
 		
@@ -281,90 +247,75 @@ public class Player extends Creature {
 		else if (id == 2)
 		{
 			if (game.getKeyManager().enter) {
-				switch(getDirection()){
-				case 1:
-				{
-					projectile = new PlayerProjectile(48 + x, 16 + y, -Math.PI/2);//up
-					bulletActive = true;
-					break;
-				}
-				case 2:
-					projectile = new PlayerProjectile(22 + x, 16 + y, (-3*Math.PI)/4);
-					bulletActive = true;
-					break;//upleft
-				case 3:
-					projectile = new PlayerProjectile(16 + x, 16 + y, Math.PI);
-					bulletActive = true;
-					break;//left
-				case 4:
-					projectile = new PlayerProjectile(16 + x, 48 + y, (3*Math.PI)/4);
-					bulletActive = true;
-					break;//downleft
-				case 5:
-					projectile = new PlayerProjectile(16 + x, 48 + y, Math.PI/2);
-					bulletActive = true;
-					break;//down
-				case 6:
-					projectile = new PlayerProjectile(50 + x, 56 + y, Math.PI/4);
-					bulletActive = true;
-					break;//downright
-				case 7:
-					projectile = new PlayerProjectile(48 + x, 48 + y, 0);
-					bulletActive = true;
-					break;//right
-				case 8:
-					projectile = new PlayerProjectile(52 + x, 25 + y, -Math.PI/4);
-					bulletActive = true;
-					break;//upright
-				default:
-					bulletActive = false;
+				long elapsed = (System.nanoTime() - firingTimer) / 1000000;
+				if (elapsed > firingDelay) {
+					switch(getDirection()){
+					case 1:
+					{
+						projectile = new PlayerProjectile(48 + x, 16 + y, -Math.PI/2);//up
+						bulletActive = true;
+						break;
+					}
+					case 2:
+						projectile = new PlayerProjectile(22 + x, 16 + y, (-3*Math.PI)/4);
+						bulletActive = true;
+						break;//upleft
+					case 3:
+						projectile = new PlayerProjectile(16 + x, 16 + y, Math.PI);
+						bulletActive = true;
+						break;//left
+					case 4:
+						projectile = new PlayerProjectile(16 + x, 48 + y, (3*Math.PI)/4);
+						bulletActive = true;
+						break;//downleft
+					case 5:
+						projectile = new PlayerProjectile(16 + x, 48 + y, Math.PI/2);
+						bulletActive = true;
+						break;//down
+					case 6:
+						projectile = new PlayerProjectile(50 + x, 56 + y, Math.PI/4);
+						bulletActive = true;
+						break;//downright
+					case 7:
+						projectile = new PlayerProjectile(48 + x, 48 + y, 0);
+						bulletActive = true;
+						break;//right
+					case 8:
+						projectile = new PlayerProjectile(52 + x, 25 + y, -Math.PI/4);
+						bulletActive = true;
+						break;//upright
+					default:
+						bulletActive = false;
+					}
+					projectiles.add(projectile);
+					firingTimer = System.nanoTime();
 				}
 			}
 			if(game.getKeyManager().d_up && game.getKeyManager().d_left) {
-//				yMove = -speed;
-//				xMove = -speed;
 				setDirection(2);
-//				System.out.println("Moving: up left");
-//				System.out.println(getDirection());
-				
 			}
 			else if(game.getKeyManager().d_down && game.getKeyManager().d_left) {
-//				yMove = speed;
-//				xMove = -speed;
 				setDirection(4);
-//				System.out.println("Moving: down left");
 			}
 			else if(game.getKeyManager().d_down && game.getKeyManager().d_right) {
-//				yMove = speed;
-//				xMove = speed;
 				setDirection(6);
-//				System.out.println("Moving: down right");
 			}
 			else if(game.getKeyManager().d_up && game.getKeyManager().d_right) {
-//				yMove = -speed;
-//				xMove = speed;
 				setDirection(8);
-//				System.out.println("Moving: up right");
-//				System.out.println(getDirection());
 			}
 			else if(game.getKeyManager().d_up) {
 				setDirection(1);
-				//yMove = -speed;
 			}
 			
 			else if(game.getKeyManager().d_left) {
-				//xMove = -speed;
 				setDirection(3);
 			}
 			else if(game.getKeyManager().d_down) {
-				//yMove = speed;
 				setDirection(5);	
 			}
 			else if(game.getKeyManager().d_right) {
-				//xMove = speed;
 				setDirection(7);
 			}
-		
 		}
 		
 		health.update(x, y);
@@ -375,18 +326,20 @@ public class Player extends Creature {
 	public void render(Graphics g) {
 		
 		g.drawImage(getCurrentAnimationFrame(), (int) x, (int) y, width, height, null);
-	if(id == 1){
-		if(projectile != null)
-		{
-			projectile.draw(g);
+		if(id == 1) {
+			if(projectiles.size() > 0) {
+				for (PlayerProjectile p: projectiles) {
+					p.draw(g);	
+				}
+			}
 		}
-	}
-	else{
-		if(projectile != null)
-		{
-			projectile.draw2(g);
+		else {
+			if(projectiles.size() > 0) {
+				for (PlayerProjectile p: projectiles) {
+					p.draw2(g);	
+				}
+			}
 		}
-	}
 		health.draw(g);
 	}
 	
