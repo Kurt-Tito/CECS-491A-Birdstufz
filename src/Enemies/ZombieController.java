@@ -20,7 +20,8 @@ public class ZombieController {
 	private Player[] players = new Player[2];
 	private ObstacleMap grid;
 	private int spawnTimer;
-	private HighScore score = new HighScore();
+	private int score;
+	private int zPoints = 256;
 	
 	public ZombieController(Player p1, Player p2, EggHuntArena arena)
 	{
@@ -61,7 +62,7 @@ public class ZombieController {
 			if(zombies.get(i).getHealth() == 0)
 			{
 				zombies.remove(i);
-				score.addScore(1);
+				score += zPoints;
 			}
 			else
 			{
@@ -167,6 +168,11 @@ public class ZombieController {
 	public void addZombie(Zombie zomb)
 	{
 		zombies.add(zomb);
+	}
+	
+	public int zScore()
+	{
+		return score;
 	}
 	
 	public void draw(Graphics2D g2)

@@ -19,7 +19,9 @@ public class GameState extends State {
 	private EggHuntArena arena = new EggHuntArena();
 	private ZombieController zombies;
 	private SkeletonController skeletons;
-	private HighScore score = new HighScore();
+	
+	public static HighScore score = new HighScore();
+	
 	private PlayerHealthBar health;
 	private Bird bird;
 	private int c1 = 0, c2 = 0;
@@ -43,6 +45,7 @@ public class GameState extends State {
 		zombies.tick();
 		skeletons.tick();
 		bird.tick();
+		score.setScore(zombies.zScore() + skeletons.sScore());
 	}
 
 	@Override
@@ -76,8 +79,9 @@ public class GameState extends State {
 		player2.render(g2);
 		score.DrawScore(g2);
 		bird.render(g2);
+		
 		if(player.getHealth() <= 0 && player2.getHealth() <= 0) {
-		floor.drawGameOver(g2);	
+			floor.drawGameOver(g2, zombies.zScore()+skeletons.sScore(), score.ReadHighScore());	
 		}
 	}
 

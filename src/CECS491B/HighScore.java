@@ -13,7 +13,7 @@ public class HighScore {
 	private int score = 0;
 	private String highScore = "";
 	private int addScore = 0;
-	private int t = 100;
+	private int t = 164;
 	public String ReadHighScore() {
 		FileReader readFile = null;
 		BufferedReader reader = null;
@@ -54,6 +54,11 @@ public class HighScore {
 	}
 	public int getScore() {
 		return score;
+	}
+	
+	public String getScore_s() {
+		String score_s = Integer.toString(score);
+		return score_s;
 	}
 	
 	public void DrawScore(Graphics g) {

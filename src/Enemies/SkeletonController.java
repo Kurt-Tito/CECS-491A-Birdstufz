@@ -23,7 +23,9 @@ public class SkeletonController {
 	private ObstacleMap moveGrid;
 	private ObstacleMap shootGrid;
 	private int spawnTimer;
-	private HighScore score = new HighScore();
+	private int score;
+	private int sPoints = 592;
+	
 	public SkeletonController(Player p1, Player p2, EggHuntArena arena)
 	{
 		players[0] = p1;
@@ -78,7 +80,8 @@ public class SkeletonController {
 			if(skeletons.get(i).getHealth() == 0)
 			{			
 				skeletons.remove(i);
-				score.addScore(2);
+				score += sPoints;
+				//players[1].score().addScore(1);
 			}
 			else
 			{
@@ -202,6 +205,11 @@ public class SkeletonController {
 	public void addSkeleton(Skeleton skel)
 	{
 		skeletons.add(skel);
+	}
+	
+	public int sScore()
+	{
+		return score;
 	}
 	
 	public void draw(Graphics2D g2)

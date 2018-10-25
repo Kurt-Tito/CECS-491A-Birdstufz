@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import CECS491B.EggHuntArena;
 import CECS491B.EggHuntArenaCell;
+import CECS491B.HighScore;
 import CECS491B.PlayerHealthBar;
 import CECS491B.PlayerProjectile;
 import game.Game;
@@ -157,15 +158,19 @@ public class Player extends Creature {
 				for (PlayerProjectile p: projectiles) {
 					if(UP.intersects(grid[j][i]) && grid[j][i].isBlocked() && p != null) {
 						p.setActive(false);
+						bulletActive = false;
 							}
 					if(DOWN.intersects(grid[j][i]) && grid[j][i].isBlocked() && p != null) {
 						p.setActive(false);
+						bulletActive = false;
 					}
 					if(LEFT.intersects(grid[j][i]) && grid[j][i].isBlocked() && p != null) {
 						p.setActive(false);
+						bulletActive = false;
 					}
 					if(RIGHT.intersects(grid[j][i]) && grid[j][i].isBlocked() && p != null) {
 						p.setActive(false);
+						bulletActive = false;
 					}
 				}
 			}
@@ -326,6 +331,7 @@ public class Player extends Creature {
 	public void render(Graphics g) {
 		
 		g.drawImage(getCurrentAnimationFrame(), (int) x, (int) y, width, height, null);
+		
 		if(id == 1) {
 			if(projectiles.size() > 0) {
 				for (PlayerProjectile p: projectiles) {
@@ -422,6 +428,11 @@ public class Player extends Creature {
 	public int getDirection() {
 		return direction;
 	}
+	
+//	public HighScore score()
+//	{
+//		return score;
+//	}
 
 	public void InvincibilityFrames(Graphics g){
 		g.drawImage(Assets.invincibility, (int) x - 8, (int) y - 8, width + 20, height + 20, null);		
