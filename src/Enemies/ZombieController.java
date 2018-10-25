@@ -11,6 +11,7 @@ import java.util.Random;
 
 import CECS491B.EggHuntArena;
 import CECS491B.HighScore;
+import CECS491B.PlayerProjectile;
 import entities.creatures.Player;
 
 public class ZombieController {
@@ -22,6 +23,8 @@ public class ZombieController {
 	private int spawnTimer;
 	private int score;
 	private int zPoints = 256;
+	private ArrayList<PlayerProjectile> projectilesP1;
+	private ArrayList<PlayerProjectile> projectilesP2;
 	
 	public ZombieController(Player p1, Player p2, EggHuntArena arena)
 	{
@@ -29,6 +32,8 @@ public class ZombieController {
 		players[1] = p2;
 		zombies = new ArrayList<Zombie>();
 		grid = getMap(arena);
+		projectilesP1 = new ArrayList<PlayerProjectile>();
+		projectilesP2 = new ArrayList<PlayerProjectile>();
 		
 		spawnTimer = SPAWN_DELAY;
 	}
@@ -43,6 +48,8 @@ public class ZombieController {
 	{
 		Rectangle[] playerRectangles = new Rectangle[players.length];
 		Rectangle[] playerProjectiles = new Rectangle[players.length];
+		projectilesP1 = players[0].getProjectiles();
+		projectilesP2 = players[1].getProjectiles();
 		
 		for(int i = 0; i < playerRectangles.length; i++)
 		{
@@ -78,19 +85,32 @@ public class ZombieController {
 						players[p].setInvincible(true);
 					}
 				}
-				for(int z = 0; z < playerProjectiles.length; z++)
-				{
-					if(players[z].isBulletActive())
-					{
-						if(playerProjectiles[z].intersects(zombies.get(i).getBoundingBox()))
-						{
+//				for(int z = 0; z < playerProjectiles.length; z++)
+//				{
+//					if(players[z].isBulletActive())
+//					{
+//						if(playerProjectiles[z].intersects(zombies.get(i).getBoundingBox()))
+//						{
+//							zombies.get(i).healthRemaining--;
+//							players[z].setBulletActive(false);
+//							players[z].deleteProjectile();
+//							System.out.println("Bullet hit Zombie");
+//						}
+//					}
+//
+//				}
+				//check projectile collision with zombies
+				for (int a = 0; a < projectilesP1.size(); a++) {
+					if(projectilesP1.get(a).getBoundingBox().intersects(zombies.get(i).getBoundingBox())) {
 							zombies.get(i).healthRemaining--;
-							players[z].setBulletActive(false);
-							players[z].deleteProjectile();
-							System.out.println("Bullet hit Zombie");
-						}
+							players[0].removeProjectileAt(a);
 					}
-
+				}
+				for (int a = 0; a < projectilesP2.size(); a++) {
+					if(projectilesP2.get(a).getBoundingBox().intersects(zombies.get(i).getBoundingBox())) {
+							zombies.get(i).healthRemaining--;
+							players[1].removeProjectileAt(a);
+					}
 				}
 				i++;
 			}

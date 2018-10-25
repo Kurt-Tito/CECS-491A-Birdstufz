@@ -94,14 +94,6 @@ public class Player extends Creature {
 		nextMoveLFT.setBounds(x-3-(int)speed, y+3, 48, 48);
 		nextMoveRT.setBounds(x+3+(int)speed, y+3, 48, 48);
 		
-		if(projectiles.size() > 0) {
-			for (PlayerProjectile p: projectiles) {
-				UP.setBounds((int)p.getPx(), (int)p.getPy()-(int)speed, 1, 1);
-				DOWN.setBounds((int)p.getPx(), (int)p.getPy()+(int)speed, 1, 1);
-				LEFT.setBounds((int)p.getPx()-(int)speed,(int)p.getPy(), 1, 1);
-				RIGHT.setBounds((int)p.getPx()+(int)speed, (int)p.getPy(), 1, 1);
-			}
-		}
 
        
 		for (int i = 0; i < grid[0].length; i++)
@@ -154,23 +146,28 @@ public class Player extends Creature {
 						x -= speed;
 				}
 				
-				
-				for (PlayerProjectile p: projectiles) {
-					if(UP.intersects(grid[j][i]) && grid[j][i].isBlocked() && p != null) {
-						p.setActive(false);
-						bulletActive = false;
-							}
-					if(DOWN.intersects(grid[j][i]) && grid[j][i].isBlocked() && p != null) {
-						p.setActive(false);
-						bulletActive = false;
-					}
-					if(LEFT.intersects(grid[j][i]) && grid[j][i].isBlocked() && p != null) {
-						p.setActive(false);
-						bulletActive = false;
-					}
-					if(RIGHT.intersects(grid[j][i]) && grid[j][i].isBlocked() && p != null) {
-						p.setActive(false);
-						bulletActive = false;
+				if(projectiles.size() > 0) {
+					for (int a = 0; a < projectiles.size(); a++) {
+						UP.setBounds((int)projectiles.get(a).getPx(), (int)projectiles.get(a).getPy()-(int)speed, 1, 1);
+						DOWN.setBounds((int)projectiles.get(a).getPx(), (int)projectiles.get(a).getPy()+(int)speed, 1, 1);
+						LEFT.setBounds((int)projectiles.get(a).getPx()-(int)speed,(int)projectiles.get(a).getPy(), 1, 1);
+						RIGHT.setBounds((int)projectiles.get(a).getPx()+(int)speed, (int)projectiles.get(a).getPy(), 1, 1);
+						
+						if(UP.intersects(grid[j][i]) && grid[j][i].isBlocked()) {
+							projectiles.get(a).setActive(false);
+						}
+						if(DOWN.intersects(grid[j][i]) && grid[j][i].isBlocked()) {
+							projectiles.get(a).setActive(false);
+						}
+						if(LEFT.intersects(grid[j][i]) && grid[j][i].isBlocked()) {
+							projectiles.get(a).setActive(false);
+						}
+						if(RIGHT.intersects(grid[j][i]) && grid[j][i].isBlocked()) {
+							projectiles.get(a).setActive(false);
+						}
+						if(!projectiles.get(a).isActive()) {
+							projectiles.remove(a);
+						}
 					}
 				}
 			}
@@ -436,14 +433,23 @@ public class Player extends Creature {
 
 	public void InvincibilityFrames(Graphics g){
 		g.drawImage(Assets.invincibility, (int) x - 8, (int) y - 8, width + 20, height + 20, null);		
-		}
+	}
 
-		public void setInvincible(boolean invincible) {
-			this.invincible = invincible;
-		}
-		public boolean getInvincible() {
-			return invincible;
-		}
+	public void setInvincible(boolean invincible) {
+		this.invincible = invincible;
+	}
+	public boolean getInvincible() {
+		return invincible;
+	}
+	
+	public ArrayList<PlayerProjectile> getProjectiles() {
+		return projectiles;
+	}
+	
+	public void removeProjectileAt(int x) {
+		projectiles.remove(x);
+	}
+		
 
 }
 
