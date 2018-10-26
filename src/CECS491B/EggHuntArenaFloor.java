@@ -34,7 +34,7 @@ public class EggHuntArenaFloor {
 		}
 	}
 	
-	public void drawGameOver(Graphics2D g2, int inscore, String inhighscore) {
+	public void drawGameOver(Graphics2D g2, int inscore, String highscore) {
 		for (int i = 0; i < 1600; i = i + 64)
 		{
 			for (int j = 0; j < 900; j = j + 64)
@@ -49,7 +49,13 @@ public class EggHuntArenaFloor {
 		g2.drawString("GAME OVER", 545, 475);
 		g2.setFont(new Font("Helvetica", Font.PLAIN, 30)); 
 		g2.setColor(Color.white);
-		g2.drawString("Your Score: " + inscore, 650, 540);
-		g2.drawString("Highscore: " + inhighscore, 650, 600);
+		g2.drawString("Your Score: " + inscore, 650, 550);
+		if(Integer.parseInt(score.ReadHighScore()) > inscore){
+		g2.drawString("Highscore: " + highscore, 650, 600);
+		}
+		else{
+		g2.drawString("New High Score!", 650, 500);	
+		g2.drawString("Highscore: " + highscore, 650, 600);
+		}
 	}
 }

@@ -22,7 +22,7 @@ public class ZombieController {
 	private ObstacleMap grid;
 	private int spawnTimer;
 	private int score;
-	private int zPoints = 256;
+	private int zPoints = 100;
 	private ArrayList<PlayerProjectile> projectilesP1;
 	private ArrayList<PlayerProjectile> projectilesP2;
 	

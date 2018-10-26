@@ -10,7 +10,7 @@ import CECS491A.State;
 
 import java.awt.Color;
 import java.awt.Dimension;
-
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 public class EggHuntMenuPanel extends GamePanel implements MouseListener{
 	private JButton egghuntjbutton,egghunthtpjbutton;
+	private HighScore score = new HighScore();
 	private static final String PATH_HALLOWBANNER = "images/UIHallow.png";
 	protected static BufferedImage hallowbanner;
 	static
@@ -90,6 +91,9 @@ public class EggHuntMenuPanel extends GamePanel implements MouseListener{
 	{
 		int w = 1400, h = 900;
 		g2.drawImage(hallowbanner, (getWidth() - w)/2, (getHeight() - h)/2, w, h, null);
+		g2.setFont(new Font("Helvetica", Font.PLAIN, 50)); 
+		g2.setColor(Color.BLACK);
+		g2.drawString("Highscore: " +score.ReadHighScore(), 200, 300);
 	}
 	
 	public void addButtons()

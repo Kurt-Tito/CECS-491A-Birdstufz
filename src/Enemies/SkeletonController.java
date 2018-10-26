@@ -25,7 +25,7 @@ public class SkeletonController {
 	private ObstacleMap shootGrid;
 	private int spawnTimer;
 	private int score;
-	private int sPoints = 592;
+	private int sPoints = 200;
 	private ArrayList<PlayerProjectile> projectilesP1;
 	private ArrayList<PlayerProjectile> projectilesP2;
 	
