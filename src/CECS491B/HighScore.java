@@ -64,9 +64,9 @@ public class HighScore {
 	}
 	
 	public void DrawScore(Graphics g) {
-		g.setFont(new Font("Helvetica", Font.PLAIN, 15)); 
+		g.setFont(new Font("Helvetica", Font.PLAIN, 25)); 
 		g.setColor(Color.WHITE);
-		g.drawString("Score: " + getScore(), 20, 20);
+		g.drawString(String.valueOf(getScore()), 10, 28);
 	}
 	public String checkScore(int i) {
 		int convert = Integer.parseInt(ReadHighScore());

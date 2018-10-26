@@ -42,20 +42,21 @@ public class EggHuntArenaFloor {
 		    	g2.drawImage(floor, i, j, null);
 		    }
 		}
-		g2.drawImage(tombstone, 450, 135, null);
-		g2.drawImage(tombstone2, 900, 125, null);
+		g2.drawImage(tombstone, 450, 115, null);
+		g2.drawImage(tombstone2, 900, 108, null);
 		g2.setFont(new Font("Helvetica", Font.BOLD, 80)); 
 		g2.setColor(Color.BLACK);
-		g2.drawString("GAME OVER", 545, 475);
-		g2.setFont(new Font("Helvetica", Font.PLAIN, 30)); 
+		g2.drawString("GAME OVER", 545, 455);
+		g2.setFont(new Font("Helvetica", Font.PLAIN, 35)); 
 		g2.setColor(Color.white);
-		g2.drawString("Your Score: " + inscore, 650, 550);
 		if(Integer.parseInt(score.ReadHighScore()) > inscore){
-		g2.drawString("Highscore: " + highscore, 650, 600);
+		g2.drawString("Your Score: " + inscore, 665, 525);
+		g2.drawString("Highscore: " + highscore, 670, 600);
 		}
 		else{
-		g2.drawString("New High Score!", 650, 500);	
-		g2.drawString("Highscore: " + highscore, 650, 600);
+		g2.drawString("New High Score!", 670, 525);	
+		g2.drawString("Your Score: " + inscore, 665, 600);
+		g2.drawString("Highscore: " + highscore, 670, 675);
 		}
 	}
 }

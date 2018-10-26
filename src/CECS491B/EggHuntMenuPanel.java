@@ -91,9 +91,9 @@ public class EggHuntMenuPanel extends GamePanel implements MouseListener{
 	{
 		int w = 1400, h = 900;
 		g2.drawImage(hallowbanner, (getWidth() - w)/2, (getHeight() - h)/2, w, h, null);
-		g2.setFont(new Font("Helvetica", Font.PLAIN, 50)); 
+		g2.setFont(new Font("Helvetica", Font.PLAIN, 40)); 
 		g2.setColor(Color.BLACK);
-		g2.drawString("Highscore: " +score.ReadHighScore(), 200, 300);
+		g2.drawString("Highscore: " +score.ReadHighScore(), 50, 850);
 	}
 	
 	public void addButtons()
