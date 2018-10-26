@@ -27,6 +27,11 @@ public class GameState extends State {
 	int col = 1;
 	int row = 6;
 	
+	int timer1 = 0;
+	int timer2 = 0;
+	int duration = 120;
+	int delta = 1;
+	
 	public GameState(Game game){
 		super(game);
 		player = new Player(game, col*64, row*64, arena, 1);
@@ -39,12 +44,37 @@ public class GameState extends State {
 	
 	@Override
 	public void tick() {
-		player.tick();
-		player2.tick();
+		
+		if (player.getHealth() > 0)
+			player.tick();
+		else
+		{
+			player.setX(-900);
+			player.setY(-900);
+		}
+		
+		if (player2.getHealth() > 0)
+			player2.tick();
+		else
+		{
+			player2.setX(-900);
+			player2.setY(-900);
+		}
+		
 		zombies.tick();
 		skeletons.tick();
 		bird.tick();
 		score.setScore(zombies.zScore() + skeletons.sScore());
+		
+		if(player.getHealth() <= 0)
+		{
+			timer1 += delta;
+		}
+		
+		if(player2.getHealth() <= 0)
+		{
+			timer2 += delta;
+		}
 	}
 
 	@Override
@@ -74,10 +104,31 @@ public class GameState extends State {
 			c2 = 0;
 			}
 			}
-		player.render(g2);
-		player2.render(g2);
+		
+		if (player.getHealth() > 0)
+			player.render(g2);
+		
+		if (player2.getHealth() > 0)
+			player2.render(g2);
+		
 		score.DrawScore(g2);
 		bird.render(g2);
+		
+		if (timer1 < duration)
+		{
+			if(player.getHealth() <= 0)
+			{
+				g.drawString("Player 1 is DEAD", 700, 900/2);
+			}
+		}
+		
+		if (timer2 < duration)
+		{
+			if(player2.getHealth() <= 0)
+			{
+				g.drawString("Player 2 is DEAD", 700, 900/2);
+			}
+		}
 		
 		if(player.getHealth() <= 0 && player2.getHealth() <= 0) {
 			floor.drawGameOver(g2, zombies.zScore()+skeletons.sScore(), score.checkScore(zombies.zScore()+skeletons.sScore()));	
