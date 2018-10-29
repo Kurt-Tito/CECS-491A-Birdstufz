@@ -50,16 +50,16 @@ public class GameState extends State {
 			player.tick();
 		else
 		{
-			player.setX(-900);
-			player.setY(-900);
+			player.setX(-5000);
+			player.setY(-5000);
 		}
 		
 		if (player2.getHealth() > 0)
 			player2.tick();
 		else
 		{
-			player2.setX(-900);
-			player2.setY(-900);
+			player2.setX(-5000);
+			player2.setY(-5000);
 		}
 		
 		zombies.tick();
