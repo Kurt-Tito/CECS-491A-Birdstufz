@@ -37,6 +37,13 @@ public class PlayerHealthBar {
 			health = 0;
 	}
 	
+	public void healDamage(int heal)
+	{
+		health += heal;
+		if(health > 75)
+			health = 75;
+	}
+	
 	public int getHealth()
 	{
 		return health;

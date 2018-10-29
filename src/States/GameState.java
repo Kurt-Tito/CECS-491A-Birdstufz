@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import entities.creatures.Bird;
+import entities.creatures.BirdController;
 import entities.creatures.Player;
 import game.Game;
 
@@ -19,10 +20,10 @@ public class GameState extends State {
 	private EggHuntArena arena = new EggHuntArena();
 	private ZombieController zombies;
 	private SkeletonController skeletons;
+	private BirdController bird;
 	public static HighScore score = new HighScore();
 	
 	private PlayerHealthBar health;
-	private Bird bird;
 	private int c1 = 0, c2 = 0;
 	int col = 1;
 	int row = 6;
@@ -37,9 +38,9 @@ public class GameState extends State {
 		player = new Player(game, col*64, row*64, arena, 1);
 		player2 = new Player(game, col*64, (row+1)*64, arena, 2);
 		
-		bird = new Bird(0, row * 64, 64, 64);
 		zombies = new ZombieController(player, player2, arena);
 		skeletons = new SkeletonController(player, player2, arena);
+		bird = new BirdController(player, player2, arena);
 	}
 	
 	@Override
@@ -64,7 +65,7 @@ public class GameState extends State {
 		zombies.tick();
 		skeletons.tick();
 		bird.tick();
-		score.setScore(zombies.zScore() + skeletons.sScore());
+		score.setScore(zombies.zScore() + skeletons.sScore() + bird.getScore());
 		
 		if(player.getHealth() <= 0)
 		{
@@ -112,7 +113,7 @@ public class GameState extends State {
 			player2.render(g2);
 		
 		score.DrawScore(g2);
-		bird.render(g2);
+		bird.draw(g);
 		
 		if (timer1 < duration)
 		{
@@ -131,7 +132,7 @@ public class GameState extends State {
 		}
 		
 		if(player.getHealth() <= 0 && player2.getHealth() <= 0) {
-			floor.drawGameOver(g2, zombies.zScore()+skeletons.sScore(), score.checkScore(zombies.zScore()+skeletons.sScore()));	
+			floor.drawGameOver(g2, zombies.zScore()+skeletons.sScore()+bird.getScore(), score.checkScore(zombies.zScore()+skeletons.sScore()+bird.getScore()));	
 		}
 	}
 

@@ -98,7 +98,6 @@ public class SkeletonController {
 					if(playerRectangles[p].intersects(skeletons.get(i).getBoundingBox()))
 					{
 						//Player p takes damage
-						System.out.println("Skeleton hit");
 						players[p].takeSetDamage(5);
 						players[p].setInvincible(true);
 					}

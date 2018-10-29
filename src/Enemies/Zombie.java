@@ -13,7 +13,7 @@ import entities.Orientation;
 import gfx.Assets;
 
 public class Zombie extends Monster{
-	private final int MAX_HEALTH = 5;
+	private final int MAX_HEALTH = 3;
 	private final double MOVE_SPEED = 2.5;
 	
 	private double rotation;

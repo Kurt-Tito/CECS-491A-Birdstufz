@@ -79,7 +79,6 @@ public class ZombieController {
 					if(playerRectangles[p].intersects(zombies.get(i).getBoundingBox()))
 					{
 						//Player p takes damage
-						System.out.println("Zombie attacks Player " + (p+1));
 						
 						players[p].takeSetDamage(5);
 						players[p].setInvincible(true);

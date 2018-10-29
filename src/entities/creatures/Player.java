@@ -413,6 +413,11 @@ public class Player extends Creature {
 		}
 	}
 	
+	public void heal(int h)
+	{
+		health.healDamage(h);
+	}
+	
 	public int getHealth()
 	{
 		return health.getHealth();

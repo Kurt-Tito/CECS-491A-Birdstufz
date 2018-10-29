@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import entities.Orientation;
 import gfx.Assets;
 public class Skeleton extends Monster{
-	private final int MAX_HEALTH = 3;
+	private final int MAX_HEALTH = 2;
 	private final int RELOAD_TIME = 120;
 	
 	private long reloadTimer;

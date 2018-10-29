@@ -64,12 +64,6 @@ public class ObstacleMap {
 		return isBlocked((int)p.getX(), (int)p.getY());
 	}
 	
-	public ObstacleMap(boolean[][] grid, int tileSize)
-	{
-		this.grid = grid;
-		this.tileSize = tileSize;
-	}
-	
 	public Point2D getTileCenter(Point2D p)
 	{
 		return getTileCenter((int)p.getX(), (int)p.getY());
