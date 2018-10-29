@@ -21,6 +21,7 @@ public class BirdController {
 	private int delay;
 	private int arenaWidth;
 	private int score;
+	private boolean hasDropped;
 	public BirdController(Player p1, Player p2, EggHuntArena arena)
 	{
 		map = new ObstacleMap(arena, false);
@@ -28,6 +29,7 @@ public class BirdController {
 		players[0] = p1;
 		players[1] = p2;
 		score = 0;
+		hasDropped = false;
 		
 		arenaWidth = map.getTileSize() * map.getObstacleGrid()[0].length;
 	}
@@ -66,12 +68,13 @@ public class BirdController {
 			else
 			{
 				bird.tick();
-				if(egg == null)
+				if(egg == null && !hasDropped)
 				{
 					if(map.getTileFromPoint(bird.getX(), bird.getY()).equals(eggDropLocation) )
 					{
 						Point p = (Point) map.getTileCenter(eggDropLocation);
 						egg = new BirdEgg(p.x, p.y);
+						hasDropped = true;
 					}
 				}
 			}
@@ -120,6 +123,7 @@ public class BirdController {
 		}
 		Point2D p = map.getTileCenter(0, (int)eggDropLocation.getY());
 		bird = new Bird((int)p.getX(), (int)p.getY(), 64, 64);
+		hasDropped = false;
 	}
 	
 	public int getScore()
