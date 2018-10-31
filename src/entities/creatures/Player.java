@@ -181,7 +181,7 @@ public class Player extends Creature {
 				if (elapsed > firingDelay) {
 					switch(getDirection()){
 					case 1:
-						projectile = new PlayerProjectile(48 + x, 16 + y, -Math.PI/2);
+						projectile = new PlayerProjectile(46 + x, 16 + y, -Math.PI/2);
 						bulletActive = true;
 						break;//up
 					case 2:
@@ -254,7 +254,7 @@ public class Player extends Creature {
 					switch(getDirection()){
 					case 1:
 					{
-						projectile = new PlayerProjectile(48 + x, 16 + y, -Math.PI/2);//up
+						projectile = new PlayerProjectile(46 + x, 16 + y, -Math.PI/2);//up
 						bulletActive = true;
 						break;
 					}
