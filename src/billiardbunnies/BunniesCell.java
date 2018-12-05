@@ -23,7 +23,7 @@ public class BunniesCell {
 	
 	public void addRandomWall()
 	{
-		double p = .5;
+		double p = .6;
 		double r = rnd.nextDouble();
 		if(r < p)
 		{

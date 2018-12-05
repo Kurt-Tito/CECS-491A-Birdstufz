@@ -55,6 +55,23 @@ public abstract class GameEntity {
 	{
 		x += dx;
 		y += dy;
+		
+		if(x < 0)
+		{
+			x += 800;
+		}
+		else if(x > 800)
+		{
+			x-= 800;
+		}
+		if(y < 0)
+		{
+			y += 800;
+		}
+		else if(y > 800)
+		{
+			y-= 800;
+		}
 	}
 	
 	public void setDirection(Direction d)

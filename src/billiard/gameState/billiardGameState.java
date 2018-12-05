@@ -8,10 +8,14 @@ import billiard.player.playerBunny;
 import billiard.game.billiardGame;
 import billiardbunnies.BunniesGrid;
 import billiardbunnies.BunniesPanel;
+import billiardbunnies.Fireball;
 
 public class billiardGameState extends State {
 	private billiardPlayer heroPlayer;
 	private playerBunny playerBunny;
+	private Fireball fireball;
+	private BunniesGrid map;
+	
 	int col = 1;
 	int row = 6;
 	
@@ -20,19 +24,24 @@ public class billiardGameState extends State {
 		super(game);
 		heroPlayer = new billiardPlayer(game, col*64, row*64);
 		playerBunny = new playerBunny(game, col*100, row*100);
+		map = new BunniesGrid();
+		fireball = new Fireball(325, 325);
 	}
 
 	@Override
 	public void tick() {
 		heroPlayer.tick();
 		playerBunny.tick();
+		fireball.tick();
 	}
 
 	@Override
 	public void render(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
+		map.draw(g2);
 		heroPlayer.render(g2);
 		playerBunny.render(g2);
+		fireball.draw(g2);
 	}
 
 }

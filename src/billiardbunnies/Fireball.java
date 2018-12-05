@@ -8,36 +8,12 @@ import java.awt.geom.Point2D;
 public class Fireball extends GameEntity {
 	private static final int MOVESPEED = 5;
 	private static final int RADIUS = 5;
-	private double dx, dy;
 	private double rotation;
 	public Fireball(int x, int y)
 	{
 		super(x,y);
 		this.speed = MOVESPEED;
 		setRotation(Math.random() * 2 * Math.PI);
-	}
-	
-	public void move()
-	{
-		x += dx;
-		y += dy;
-		
-		if(x < 0)
-		{
-			x += 800;
-		}
-		else if(x > 800)
-		{
-			x-= 800;
-		}
-		if(y < 0)
-		{
-			y += 800;
-		}
-		else if(y > 800)
-		{
-			y-= 800;
-		}
 	}
 	
 	public void setRotation(double rotation)
