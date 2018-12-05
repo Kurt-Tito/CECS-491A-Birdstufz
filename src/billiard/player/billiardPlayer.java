@@ -71,7 +71,7 @@ public class billiardPlayer extends Creature {
 	private void getInput(){
 		xMove = 0;
 		yMove = 0;
-		System.out.println(game.getKeyManager2().pressed.size());
+		//System.out.println(game.getKeyManager2().pressed.size());
 		if (game.getKeyManager2().up && game.getKeyManager2().pressed.size() <= 1 ) {
 			yMove = -speed;
 		}
