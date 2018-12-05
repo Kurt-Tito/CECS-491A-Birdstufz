@@ -1,19 +1,17 @@
-package game;
+package billiard.game;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
-import States.GameState;
-import States.MenuState;
-import States.State;
+import billiard.gameState.State;
+import billiard.gameState.billiardGameState;
 import billiard.input.KeyManager2;
 import display.Display;
-import gfx.Assets;
-import gfx.ImageLoader;
-import input.KeyManager;
+import billiard.gfx.Assets;
 
-public class Game implements Runnable {
+
+public class billiardGame implements Runnable {
 
 	private Display display;
 	public int width, height;
@@ -26,33 +24,28 @@ public class Game implements Runnable {
 	private Graphics g;
 	
 	//States
-	private State gameState;
-	private State menuState;
+	private billiardGameState gameState;
 	
 	//Input
-	private KeyManager keyManager;
 	private KeyManager2 keyManager2;
 	
-	public Game(String title, int width, int height){
+	public billiardGame(String title, int width, int height){
 		this.width = width;
 		this.height = height;
 		this.title = title;
-		keyManager = new KeyManager();
 		keyManager2 = new KeyManager2();
 	}
 	
 	private void init(){
 		display = new Display(title, width, height);
-		display.getFrame().addKeyListener(keyManager);
+		display.getFrame().addKeyListener(keyManager2);
 		Assets.init();
 		
-		gameState = new GameState(this);
-		menuState = new MenuState(this);
+		gameState = new billiardGameState(this);
 		State.setState(gameState);
 	}
 	
 	private void tick(){
-		keyManager.tick();
 		keyManager2.tick();
 		
 		if(State.getState() != null)
@@ -114,9 +107,6 @@ public class Game implements Runnable {
 		
 	}
 	
-	public KeyManager getKeyManager(){
-		return keyManager;
-	}
 	
 	public KeyManager2 getKeyManager2(){
 		return keyManager2;

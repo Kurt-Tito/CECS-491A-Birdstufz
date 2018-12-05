@@ -8,19 +8,21 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
+import billiard.input.KeyManager2;
+import billiard.player.billiardPlayer;
+import gfx.Assets;
+
+
 
 public class BunniesPanel extends JPanel implements Runnable{
 	private BunniesGrid map;
-	
 	private boolean running = false;
 	private Thread thread;
 	public BunniesPanel()
 	{
 		setBackground(Color.white);
 		setPreferredSize(new Dimension(800, 800));
-		
 		map = new BunniesGrid();
-
 	}
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Billiard Bunnies");
@@ -42,6 +44,8 @@ public class BunniesPanel extends JPanel implements Runnable{
 	}
 	@Override
 	public void run() {
+		
+		
 		int fps = 60;
 		double timePerTick = 1000000000 / fps;
 		double delta = 0;
@@ -64,7 +68,7 @@ public class BunniesPanel extends JPanel implements Runnable{
 			}
 			
 			if(timer >= 1000000000){
-				//System.out.println("Ticks and Frames: " + ticks);
+				System.out.println("Ticks and Frames: " + ticks);
 				ticks = 0;
 				timer = 0;
 			}

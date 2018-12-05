@@ -17,6 +17,17 @@ public class Assets {
 	public static BufferedImage pU, pD, pL, pR, pUR, pUL, pDL, pDR, invincibility;
 	public static BufferedImage[] idle, meleeAttack, rifleMove, rifleShoot;
 	public static BufferedImage[] idleBird = new BufferedImage[2];
+	
+	
+	/*
+	 * 
+	 * 
+	 * BILLIARDS GAME
+	 * 
+	 * 
+	 */
+	public static BufferedImage heroForward;
+	
 
 	public static void init(){
 		
@@ -90,5 +101,15 @@ public class Assets {
 			rifleShoot[i] = ImageLoader.loadImage("/Player/RifleShoot/survivor-shoot_rifle_" +
 											i + ".png");
 		}
+		
+		/*
+		 * 
+		 * BILLIARDS GAME
+		 * 
+		 */
+		heroForward = ImageLoader.loadImage("/billiardPlayer/forward.png");
+		
+		
+		
 	}
 }
