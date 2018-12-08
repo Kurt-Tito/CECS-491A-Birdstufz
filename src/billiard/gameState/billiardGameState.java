@@ -25,7 +25,8 @@ public class billiardGameState extends State {
 		heroPlayer = new billiardPlayer(game, col*64, row*64);
 		playerBunny = new playerBunny(game, col*100, row*100);
 		map = new BunniesGrid();
-		fireball = new Fireball(325, 325);
+		fireball = new Fireball(550, 430);
+		fireball.setRotation(Math.toRadians(90));
 	}
 
 	@Override

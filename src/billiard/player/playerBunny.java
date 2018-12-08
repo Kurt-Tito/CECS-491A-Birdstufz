@@ -30,7 +30,7 @@ public class playerBunny extends Creature {
 		yMove = 0;
 		
 		
-		System.out.println(game.getKeyManager2().pressed2.size());
+		//System.out.println(game.getKeyManager2().pressed2.size());
 		if (game.getKeyManager2().d_up && game.getKeyManager2().pressed2.size() <= 1 ) {
 			yMove = -speed;
 		}

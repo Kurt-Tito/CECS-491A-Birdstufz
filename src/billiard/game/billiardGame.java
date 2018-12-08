@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import billiard.gameState.State;
 import billiard.gameState.billiardGameState;
 import billiard.input.KeyManager2;
+import billiard.input.MouseManager;
 import display.Display;
 import billiard.gfx.Assets;
 
@@ -28,17 +29,26 @@ public class billiardGame implements Runnable {
 	
 	//Input
 	private KeyManager2 keyManager2;
+	private MouseManager mouseManager;
 	
 	public billiardGame(String title, int width, int height){
 		this.width = width;
 		this.height = height;
 		this.title = title;
 		keyManager2 = new KeyManager2();
+		mouseManager = new MouseManager();
 	}
 	
 	private void init(){
 		display = new Display(title, width, height);
 		display.getFrame().addKeyListener(keyManager2);
+		display.getFrame().addMouseListener(mouseManager);
+		display.getFrame().addMouseMotionListener(mouseManager);
+		display.getCanvas().addMouseListener(mouseManager);
+		display.getCanvas().addMouseMotionListener(mouseManager);
+		
+		
+		
 		Assets.init();
 		
 		gameState = new billiardGameState(this);
@@ -97,7 +107,7 @@ public class billiardGame implements Runnable {
 			}
 			
 			if(timer >= 1000000000){
-				System.out.println("Ticks and Frames: " + ticks);
+				//System.out.println("Ticks and Frames: " + ticks);
 				ticks = 0;
 				timer = 0;
 			}
@@ -110,6 +120,10 @@ public class billiardGame implements Runnable {
 	
 	public KeyManager2 getKeyManager2(){
 		return keyManager2;
+	}
+	
+	public MouseManager getMouseManager() {
+		return mouseManager;
 	}
 	
 	public synchronized void start(){
