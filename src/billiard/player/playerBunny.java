@@ -1,28 +1,77 @@
 package billiard.player;
 
-import java.awt.Graphics;
+import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.geom.Point2D;
+import java.util.*;
 
 import billiard.game.billiardGame;
 import entities.creatures.Creature;
 import billiard.gfx.Assets;
+import billiardbunnies.Collisions;
+import billiardbunnies.LineSegment;
+import billiardbunnies.Fireball;
 
 
 public class playerBunny extends Creature {
-	
+	private ArrayList<Fireball> fireballs = new ArrayList<Fireball>();
 	private billiardGame game;
-
+	private billiardPlayer player;
+	private static final int SHOOT_DELAY = 5;
+	private int shootDelay;
+	private Point2D d;
 	public playerBunny(billiardGame game, int x, int y) {
-		super(x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
+		super(x+755, y+755, Creature.DEFAULT_CREATURE_WIDTH-16, Creature.DEFAULT_CREATURE_HEIGHT-16);
+		shootDelay = SHOOT_DELAY;
 		this.game = game;
+		d = new Point2D.Double();
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public void tick() {
+	private boolean atDestination()
+	{
+		return x == d.getX() && y == d.getY();
+	}
+	
+public void tick() {
 		getInput();
 		move();
-		// TODO Auto-generated method stub
-		
+	
+		for(LineSegment line: LineSegment.walls)
+		{
+			if(Collisions.CircleLine(line, x + (width/2), y + (width/2), width/2))
+			{
+				x -= xMove;
+				y -= yMove;
+			}
+		}
+		if(atDestination())
+		{
+			if(shootDelay <= 0)
+			{
+				Fireball fb = new Fireball((int) x, (int)y);
+				fb.setRotation(Math.atan2(-(player.getCenterY() - y), player.getCenterX() - x));
+				fireballs.add(fb);		
+				shootDelay += SHOOT_DELAY;
+			}
+			else
+			{
+				shootDelay--;
+			}
+		}
+		for(int i = 0; i < fireballs.size(); i++)
+		{
+			if(fireballs.get(i).isActive())
+			{
+				fireballs.get(i).tick();
+			}
+			else
+			{
+				fireballs.remove(i);
+				i--;
+			}
+		}
 	}
 
 	private void getInput() {
@@ -45,11 +94,19 @@ public class playerBunny extends Creature {
 		}
 	}
 	
+	public Rectangle getBoundingBox()
+	{
+		return new Rectangle(x, y, width - 16, height - 16);
+	}
 	
 	@Override
 	public void render(Graphics g) {
 		// TODO Auto-generated method stub
 		g.drawImage(Assets.playerBunny, (int) x, (int) y, width, height, null);
+		for(Fireball fb: fireballs)
+		{
+			fb.draw((Graphics2D) g);
+		}
 	}
 	
 

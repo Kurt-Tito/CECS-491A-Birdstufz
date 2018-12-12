@@ -15,7 +15,7 @@ public class Assets {
 		
 		
 		heroForward = ImageLoader.loadImage("/billiardPlayer/forward.png");
-		playerBunny = ImageLoader.loadImage("/billiardPlayer/playerBunny.png");
+		playerBunny = ImageLoader.loadImage("/billiardPlayer/bunnyD.png");
 
 	}
 }
