@@ -2,6 +2,7 @@ package billiard.gameState;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import billiard.player.billiardPlayer;
 import billiard.player.playerBunny;
@@ -15,7 +16,7 @@ public class billiardGameState extends State {
 	private billiardPlayer heroPlayer;
 	private playerBunny playerBunny;
 	private BunniesGrid map;
-	private Bunny bunny;
+	private ArrayList<Bunny> bunnies = new ArrayList<Bunny>();;
 	
 	int col = 0;
 	int row = 0;
@@ -24,16 +25,21 @@ public class billiardGameState extends State {
 	public billiardGameState(billiardGame game) {
 		super(game);
 		heroPlayer = new billiardPlayer(game, col*64, row*64);
-		playerBunny = new playerBunny(game, col*100, row*100);
+		playerBunny = new playerBunny(game, col*100, row*100, heroPlayer);
 		map = new BunniesGrid();
-		bunny = new Bunny(40,40,map, heroPlayer);
+		bunnies.add(new Bunny(0,9,map, heroPlayer));
+		bunnies.add(new Bunny(9,9,map, heroPlayer));
+		bunnies.add(new Bunny(9,0,map, heroPlayer));
 	}
 
 	@Override
 	public void tick() {
 		heroPlayer.tick();
 		playerBunny.tick();
-		bunny.tick();
+		for(int i = 0; i < bunnies.size(); i++)
+		{
+			bunnies.get(i).tick();
+		}
 	}
 
 	@Override
@@ -42,7 +48,10 @@ public class billiardGameState extends State {
 		map.draw(g2);
 		heroPlayer.render(g2);
 		playerBunny.render(g2);
-		bunny.draw(g2);
+		for(int i = 0; i < bunnies.size(); i++)
+		{
+			bunnies.get(i).draw(g2);
+		}
 	}
 
 }

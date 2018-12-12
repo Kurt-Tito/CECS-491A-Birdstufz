@@ -7,50 +7,54 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Random;
 
+import billiard.gfx.Assets;
 import billiard.player.billiardPlayer;
 
 public class Bunny extends GameEntity{
 	private static final int MOVESPEED = 4;
 	private static final int RADIUS = 20;
-	private static final int SHOOT_DELAY = 5;
+	private static final int SHOOT_DELAY = 10;
 	private static final double p = .75;
 	private BunniesGrid map;
 	private billiardPlayer player;
 	private Random rand = new Random(System.nanoTime());
-	private Point2D d;
+	private Point2D dest;
 	private int shootDelay;
+	private Direction lastDirection;
 	private ArrayList<Fireball> fireballs = new ArrayList<Fireball>();
 	public Bunny(int x, int y, BunniesGrid map, billiardPlayer player) {
 		super(x, y);
-		d = new Point2D.Double();
+		dest = new Point2D.Double();
 		shootDelay = SHOOT_DELAY;
 		this.map = map;
 		this.player = player;
+		Point2D p2 = map.getCellCenter(x,y);
+		this.x = p2.getX();
+		this.y = p2.getY();
 		getRandomDestination();
 	}
 	
 	public void move()
 	{
-		System.out.println(d);
-		if(LineSegment.length(x, y, d.getX(), d.getY()) >= MOVESPEED)
+		if(LineSegment.length(x, y, dest.getX(), dest.getY()) >= MOVESPEED)
 		{
 			super.move();
 		}
 		else
 		{
-			x = d.getX();
-			y = d.getY();
+			x = dest.getX();
+			y = dest.getY();
 		}
 	}
 	
 	private boolean atDestination()
 	{
-		return x == d.getX() && y == d.getY();
+		return x == dest.getX() && y == dest.getY();
 	}
 	
 	private void updateMovement()
 	{
-		double rotation = Math.atan2(d.getY() - y, d.getX() - x);
+		double rotation = Math.atan2(dest.getY() - y, dest.getX() - x);
 		dx = MOVESPEED * Math.cos(rotation);
 		dy = MOVESPEED * Math.sin(rotation);
 	}
@@ -62,6 +66,7 @@ public class Bunny extends GameEntity{
 			if(shootDelay == 0)
 			{
 				Fireball fb = new Fireball((int) x, (int)y);
+				fb.setColor(Color.red);
 				fb.setRotation(Math.atan2(-(player.getCenterY() - y), player.getCenterX() - x));
 				fireballs.add(fb);
 				
@@ -94,26 +99,36 @@ public class Bunny extends GameEntity{
 	
 	private void getRandomDestination()
 	{
+		Point location = map.getCell(x, y);
+		Direction d = lastDirection;
 		boolean valid = false;
-		while(!valid)
+		if(Math.random() < .8)
 		{
-			Direction d = Direction.values()[rand.nextInt(Direction.values().length)];
-			Point location = map.getCell(x, y);
-			if(map.isTraversable(location, d))
+			if(d != null && map.isTraversable(location, d))
 			{
-				Point c = map.getAdjacentCell(location.x,location.y, d);
-				Point2D p = map.getCellCenter(c.x, c.y);
-				this.d.setLocation(p);
-				updateMovement();
 				valid = true;
 			}
 		}
+		while(!valid)
+		{
+			d = Direction.values()[rand.nextInt(Direction.values().length)];
+			
+			if(map.isTraversable(location, d))
+			{
+				valid = true;
+			}
+		}
+		Point c = map.getAdjacentCell(location.x,location.y, d);
+		Point2D p = map.getCellCenter(c.x, c.y);
+		dest.setLocation(p);
+		updateMovement();
 	}
 
 	@Override
 	public void draw(Graphics2D g2) {
 		g2.setColor(Color.green);
-		g2.fillOval((int)x - RADIUS, (int)y - RADIUS, RADIUS*2, RADIUS*2);
+		//g2.fillOval((int)x - RADIUS, (int)y - RADIUS, RADIUS*2, RADIUS*2);
+		g2.drawImage(Assets.playerBunny, (int) x-RADIUS, (int) y-RADIUS, RADIUS*2, RADIUS*2, null);
 		for(Fireball fb: fireballs)
 		{
 			fb.draw(g2);

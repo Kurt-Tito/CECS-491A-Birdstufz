@@ -18,25 +18,20 @@ public class playerBunny extends Creature {
 	private ArrayList<Fireball> fireballs = new ArrayList<Fireball>();
 	private billiardGame game;
 	private billiardPlayer player;
-	private static final int SHOOT_DELAY = 5;
+	private static final int SHOOT_DELAY = 240; //number of frames
 	private int shootDelay;
-	private Point2D d;
-	public playerBunny(billiardGame game, int x, int y) {
+	public playerBunny(billiardGame game, int x, int y, billiardPlayer player) {
 		super(x+755, y+755, Creature.DEFAULT_CREATURE_WIDTH-16, Creature.DEFAULT_CREATURE_HEIGHT-16);
 		shootDelay = SHOOT_DELAY;
 		this.game = game;
-		d = new Point2D.Double();
+		this.player = player;
 		// TODO Auto-generated constructor stub
-	}
-
-	private boolean atDestination()
-	{
-		return x == d.getX() && y == d.getY();
 	}
 	
 public void tick() {
 		getInput();
 		move();
+		shootDelay--;
 	
 		for(LineSegment line: LineSegment.walls)
 		{
@@ -47,19 +42,17 @@ public void tick() {
 			}
 		}
 		/* this code below is not working */
-		if(atDestination())
+		if(shootDelay <= 0)
 		{
-			if(shootDelay <= 0)
-			{
-				Fireball fb = new Fireball((int) x, (int)y);
-				fb.setRotation(Math.atan2(-(player.getCenterY() - y), player.getCenterX() - x));
-				fireballs.add(fb);		
-				shootDelay += SHOOT_DELAY;
-			}
-			else
-			{
-				shootDelay--;
-			}
+			System.out.println("SHOOOT");
+			Fireball fb = new Fireball((int) x + width/2, (int)y + height/2);
+			fb.setRotation(Math.atan2(-(player.getCenterY() - y), player.getCenterX() - x));
+			fireballs.add(fb);		
+			shootDelay += SHOOT_DELAY;
+		}
+		else
+		{
+			shootDelay--;
 		}
 		for(int i = 0; i < fireballs.size(); i++)
 		{

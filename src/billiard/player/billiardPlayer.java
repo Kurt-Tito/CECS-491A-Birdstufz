@@ -59,7 +59,7 @@ public class billiardPlayer extends Creature {
 //		
 		projectiles = new ArrayList<Fireball>();
 		firingTimer = System.nanoTime();
-		firingDelay = 250; //change firing delay in ms
+		firingDelay = 500; //change firing delay in ms
 	}
 	
 

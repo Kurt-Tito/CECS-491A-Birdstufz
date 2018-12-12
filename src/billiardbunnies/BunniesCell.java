@@ -27,11 +27,11 @@ public class BunniesCell {
 	
 	public void addRandomWall()
 	{
-		double p = .6;
+		double p = .5;
 		double r = rnd.nextDouble();
 		if(r < p)
 		{
-			addWall(CellWall.values()[rnd.nextInt(CellWall.values().length)]);
+			addWall(CellWall.values()[rnd.nextInt(6)%CellWall.values().length]);
 		}
 	}
 	
