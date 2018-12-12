@@ -46,6 +46,7 @@ public void tick() {
 				y -= yMove;
 			}
 		}
+		/* this code below is not working */
 		if(atDestination())
 		{
 			if(shootDelay <= 0)
