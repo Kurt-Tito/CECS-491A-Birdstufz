@@ -8,16 +8,17 @@ import billiard.player.playerBunny;
 import billiard.game.billiardGame;
 import billiardbunnies.BunniesGrid;
 import billiardbunnies.BunniesPanel;
+import billiardbunnies.Bunny;
 import billiardbunnies.Fireball;
 
 public class billiardGameState extends State {
 	private billiardPlayer heroPlayer;
 	private playerBunny playerBunny;
-	private Fireball fireball;
 	private BunniesGrid map;
+	private Bunny bunny;
 	
-	int col = 1;
-	int row = 6;
+	int col = 0;
+	int row = 0;
 	
 
 	public billiardGameState(billiardGame game) {
@@ -25,15 +26,14 @@ public class billiardGameState extends State {
 		heroPlayer = new billiardPlayer(game, col*64, row*64);
 		playerBunny = new playerBunny(game, col*100, row*100);
 		map = new BunniesGrid();
-		fireball = new Fireball(550, 430);
-		fireball.setRotation(Math.toRadians(90));
+		bunny = new Bunny(40,40,map, heroPlayer);
 	}
 
 	@Override
 	public void tick() {
 		heroPlayer.tick();
 		playerBunny.tick();
-		fireball.tick();
+		bunny.tick();
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class billiardGameState extends State {
 		map.draw(g2);
 		heroPlayer.render(g2);
 		playerBunny.render(g2);
-		fireball.draw(g2);
+		bunny.draw(g2);
 	}
 
 }

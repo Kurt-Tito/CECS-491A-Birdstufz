@@ -6,10 +6,11 @@ import java.awt.Point;
 import java.awt.geom.Point2D;
 
 public class Fireball extends GameEntity {
-	private static final int MOVESPEED = 1;
+	private static final int MOVESPEED = 5;
 	private static final int RADIUS = 5;
 	private double rotation;
 	private boolean active;
+	private int collisionCount;
 	public Fireball(int x, int y)
 	{
 		super(x,y);
@@ -17,6 +18,7 @@ public class Fireball extends GameEntity {
 		active = true;
 		//setRotation(Math.random() * 2 * Math.PI);
 		//setRotation(Math.random() * 2 * Math.PI);
+		collisionCount = 0;
 	}
 	
 	public void setRotation(double rotation)
@@ -24,6 +26,15 @@ public class Fireball extends GameEntity {
 		this.rotation = rotation;
 		dx = speed * Math.cos(rotation);
 		dy = -speed * Math.sin(rotation);
+	}
+	
+	private void incrementCollisionCounter()
+	{
+		collisionCount++;
+	}
+	public int getCollisionCount()
+	{
+		return collisionCount;
 	}
 	
 	private void reflectX()
@@ -78,7 +89,11 @@ public class Fireball extends GameEntity {
 						dy = -temp;
 					}
 				}
-				
+				incrementCollisionCounter();
+				if(getCollisionCount() >= 10)
+				{
+					setActive(false);
+				}
 			}
 		}
 		move();

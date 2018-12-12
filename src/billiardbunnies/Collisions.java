@@ -16,14 +16,14 @@ public class Collisions {
 		
 		if(c > 0)
 		{
-			distance = dot(pa, pa);
+			distance = Math.sqrt(dot(pa, pa));
 			return distance <= radius;
 		}
 		Point2D bp = new Point2D.Double(x - line.getX2(), y - line.getY2());
 		double d = dot(n, bp);
 		if(d > 0)
 		{
-			distance = dot(bp, bp);
+			distance = Math.sqrt(dot(bp, bp));
 			return distance <= radius;
 		}
 		distance = distanceLinePoint(line,x,y);

@@ -15,7 +15,9 @@ import entities.creatures.Creature;
 import billiard.gfx.Assets;
 import billiard.game.billiardGame;
 import billiardbunnies.BunniesPanel;
+import billiardbunnies.Collisions;
 import billiardbunnies.Fireball;
+import billiardbunnies.LineSegment;
 
 public class billiardPlayer extends Creature {
 
@@ -49,7 +51,7 @@ public class billiardPlayer extends Creature {
 	private long firingDelay;
 	
 	public billiardPlayer(billiardGame game, int x, int y) {
-		super(x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
+		super(x, y, Creature.DEFAULT_CREATURE_WIDTH-24, Creature.DEFAULT_CREATURE_HEIGHT-24);
 		this.game = game;
 		
 		
@@ -57,7 +59,7 @@ public class billiardPlayer extends Creature {
 //		
 		projectiles = new ArrayList<Fireball>();
 		firingTimer = System.nanoTime();
-		firingDelay = 200; //change firing delay in ms
+		firingDelay = 250; //change firing delay in ms
 	}
 	
 
@@ -65,10 +67,23 @@ public class billiardPlayer extends Creature {
 		
 		getInput();
 		move();
+		for(LineSegment line: LineSegment.walls)
+		{
+			if(Collisions.CircleLine(line, x + (width/2), y + (width/2), width/2))
+			{
+				x -= xMove;
+				y -= yMove;
+			}
+		}
 		
-		for (Fireball p: projectiles) {
-			if(p.isActive()) {
-				p.tick();
+		for (int i = 0; i < projectiles.size(); i++) {
+			if(projectiles.get(i).isActive()) {
+				projectiles.get(i).tick();
+			}
+			else
+			{
+				projectiles.remove(i);
+				i--;
 			}
 		}
 	}
@@ -91,6 +106,7 @@ public class billiardPlayer extends Creature {
 		
 		if (game.getMouseManager().isLeftPressed()) {
 			long elapsed = (System.nanoTime() - firingTimer) / 1000000;
+			System.out.println("ASDFASD");
 			if (elapsed > firingDelay) {
 				
 				double Cx =  (x +  halfDiagonal * Math.cos(Math.toRadians(-45)));
@@ -112,9 +128,10 @@ public class billiardPlayer extends Creature {
 				
 				projectile = new Fireball((int)Cx, (int)Cy);
 				projectile.setRotation(Math.toRadians(angle));
+				projectiles.add(projectile);
+				firingTimer = System.nanoTime();
 			}
-			projectiles.add(projectile);
-			firingTimer = System.nanoTime();
+			
 		}
 		
 		//health.update(x, y);
@@ -124,10 +141,14 @@ public class billiardPlayer extends Creature {
 	public void render(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		//g.drawImage(getCurrentAnimationFrame(), (int) x, (int) y, width, height, null);
+		g.fillOval(x, y, width, width);
 		g.drawImage(Assets.heroForward,  (int) x, (int) y, width, height, null);
 		if (projectiles.size() > 0) {
 			for (Fireball f: projectiles) {
-				f.draw(g2);
+				if(f.isActive())
+				{
+					f.draw(g2);
+				}
 			}
 		}
 		

@@ -7,18 +7,22 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class BunniesCell {
-	private static int size = 80;
+	public static final int SIZE = 80;
 	private static Random rnd = new Random(System.nanoTime());
 	private int x, y;
-	private boolean top, left, fwdDiagonal, backDiagonal;
-	private ArrayList<LineSegment> walls;
+	private LineSegment[] walls;
 	public BunniesCell(int x, int y)
 	{
-		this.x = x * size + size/2;
-		this.y = y * size + size/2;
+		this.x = x * SIZE + SIZE/2;
+		this.y = y * SIZE + SIZE/2;
 		
-		walls = new ArrayList<LineSegment>();
+		walls = new LineSegment[CellWall.values().length];
 		
+	}
+	
+	public boolean hasWall(CellWall w)
+	{
+		return walls[w.ordinal()] != null;
 	}
 	
 	public void addRandomWall()
@@ -33,67 +37,29 @@ public class BunniesCell {
 	
 	public void addWall(CellWall w)
 	{
-		switch(w)
+		if(walls[w.ordinal()] == null)
 		{
-		case TOP:
-			top = true;
-			break;
-		case LEFT:
-			left = true;
-			break;
-		case FORWARD_DIAGONAL:
-			fwdDiagonal = true;
-			break;
-		case BACK_DIAGONAL:
-			backDiagonal = true;
-			break;
-		default:
-			break;
-		}
-		updateWalls();
-	}
-	
-	private void updateWalls()
-	{
-		
-		walls.clear();
-		if(top)
-		{
-			walls.add(new LineSegment(x - (size/2), y - (size/2), x + (size/2), y - (size/2)));
-		}
-		if(left)
-		{
-			walls.add(new LineSegment(x - (size/2), y - (size/2), x - (size/2), y + (size/2)));
-		}
-		if(fwdDiagonal)
-		{
-			walls.add(new LineSegment(x - (size/2), y - (size/2), x + (size/2), y + (size/2)));
-		}
-		if(backDiagonal)
-		{
-			walls.add(new LineSegment(x + (size/2), y - (size/2), x - (size/2), y + (size/2)));
+			switch(w)
+			{
+			case TOP:
+				walls[w.ordinal()] = new LineSegment(x - (SIZE/2), y - (SIZE/2), x + (SIZE/2), y - (SIZE/2));
+				break;
+			case LEFT:
+				walls[w.ordinal()] = new LineSegment(x - (SIZE/2), y - (SIZE/2), x - (SIZE/2), y + (SIZE/2));
+				break;
+			case FORWARD_DIAGONAL:
+				walls[w.ordinal()] = new LineSegment(x - (SIZE/2), y - (SIZE/2), x + (SIZE/2), y + (SIZE/2));
+				break;
+			case BACK_DIAGONAL:
+				walls[w.ordinal()] = new LineSegment(x + (SIZE/2), y - (SIZE/2), x - (SIZE/2), y + (SIZE/2));
+				break;
+			}
 		}
 	}
 	
 	public void removeWall(CellWall w)
 	{
-		switch(w)
-		{
-		case TOP:
-			top = false;
-			break;
-		case LEFT:
-			left = false;
-			break;
-		case FORWARD_DIAGONAL:
-			fwdDiagonal = false;
-			break;
-		case BACK_DIAGONAL:
-			backDiagonal = false;
-			break;
-		default:
-			break;
-		}
+		walls[w.ordinal()] = null;
 	}
 	
 	public enum CellWall
@@ -105,10 +71,13 @@ public class BunniesCell {
 	{
 		g2.setStroke(new BasicStroke(1));
 		g2.setColor(Color.lightGray);
-		//g2.drawRect(x - size/2, y - size/2, size, size);
+		//g2.drawRect(x - SIZE/2, y - SIZE/2, SIZE, SIZE);
 		for(LineSegment line: walls)
 		{
-			line.draw(g2);
+			if(line != null)
+			{
+				line.draw(g2);
+			}
 		}
 	}
 }
