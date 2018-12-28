@@ -1,9 +1,6 @@
 package billiard.player;
 
 import java.awt.*;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -49,6 +46,7 @@ public class billiardPlayer extends Creature {
 //	
 	private long firingTimer;
 	private long firingDelay;
+	private int health;
 	
 	public billiardPlayer(billiardGame game, int x, int y) {
 		super(x, y, Creature.DEFAULT_CREATURE_WIDTH-24, Creature.DEFAULT_CREATURE_HEIGHT-24);
@@ -60,6 +58,7 @@ public class billiardPlayer extends Creature {
 		projectiles = new ArrayList<Fireball>();
 		firingTimer = System.nanoTime();
 		firingDelay = 500; //change firing delay in ms
+		health = 50;
 	}
 	
 
@@ -151,6 +150,11 @@ public class billiardPlayer extends Creature {
 				}
 			}
 		}
+		
+		g.setColor(Color.WHITE);
+		g.fillRect((int)x - 5, (int)y - 25, 50, 7);
+		g.setColor(Color.GREEN);
+		g.fillRect((int)x - 5, (int)y - 25, health, 7);
 		
 		
 		//health.draw(g);
@@ -248,6 +252,15 @@ public class billiardPlayer extends Creature {
 		return projectiles;
 	}
 	
+	public void takeDamage()
+	{
+		health -= 2;
+	}
+	
+	public int getHealth()
+	{
+		return health;
+	}
 //	public void removeProjectileAt(int x) {
 //		projectiles.remove(x);
 //	}

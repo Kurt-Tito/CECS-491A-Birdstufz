@@ -44,7 +44,7 @@ public void tick() {
 		/* this code below is not working */
 		if(shootDelay <= 0)
 		{
-			System.out.println("SHOOOT");
+			//System.out.println("SHOOOT");
 			Fireball fb = new Fireball((int) x + width/2, (int)y + height/2);
 			fb.setRotation(Math.atan2(-(player.getCenterY() - y), player.getCenterX() - x));
 			fireballs.add(fb);		
@@ -59,6 +59,22 @@ public void tick() {
 			if(fireballs.get(i).isActive())
 			{
 				fireballs.get(i).tick();
+				
+				for(int l = 0; l < 48; l++)
+				{
+					for (int k = 0; k < 48; k++)
+					{
+						if(fireballs.get(i).getX() == player.getX()+l)
+						{
+							if(fireballs.get(i).getY() == player.getY()+k)
+							{
+								//System.out.println("hit");
+								player.takeDamage();
+								fireballs.get(i).setActive(false);
+							}
+						}
+					}
+				}
 			}
 			else
 			{

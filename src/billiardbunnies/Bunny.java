@@ -87,6 +87,23 @@ public class Bunny extends GameEntity{
 			if(fireballs.get(i).isActive())
 			{
 				fireballs.get(i).tick();
+				
+				for(int l = 0; l < 48; l++)
+				{
+					for (int k = 0; k < 4; k++)
+					{
+						if(fireballs.get(i).getX() == player.getX()+l)
+						{
+							if(fireballs.get(i).getY() == player.getY()+k)
+							{
+								System.out.println("hit");
+								player.takeDamage();
+								fireballs.get(i).setActive(false);
+							}
+						}
+					}
+				}
+					
 			}
 			else
 			{
